@@ -14,6 +14,6 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int id;
+    public long id;
 
 }

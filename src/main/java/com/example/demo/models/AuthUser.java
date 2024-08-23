@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -15,20 +16,12 @@ import java.util.Objects;
 @Table(name = "auth_users")
 public class AuthUser extends BaseEntity {
 
+    @Column(name = "username",unique = true)
     private String username;
+    @Column(name = "password",unique = true)
     private String password;
+    @Column(name = "email",unique = true)
     private String email;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AuthUser authUser = (AuthUser) o;
-        return id == authUser.id;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

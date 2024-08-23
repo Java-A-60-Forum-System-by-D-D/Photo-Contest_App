@@ -27,15 +27,32 @@ public class Contest extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private Phase phase;
+    @Enumerated(EnumType.STRING)
+    private Phase phase = Phase.NOT_STARTED;
+
     @OneToMany(mappedBy = "contest")
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;
+
+
     @Column(name = "start_date", nullable = false)
     private LocalDateTime createdAt;
     @Column(name = "end_date", nullable = false)
     private LocalDateTime updatedAt;
+    @Column(name = "start_phase_1")
+    private LocalDateTime startPhase1;
+    @Column(name = "end_phase_1")
+    private LocalDateTime endPhase1;
+    @Column(name = "start_phase_2")
+    private LocalDateTime startPhase2;
+    @Column(name = "end_phase_2")
+    private LocalDateTime endPhase2;
+
+
+
+
+
     @ManyToMany
     @JoinTable(
             name = "contest_participants",
