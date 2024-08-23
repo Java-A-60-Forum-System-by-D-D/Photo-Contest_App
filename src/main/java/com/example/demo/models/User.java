@@ -11,16 +11,20 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "auth_user_id")
     private AuthUser authUser;
+
     @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name", nullable = false)
 
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    @Column(name = "total_score")
+    private int totalScore;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -31,13 +35,13 @@ public class User extends BaseEntity{
     @ManyToMany(mappedBy = "participants")
     private List<Contest> participatedContests;
 
+
     @ManyToMany
     @JoinTable(
             name = "jury_contests",
             joinColumns = @JoinColumn(name = "jury_id"),
             inverseJoinColumns = @JoinColumn(name = "contest_id"))
     private List<Contest> jurorContests;
-
 
 
 }
