@@ -1,21 +1,19 @@
 package com.example.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @Entity
-@Table(name = "users")
-public class User extends BaseEntity {
-
-    @OneToOne
-    @JoinColumn(name = "auth_user_id")
-    private AuthUser authUser;
+@DiscriminatorValue("USER")
+public class User extends AuthUser {
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -30,13 +28,19 @@ public class User extends BaseEntity {
     private UserRole role;
 
     @OneToMany(mappedBy = "organizer")
+    @JsonIgnore
     private List<Contest> organizedContests;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "participants")
     private List<Contest> participatedContests;
 
+    public User() {
+        this.role=UserRole.JUNKIE;
+    }
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
             name = "jury_contests",
             joinColumns = @JoinColumn(name = "jury_id"),

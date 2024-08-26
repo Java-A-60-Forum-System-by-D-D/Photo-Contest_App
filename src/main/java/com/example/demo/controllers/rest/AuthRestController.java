@@ -1,45 +1,43 @@
 package com.example.demo.controllers.rest;
 
+import com.example.demo.models.AuthUser;
+import com.example.demo.models.User;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserDto;
+import com.example.demo.models.dto.UserViewDto;
+import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthRestController {
-   private final UserService userService;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final AuthenticationService authenticationService;
 
-    public AuthRestController(UserService userService) {
+    public AuthRestController(UserService userService, UserMapper userMapper, AuthenticationService authenticationService) {
         this.userService = userService;
+        this.userMapper = userMapper;
+
+        this.authenticationService = authenticationService;
     }
 
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
     @PostMapping("/login")
-    public Principal login(Principal principal){
+    public AuthUser login(@RequestBody LoginUserDto loginUserDto) {
+        AuthUser user = authenticationService.loginUser(loginUserDto);
+        return user;
+    }
 
-        return principal;
-    }
-//    @PostMapping`("/login")
-//    public LoginUserDto login(@RequestBody LoginUserDto loginUserDto){
-//        userService.loginUser(loginUserDto);
-//        return "login";
-//    }
-    @GetMapping("/register")
-    public String register(){
-        return "register";
-    }
     @PostMapping("/register")
-    public String registerUser(@RequestBody RegisterUserDto registerUserDto){
-        userService.saveUser(registerUserDto);
+    public UserViewDto registerUser(@Valid @RequestBody RegisterUserDto registerUserDto) {
+        User user = userMapper.createUserFromDto(registerUserDto);
 
-        return "register";
+        userService.saveUser(user);
+
+        return userMapper.mapUserToUserViewDto(user);
     }
 }

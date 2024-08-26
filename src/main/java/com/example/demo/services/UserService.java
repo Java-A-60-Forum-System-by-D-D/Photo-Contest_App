@@ -1,12 +1,15 @@
 package com.example.demo.services;
 
+import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserDto;
 
 public interface UserService {
     User getUserById(long id);
-    User saveUser(RegisterUserDto registerUserDto);
+    User saveUser(User user);
 
     LoginUserDto loginUser(LoginUserDto loginUserDto);
+
+
 }

@@ -1,19 +1,19 @@
 package com.example.demo.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "auth_users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype")
 public class AuthUser extends BaseEntity {
 
     @Column(name = "username",unique = true)

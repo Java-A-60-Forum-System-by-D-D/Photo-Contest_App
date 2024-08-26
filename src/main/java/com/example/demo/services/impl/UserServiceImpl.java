@@ -28,21 +28,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(RegisterUserDto registerUserDto) {
-        AuthUser authUser = new AuthUser();
-        authUser.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
-        authUser.setUsername(registerUserDto.getUsername());
-        authUser.setEmail(registerUserDto.getEmail());
-        User user = new User();
-        user.setAuthUser(authUser);
-        user.setFirstName(registerUserDto.getFirstName());
-        user.setLastName(registerUserDto.getLastName());
+    public User saveUser(User user) {
         return userRepository.save(user);
     }
 
     @Override
     public LoginUserDto loginUser(LoginUserDto loginUserDto) {
-        AuthUser authUser = authenticationService.findByEmail(loginUserDto.getEmail());
+//        AuthUser authUser = authenticationService.findByEmail(loginUserDto.getEmail());
         return null;
     }
+
+
 }
