@@ -9,7 +9,6 @@ public interface UserService {
     User getUserById(long id);
     User saveUser(User user);
 
-    LoginUserDto loginUser(LoginUserDto loginUserDto);
 
 
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
@@ -22,6 +23,7 @@ public class AuthUser extends BaseEntity {
     private String password;
     @Column(name = "email",unique = true)
     private String email;
+
 
 
 }

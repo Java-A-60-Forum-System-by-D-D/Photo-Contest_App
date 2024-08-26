@@ -10,4 +10,6 @@ public class LoginUserDto {
     @NotNull
     private String password;
 
+    private String token;
+
 }

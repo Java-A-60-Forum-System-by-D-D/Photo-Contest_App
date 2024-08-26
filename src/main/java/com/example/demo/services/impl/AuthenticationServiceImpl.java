@@ -3,10 +3,14 @@ package com.example.demo.services.impl;
 import com.example.demo.exceptions.PasswordMismatchException;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.AuthUser;
-import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.repositories.AuthUserRepository;
 import com.example.demo.services.AuthenticationService;
+import com.example.demo.services.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +22,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public static final String PASSWORD_MISMATCH = "Password mismatch";
     private final AuthUserRepository authUserRepository;
     private final PasswordEncoder passwordEncoder;
-    private final PhotoContestUserDetails photoContestUserDetails;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AuthenticationServiceImpl(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder, PhotoContestUserDetails photoContestUserDetails) {
+    @Autowired
+    public AuthenticationServiceImpl(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authUserRepository = authUserRepository;
         this.passwordEncoder = passwordEncoder;
-        this.photoContestUserDetails = photoContestUserDetails;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @Override
     public Optional<AuthUser> findByEmail(String email) {
         return authUserRepository.findByEmail(email);
-
     }
 
     @Override
@@ -38,23 +44,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthUser loginUser(LoginUserDto loginUserDto) {
+    public LoginUserDto loginUser(LoginUserDto loginUserDto) {
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword())
+        );
+        String token = tokenService.generateJwt(auth);
 
         Optional<AuthUser> authUser = findByEmail(loginUserDto.getEmail());
-        if(authUser.isEmpty()){
+        if (authUser.isEmpty()) {
             throw new UserNotFoundException(USER_DOES_NOT_EXIST);
         }
         AuthUser user = authUser.get();
         if (!passwordEncoder.matches(loginUserDto.getPassword(), user.getPassword())) {
             throw new PasswordMismatchException(PASSWORD_MISMATCH);
         }
-        photoContestUserDetails.loadUserByUsername(user.getEmail());
-        return user;
 
+        loginUserDto.setToken(token);
+        return loginUserDto;
     }
 
     @Override
     public AuthUser saveAuthUser(AuthUser authUser) {
-       return authUserRepository.save(authUser);
+        return authUserRepository.save(authUser);
     }
 }

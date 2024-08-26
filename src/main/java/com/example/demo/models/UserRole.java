@@ -1,6 +1,14 @@
 package com.example.demo.models;
 
-public enum UserRole {
+import org.springframework.security.core.GrantedAuthority;
 
-    ORGANIZER, JUNKIE, ENTHUSIAST, MASTER, DICTATOR
+public enum UserRole implements GrantedAuthority {
+
+    ORGANIZER, JUNKIE, ENTHUSIAST, MASTER, DICTATOR;
+
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + this.name();
+    }
 }
