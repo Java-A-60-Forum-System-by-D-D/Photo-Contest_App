@@ -13,7 +13,7 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "auth_users")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 public class AuthUser extends BaseEntity {
 

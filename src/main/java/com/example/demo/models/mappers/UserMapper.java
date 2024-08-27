@@ -27,6 +27,7 @@ public class UserMapper {
         user.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
         user.setFirstName(registerUserDto.getFirstName());
         user.setLastName(registerUserDto.getLastName());
+        user.setRole(UserRole.JUNKIE);
         return user;
     }
 

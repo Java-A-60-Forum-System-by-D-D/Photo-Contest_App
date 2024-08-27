@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@Entity
-@Table(name = "users")
+@Entity(name = "users")
 @DiscriminatorValue("USER")
 public class User extends AuthUser implements UserDetails, GrantedAuthority {
 
