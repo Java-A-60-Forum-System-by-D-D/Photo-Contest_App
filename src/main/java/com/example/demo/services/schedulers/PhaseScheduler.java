@@ -33,7 +33,7 @@ public class PhaseScheduler {
                 contest.setPhase(Phase.PHASE_2);
                 contest.setUpdatedAt(now);
                 contestRepository.save(contest);
-            } else if (contest.getEndPhase2().isBefore(now) && !contest.getPhase().equals(Phase.FINISHED)) {
+            } else if (contest.getStartPhase3().isBefore(now) && !contest.getPhase().equals(Phase.FINISHED)) {
                 contest.setPhase(Phase.FINISHED);
                 contest.setUpdatedAt(now);
                 contestRepository.save(contest);

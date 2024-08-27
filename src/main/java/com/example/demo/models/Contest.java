@@ -42,12 +42,10 @@ public class Contest extends BaseEntity {
     private LocalDateTime updatedAt;
     @Column(name = "start_phase_1")
     private LocalDateTime startPhase1;
-    @Column(name = "end_phase_1")
-    private LocalDateTime endPhase1;
     @Column(name = "start_phase_2")
     private LocalDateTime startPhase2;
-    @Column(name = "end_phase_2")
-    private LocalDateTime endPhase2;
+    @Column(name = "start_phase_3")
+    private LocalDateTime startPhase3;
 
 
 

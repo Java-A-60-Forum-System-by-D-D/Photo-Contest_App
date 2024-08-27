@@ -32,7 +32,7 @@ public class ContestMapper {
         LocalDateTime startPhase2 = startPhase1.plusDays(2);
         contest.setStartPhase2(startPhase2);
         LocalDateTime startPhase3 = startPhase2.plusHours(12);
-        contest.setEndPhase2(startPhase3);
+        contest.setStartPhase3(startPhase3);
         return contest;
     }
     public ContestViewDto createContestViewDto(Contest contest) {
@@ -43,7 +43,7 @@ public class ContestMapper {
         contestViewDto.setCreatorName(contest.getOrganizer().getFirstName() + " " + contest.getOrganizer().getLastName());
         contestViewDto.setStartPhase1(contest.getStartPhase1());
         contestViewDto.setStartPhase2(contest.getStartPhase2());
-        contestViewDto.setEndPhase2(contest.getEndPhase2());
+        contestViewDto.setStartPhase3(contest.getStartPhase3());
         return contestViewDto;
     }
 }

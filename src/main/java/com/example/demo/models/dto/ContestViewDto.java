@@ -12,6 +12,6 @@ public class ContestViewDto {
     private String creatorName;
     private LocalDateTime startPhase1;
     private LocalDateTime startPhase2;
-    private LocalDateTime endPhase2;
+    private LocalDateTime startPhase3;
 
 }
