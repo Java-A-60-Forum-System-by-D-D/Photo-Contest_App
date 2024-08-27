@@ -6,7 +6,6 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
-import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.UserService;
@@ -22,10 +21,13 @@ public class ContestServiceImpl implements ContestService {
     public static final String USER_IS_NOT_AUTHORIZED_TO_CREATE_CONTEST = "User is not authorized to create contest";
     public static final String CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS = "Contest with such title already exists";
     private final ContestRepository contestRepository;
+    private final UserService userService;
 
 
-    public ContestServiceImpl(ContestRepository contestRepository) {
+
+    public ContestServiceImpl(ContestRepository contestRepository, UserService userService) {
         this.contestRepository = contestRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -46,7 +48,15 @@ public class ContestServiceImpl implements ContestService {
             throw new EntityDuplicateException(CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS);
         }
 
-        return contestRepository.save(contest);
+        Contest savedContest = contestRepository.save(contest);
+
+        List<User> organizers = userService.findUsersByRoleOrganizer("ORGANIZER");
+        organizers.forEach(u -> {
+            u.getJurorContests().add(savedContest);
+            userService.save(u);
+        });
+
+        return savedContest;
     }
 
 

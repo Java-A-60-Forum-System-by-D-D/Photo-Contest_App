@@ -47,6 +47,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     private List<Contest> jurorContests;
 
 
+
     @Override
     public String getAuthority() {
         return role.toString();

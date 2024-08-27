@@ -1,9 +1,8 @@
 package com.example.demo.services;
 
-import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
-import com.example.demo.models.dto.LoginUserDto;
-import com.example.demo.models.dto.RegisterUserDto;
+
+import java.util.List;
 
 public interface UserService {
     User getUserById(long id);
@@ -14,4 +13,5 @@ public interface UserService {
     User getUserByEmail(String email);
 
     void save(User user);
+    List<User> findUsersByRoleOrganizer(String role);
 }

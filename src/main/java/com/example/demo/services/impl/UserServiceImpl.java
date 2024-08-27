@@ -1,10 +1,8 @@
 package com.example.demo.services.impl;
 
 import com.example.demo.exceptions.EntityNotFoundException;
-import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
-import com.example.demo.models.dto.LoginUserDto;
-import com.example.demo.models.dto.RegisterUserDto;
+import com.example.demo.models.UserRole;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
@@ -13,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationService = authenticationService;
+
     }
 
     @Override
@@ -62,6 +63,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findUsersByRoleOrganizer(String role) {
+        return userRepository.findUsersByRole(UserRole.ORGANIZER);
     }
 
 
