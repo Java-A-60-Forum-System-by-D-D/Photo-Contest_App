@@ -3,6 +3,7 @@ package com.example.demo.controllers.rest;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;
+import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.UserService;
@@ -31,12 +32,14 @@ public class ContestRestController {
     }
 
     @PostMapping
-    public Contest createContest(@Valid @RequestBody ContestDto contestDto) {
+    public ContestViewDto createContest(@Valid @RequestBody ContestDto contestDto) {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
         Contest contest = contestMapper.createContestFromDto(contestDto, user);
-        return contestService.createContest(contest, user);
+         contestService.createContest(contest, user);
+         return contestMapper.createContestViewDto(contest);
+
     }
 }
