@@ -42,7 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUserById(long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                             .orElse(null);
     }
 
     @Override
@@ -52,7 +53,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findUsersByEmail(email).stream().findFirst().orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND + email));
+        return userRepository.findUsersByEmail(email)
+                             .stream()
+                             .findFirst()
+                             .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND + email));
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
     }
 
 

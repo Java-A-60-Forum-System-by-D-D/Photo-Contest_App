@@ -51,7 +51,7 @@ public class Contest extends BaseEntity {
 
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "contest_participants",
             joinColumns = @JoinColumn(name = "contest_id"),

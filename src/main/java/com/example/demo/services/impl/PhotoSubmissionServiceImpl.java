@@ -1,10 +1,17 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
+import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
+import com.example.demo.models.UserRole;
+import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.PhotoSubmissionRepository;
+import com.example.demo.repositories.UserRepository;
+import com.example.demo.services.ContestService;
 import com.example.demo.services.PhotoSubmissionService;
+import com.example.demo.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +20,14 @@ import java.util.List;
 @Service
 public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     private final PhotoSubmissionRepository photoSubmissionRepository;
+    private final UserService userService;
+    private final ContestService contestService;
 
-    public PhotoSubmissionServiceImpl(PhotoSubmissionRepository photoSubmissionRepository) {
+    public PhotoSubmissionServiceImpl(PhotoSubmissionRepository photoSubmissionRepository, UserService userService, ContestService contestService) {
         this.photoSubmissionRepository = photoSubmissionRepository;
+
+        this.userService = userService;
+        this.contestService = contestService;
     }
 
     @Override
@@ -26,18 +38,23 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     @Override
     @Transactional
     public PhotoSubmission createPhotoSubmission(PhotoSubmission photoSubmission, User user) {
-        if(user.getParticipatedContests().contains(photoSubmission.getContest())){
+        if (user.getParticipatedContests()
+                .contains(photoSubmission.getContest())) {
             throw new EntityDuplicateException("User already submitted photo for this contest");
         }
 
-        System.out.println(user.getParticipatedContests());
+
+        user.getParticipatedContests()
+            .add(photoSubmission.getContest());
+
+        userService.save(user);
+
+        Contest contest = photoSubmission.getContest();
+        contest.getParticipants()
+               .add(user);
+        contestService.save(contest);
 
 
-        user.getParticipatedContests().add(photoSubmission.getContest());
-
-        System.out.println(user.getParticipatedContests());
-
-        photoSubmission.getContest().getParticipants().add(user);
         return photoSubmissionRepository.save(photoSubmission);
     }
 }

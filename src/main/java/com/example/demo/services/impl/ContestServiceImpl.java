@@ -22,11 +22,10 @@ public class ContestServiceImpl implements ContestService {
     public static final String USER_IS_NOT_AUTHORIZED_TO_CREATE_CONTEST = "User is not authorized to create contest";
     public static final String CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS = "Contest with such title already exists";
     private final ContestRepository contestRepository;
-    private final UserService userService;
 
-    public ContestServiceImpl(ContestRepository contestRepository, UserService userService) {
+
+    public ContestServiceImpl(ContestRepository contestRepository) {
         this.contestRepository = contestRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -80,5 +79,10 @@ public class ContestServiceImpl implements ContestService {
     public boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest) {
         return contestRepository.findAllParticipated(user.getId())
                                 .contains(contest);
+    }
+
+    @Override
+    public void save(Contest contest) {
+        contestRepository.save(contest);
     }
 }

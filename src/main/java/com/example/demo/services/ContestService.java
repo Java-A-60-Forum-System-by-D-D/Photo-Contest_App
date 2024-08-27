@@ -19,4 +19,6 @@ public interface ContestService {
     List<Contest> getFinishedContests(User user);
 
     boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest);
+
+    void save(Contest contest);
 }
