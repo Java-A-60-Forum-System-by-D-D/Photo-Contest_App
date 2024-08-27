@@ -43,16 +43,6 @@ public class JWTSecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    @Order(1)
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-//
-//        return http.build();
-//    }
 
     @Bean
     public AuthenticationManager authManager(@Qualifier("photoContestUserDetails") UserDetailsService detailsService){
