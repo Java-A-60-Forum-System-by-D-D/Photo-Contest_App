@@ -1,5 +1,6 @@
 package com.example.demo.models.mappers;
 
+import com.example.demo.models.Category;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;

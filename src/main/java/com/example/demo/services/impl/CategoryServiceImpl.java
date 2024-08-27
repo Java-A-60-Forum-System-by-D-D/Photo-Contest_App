@@ -1,6 +1,7 @@
 package com.example.demo.services.impl;
 
 import com.example.demo.exceptions.AuthorizationUserException;
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Category;
 import com.example.demo.models.User;
 import com.example.demo.repositories.CategoryRepository;
@@ -20,7 +21,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryByName(String name) {
-        return categoryRepository.findCategoriesByName(name);
+
+        return categoryRepository.findCategoriesByName(name)
+                                 .stream()
+                                 .findFirst()
+                                 .orElseThrow(() -> new EntityNotFoundException("No category with such name"));
     }
 
     @Override
