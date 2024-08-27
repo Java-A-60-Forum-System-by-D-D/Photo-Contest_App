@@ -1,7 +1,7 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.exceptions.PasswordMismatchException;
-import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.AuthUser;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.repositories.AuthUserRepository;
@@ -24,13 +24,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final PhotoContestUserDetails photoContestUserDetails;
 
     @Autowired
-    public AuthenticationServiceImpl(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthenticationServiceImpl(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService, PhotoContestUserDetails photoContestUserDetails) {
         this.authUserRepository = authUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.photoContestUserDetails = photoContestUserDetails;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         Optional<AuthUser> authUser = findByEmail(loginUserDto.getEmail());
         if (authUser.isEmpty()) {
-            throw new UserNotFoundException(USER_DOES_NOT_EXIST);
+            throw new EntityNotFoundException(USER_DOES_NOT_EXIST);
         }
         AuthUser user = authUser.get();
         if (!passwordEncoder.matches(loginUserDto.getPassword(), user.getPassword())) {
@@ -60,6 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         loginUserDto.setToken(token);
+        photoContestUserDetails.loadUserByUsername(loginUserDto.getEmail());
         return loginUserDto;
     }
 

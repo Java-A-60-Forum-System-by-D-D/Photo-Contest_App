@@ -1,5 +1,6 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.LoginUserDto;
@@ -17,17 +18,18 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 
+    public static final String USER_NOT_FOUND = "User not found: ";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUsersByEmail(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findUsersByEmail(email)
                                   .stream()
                                   .findFirst()
-                                  .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+                                  .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
         return user;
     }
@@ -48,7 +50,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(user);
     }
 
-
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findUsersByEmail(email).stream().findFirst().orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND + email));
+    }
 
 
 }

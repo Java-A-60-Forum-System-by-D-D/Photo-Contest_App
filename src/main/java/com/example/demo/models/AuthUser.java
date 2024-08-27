@@ -19,7 +19,7 @@ public class AuthUser extends BaseEntity {
 
     @Column(name = "username",unique = true)
     private String username;
-    @Column(name = "password",unique = true)
+    @Column(name = "password")
     private String password;
     @Column(name = "email",unique = true)
     private String email;

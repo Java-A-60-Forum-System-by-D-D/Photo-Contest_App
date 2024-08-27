@@ -38,7 +38,7 @@ public class Contest extends BaseEntity {
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime createdAt;
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private LocalDateTime updatedAt;
     @Column(name = "start_phase_1")
     private LocalDateTime startPhase1;
