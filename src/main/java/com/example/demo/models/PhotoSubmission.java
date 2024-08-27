@@ -29,7 +29,7 @@ public class PhotoSubmission extends BaseEntity {
     @JoinColumn(name = "contest_id")
     private Contest contest;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "photo_submission_reviews",
             joinColumns = @JoinColumn(name = "photo_submission_id"),

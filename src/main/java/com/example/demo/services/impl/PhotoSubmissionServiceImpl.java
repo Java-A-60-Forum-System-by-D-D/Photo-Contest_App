@@ -2,6 +2,7 @@ package com.example.demo.services.impl;
 
 import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
+    public static final String PHOTO_SUBMISSION_NOT_FOUND = "Photo submission not found: ";
     private final PhotoSubmissionRepository photoSubmissionRepository;
     private final UserService userService;
     private final ContestService contestService;
@@ -56,5 +58,28 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
 
 
         return photoSubmissionRepository.save(photoSubmission);
+    }
+
+    @Override
+    public List<PhotoSubmission> getAllReviewedPhotos(PhotoSubmission photoSubmission, User user) {
+        return photoSubmissionRepository.findByJuriIdAndReviewed(user.getId());
+    }
+
+
+
+    @Override
+    public PhotoSubmission getPhotoSubmissionById(long id) {
+        return photoSubmissionRepository.findById(id).stream().findFirst()
+                                        .orElseThrow(() -> new EntityNotFoundException(PHOTO_SUBMISSION_NOT_FOUND + id));
+    }
+
+    @Override
+    public List<PhotoSubmission> getNotReviewedPhotos() {
+        return photoSubmissionRepository.findNotReviewedPhotos();
+    }
+
+    @Override
+    public void save(PhotoSubmission photoSubmission) {
+        photoSubmissionRepository.save(photoSubmission);
     }
 }
