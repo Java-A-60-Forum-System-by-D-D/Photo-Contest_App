@@ -35,7 +35,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     private List<Contest> organizedContests;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private List<Contest> participatedContests;
 
     public User() {

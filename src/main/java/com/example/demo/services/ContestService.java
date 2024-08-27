@@ -11,4 +11,12 @@ public interface ContestService {
     List<Contest> getAllContests();
 
     Optional<Contest> findByTitle(String title);
+
+    List<Contest> getOpenContests();
+
+    List<Contest> getAllParticipatedContests(User user);
+
+    List<Contest> getFinishedContests(User user);
+
+    boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest);
 }

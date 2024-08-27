@@ -5,6 +5,7 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
+import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,25 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public Optional<Contest> findByTitle(String title) {
         return contestRepository.findByTitle(title);
+    }
+
+    @Override
+    public List<Contest> getOpenContests() {
+        return contestRepository.findAllByPhase_Phase1();
+    }
+
+    @Override
+    public List<Contest> getAllParticipatedContests(User user) {
+        return contestRepository.findAllParticipated(user.getId());
+    }
+
+    @Override
+    public List<Contest> getFinishedContests(User user) {
+        return contestRepository.findAllFinished(user.getId());
+    }
+
+    @Override
+    public boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest) {
+        return contestRepository.findAllParticipated(user.getId()).contains(contest);
     }
 }
