@@ -24,6 +24,7 @@ public class ContestMapper {
         contest.setDescription(contestDto.getDescription());
         contest.setCategory(categoryService.getCategoryByName(contestDto.getCategory()));
         contest.setCreatedAt(LocalDateTime.now());
+        contest.setUpdatedAt(LocalDateTime.now());
         contest.setOrganizer(user);
         LocalDateTime startPhase1 = LocalDateTime.now().with(LocalTime.of(22, 0));
         contest.setStartPhase1(startPhase1);

@@ -16,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Contest extends BaseEntity {
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -38,7 +38,7 @@ public class Contest extends BaseEntity {
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime createdAt;
-    @Column(name = "end_date")
+    @Column(name = "updated_date")
     private LocalDateTime updatedAt;
     @Column(name = "start_phase_1")
     private LocalDateTime startPhase1;
@@ -51,8 +51,6 @@ public class Contest extends BaseEntity {
 
 
 
-
-
     @ManyToMany
     @JoinTable(
             name = "contest_participants",
@@ -62,4 +60,17 @@ public class Contest extends BaseEntity {
 
 
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contest contest = (Contest) o;
+        return Objects.equals(title, contest.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title);
+    }
 }

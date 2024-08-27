@@ -29,6 +29,15 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
         if(user.getParticipatedContests().contains(photoSubmission.getContest())){
             throw new EntityDuplicateException("User already submitted photo for this contest");
         }
-       return photoSubmissionRepository.save(photoSubmission);
+
+        System.out.println(user.getParticipatedContests());
+
+
+        user.getParticipatedContests().add(photoSubmission.getContest());
+
+        System.out.println(user.getParticipatedContests());
+
+        photoSubmission.getContest().getParticipants().add(user);
+        return photoSubmissionRepository.save(photoSubmission);
     }
 }

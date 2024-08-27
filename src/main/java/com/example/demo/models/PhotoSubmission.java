@@ -37,7 +37,16 @@ public class PhotoSubmission extends BaseEntity {
     )
     private List<PhotoReview> reviews;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhotoSubmission that = (PhotoSubmission) o;
+        return Objects.equals(title, that.title);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title);
+    }
 }

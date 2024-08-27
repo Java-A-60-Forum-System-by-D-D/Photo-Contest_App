@@ -15,6 +15,7 @@ import java.util.Objects;
 
 @Data
 @Entity
+@Table(name = "users")
 @DiscriminatorValue("USER")
 public class User extends AuthUser implements UserDetails, GrantedAuthority {
 
@@ -34,13 +35,9 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     @JsonIgnore
     private List<Contest> organizedContests;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
-    private List<Contest> participatedContests;
 
-    public User() {
-        this.role=UserRole.JUNKIE;
-    }
+    @ManyToMany(mappedBy = "participants")
+    private List<Contest> participatedContests;
 
     @ManyToMany
     @JsonIgnore
