@@ -71,6 +71,7 @@ public class PhotoSubmissionsRestController {
                 .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
+
         PhotoSubmission photoSubmission = photoSubmissionService.getPhotoSubmissionById(id);
         PhotoReview photoReview = reviewMapper.createPhotoReviewFromDto(photoReviewDto, user);
         return reviewMapper.toPhotoReviewView(photoReviewService.handleUserReview(photoReview, photoSubmission, user), photoSubmission);

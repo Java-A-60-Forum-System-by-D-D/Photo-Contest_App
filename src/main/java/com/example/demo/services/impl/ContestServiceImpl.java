@@ -24,7 +24,6 @@ public class ContestServiceImpl implements ContestService {
     private final UserService userService;
 
 
-
     public ContestServiceImpl(ContestRepository contestRepository, UserService userService) {
         this.contestRepository = contestRepository;
         this.userService = userService;
@@ -52,7 +51,8 @@ public class ContestServiceImpl implements ContestService {
 
         List<User> organizers = userService.findUsersByRoleOrganizer("ORGANIZER");
         organizers.forEach(u -> {
-            u.getJurorContests().add(savedContest);
+            u.getJurorContests()
+             .add(savedContest);
             userService.save(u);
         });
 
@@ -91,8 +91,44 @@ public class ContestServiceImpl implements ContestService {
                                 .contains(contest);
     }
 
+
     @Override
     public void save(Contest contest) {
         contestRepository.save(contest);
+    }
+
+    @Override
+    @Transactional
+    public Contest addJury(long contestId, User juryToAdd, User user) {
+
+        Contest contest = getContestById(contestId);
+        List<Contest> organizedContests = user.getOrganizedContests();
+        UserRole juryRole = juryToAdd.getRole();
+        UserRole userRole = user.getRole();
+
+        if (!userRole.equals(UserRole.ORGANIZER)) {
+            throw new AuthorizationUserException("User is not organizer");
+        } else if (!organizedContests
+                .contains(contest)) {
+            throw new AuthorizationUserException("User is not the organizer of this contest");
+        } else if (!juryRole
+                .equals(UserRole.MASTER) && !juryRole
+                .equals(UserRole.DICTATOR)) {
+            throw new AuthorizationUserException("The user you want to add as a jury does not have the desired level");
+        } else if (juryToAdd.getJurorContests()
+                            .contains(contest)) {
+            throw new EntityDuplicateException("The user is already invited as a jury to this contest");
+        }
+
+
+        juryToAdd.getJurorContests()
+                 .add(contest);
+
+        juryToAdd.setTotalScore(juryToAdd.getTotalScore()+3);
+
+        userService.save(juryToAdd);
+
+
+        return contest;
     }
 }

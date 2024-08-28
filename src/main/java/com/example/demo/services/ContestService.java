@@ -21,4 +21,6 @@ public interface ContestService {
     boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest);
 
     void save(Contest contest);
+
+    Contest addJury(long contestId,User juryToAdd,User user);
 }

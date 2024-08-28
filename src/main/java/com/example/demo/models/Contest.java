@@ -49,6 +49,8 @@ public class Contest extends BaseEntity {
 
 
 
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "contest_participants",
