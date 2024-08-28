@@ -74,7 +74,7 @@ public class PhotoSubmissionsRestController {
 
         PhotoSubmission photoSubmission = photoSubmissionService.getPhotoSubmissionById(id);
         PhotoReview photoReview = reviewMapper.createPhotoReviewFromDto(photoReviewDto, user);
-        return reviewMapper.toPhotoReviewView(photoReviewService.createPhotoReview(photoReview, photoSubmission), photoSubmission);
+        return reviewMapper.toPhotoReviewView(photoReviewService.handleUserReview(photoReview, photoSubmission, user), photoSubmission);
 
     }
 

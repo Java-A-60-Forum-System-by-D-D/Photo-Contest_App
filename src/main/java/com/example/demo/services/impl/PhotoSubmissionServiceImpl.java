@@ -3,10 +3,7 @@ package com.example.demo.services.impl;
 import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
 import com.example.demo.exceptions.EntityNotFoundException;
-import com.example.demo.models.Contest;
-import com.example.demo.models.PhotoSubmission;
-import com.example.demo.models.User;
-import com.example.demo.models.UserRole;
+import com.example.demo.models.*;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.PhotoSubmissionRepository;
 import com.example.demo.repositories.UserRepository;
@@ -43,6 +40,9 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
         if (user.getParticipatedContests()
                 .contains(photoSubmission.getContest())) {
             throw new EntityDuplicateException("User already submitted photo for this contest");
+        }
+        if(!photoSubmission.getContest().getPhase().equals(Phase.PHASE_1)){
+            throw new EntityDuplicateException("Contest is not in phase 1");
         }
 
 
