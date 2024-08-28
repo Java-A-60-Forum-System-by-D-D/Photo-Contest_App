@@ -22,4 +22,7 @@ public class ContestDto {
     @NotEmpty
     private String category;
 
+    @NotNull
+    private Boolean isOpen;
+
 }
