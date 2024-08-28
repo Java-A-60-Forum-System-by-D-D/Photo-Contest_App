@@ -3,9 +3,12 @@ package com.example.demo.services.impl;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
+import com.example.demo.models.filtering.UserFilterOptions;
+import com.example.demo.models.filtering.UserSpecification;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -68,6 +71,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> findUsersByRoleOrganizer(String role) {
         return userRepository.findUsersByRole(UserRole.ORGANIZER);
+    }
+
+    @Override
+    public List<User> getUsers(UserFilterOptions userFilterOptions) {
+        Specification<User> spec = UserSpecification.filterByOptions(userFilterOptions);
+        return userRepository.findAll(spec);
     }
 
 

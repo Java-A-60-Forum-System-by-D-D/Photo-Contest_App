@@ -116,7 +116,9 @@ public class ContestRestController {
                 .getAuthentication();
         String mail = authentication.getName();
         User user = userService.getUserByEmail(mail);
+
         Contest contest = contestService.getContestById(id);
+
         List<PhotoSubmission> getListOfScoresAndJuryComments = photoSubmissionService.getAScoreAndComments(contest, user);
         List<PhotoSubmissionReviewsView> userView = getListOfScoresAndJuryComments
                 .stream()

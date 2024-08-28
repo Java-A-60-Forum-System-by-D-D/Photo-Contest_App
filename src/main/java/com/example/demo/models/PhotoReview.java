@@ -24,8 +24,6 @@ public class PhotoReview extends BaseEntity{
     private User jury;
 
 
-
-
     @Column(name = "is_reviewed", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isReviewed;
 

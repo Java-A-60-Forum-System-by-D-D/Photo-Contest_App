@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.User;
+import com.example.demo.models.filtering.UserFilterOptions;
 
 import java.util.List;
 
@@ -9,9 +10,10 @@ public interface UserService {
     User saveUser(User user);
 
 
-
     User getUserByEmail(String email);
 
     void save(User user);
     List<User> findUsersByRoleOrganizer(String role);
+
+    List<User> getUsers(UserFilterOptions userFilterOptions);
 }
