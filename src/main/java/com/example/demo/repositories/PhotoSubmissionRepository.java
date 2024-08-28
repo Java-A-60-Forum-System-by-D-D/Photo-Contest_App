@@ -16,4 +16,8 @@ public interface PhotoSubmissionRepository  extends JpaRepository<PhotoSubmissio
 
     @Query("Select p from PhotoSubmission p join PhotoReview  r on r.id = p.id where r.isReviewed = false")
     List<PhotoSubmission> findNotReviewedPhotos();
+
+    List<PhotoSubmission> findPhotoSubmissionByContest_IdAndCreator_Id(long contestId, long userId);
+@Query("Select p from PhotoSubmission  p where p.contest.id = :contestId and p.creator.id != :userId")
+    List<PhotoSubmission> findPhotoSubmissionsByContest_Id(long contestId, long userId);
 }

@@ -110,4 +110,21 @@ public class ContestRestController {
         return contestMapper.createContestViewDto(contestService.addJury(id, juryToAdd,user));
 
     }
+    @GetMapping("/{id}/finished")
+    public Map<String, List<PhotoSubmissionReviewsView>> getFinishedContest(@PathVariable("id") long id) {
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        String mail = authentication.getName();
+        User user = userService.getUserByEmail(mail);
+        Contest contest = contestService.getContestById(id);
+        List<PhotoSubmission> getListOfScoresAndJuryComments = photoSubmissionService.getAScoreAndComments(contest, user);
+        List<PhotoSubmissionReviewsView> userView = getListOfScoresAndJuryComments
+                .stream()
+                .map(photoMapper::createPhotoSubmissionReviewView).toList();
+        List<PhotoSubmission> getListOfOtherUsersSubmissions = photoSubmissionService.findAllContestSubmissionsByOthers(contest, user);
+        List<PhotoSubmissionReviewsView> othersView = getListOfOtherUsersSubmissions
+                .stream()
+                .map(photoMapper::createPhotoSubmissionReviewView).toList();
+        return Map.of("user", userView, "others", othersView);
+    }
 }

@@ -4,6 +4,7 @@ import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Contest;
+import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.repositories.ContestRepository;
@@ -131,4 +132,6 @@ public class ContestServiceImpl implements ContestService {
 
         return contest;
     }
+
+
 }

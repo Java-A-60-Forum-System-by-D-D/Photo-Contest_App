@@ -49,4 +49,10 @@ public class PhotoSubmission extends BaseEntity {
     public int hashCode() {
         return Objects.hashCode(title);
     }
+
+    public int getReviewScore() {
+        return reviews.stream()
+                      .mapToInt(PhotoReview::getScore)
+                      .sum();
+    }
 }

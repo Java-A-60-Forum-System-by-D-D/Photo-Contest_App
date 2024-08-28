@@ -2,6 +2,7 @@ package com.example.demo.repositories;
 
 import com.example.demo.models.Category;
 import com.example.demo.models.Contest;
+import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestViewDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface ContestRepository extends JpaRepository<Contest,Long> {
     List<Contest> findAllParticipated(@Param("userId") long userId);
     @Query("Select c from Contest c join c.participants p on p.id = :userId where c.phase = 'FINISHED'")
     List<Contest> findAllFinished(@Param("userId")long userId);
+
+
 }

@@ -82,4 +82,20 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     public void save(PhotoSubmission photoSubmission) {
         photoSubmissionRepository.save(photoSubmission);
     }
+
+    @Override
+    public List<PhotoSubmission> getAScoreAndComments(Contest contest, User user) {
+        if(!contest.getPhase().equals(Phase.FINISHED)){
+            throw new EntityNotFoundException("Contest is not finished");
+        }
+        return photoSubmissionRepository.findPhotoSubmissionByContest_IdAndCreator_Id(contest.getId(), user.getId());
+    }
+
+    @Override
+    public List<PhotoSubmission> findAllContestSubmissionsByOthers(Contest contest, User user) {
+        if(!contest.getPhase().equals(Phase.FINISHED)){
+            throw new EntityNotFoundException("Contest is not finished");
+        }
+        return photoSubmissionRepository.findPhotoSubmissionsByContest_Id(contest.getId(), user.getId());
+    }
 }

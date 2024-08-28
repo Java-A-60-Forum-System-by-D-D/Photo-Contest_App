@@ -1,8 +1,8 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
-import com.example.demo.models.dto.PhotoSubmissionViewDto;
 
 import java.util.List;
 
@@ -18,4 +18,8 @@ public interface PhotoSubmissionService {
     List<PhotoSubmission> getNotReviewedPhotos();
 
     void save(PhotoSubmission photoSubmission);
+
+    List<PhotoSubmission> getAScoreAndComments(Contest contest, User user);
+
+    List<PhotoSubmission> findAllContestSubmissionsByOthers(Contest contest, User user);
 }

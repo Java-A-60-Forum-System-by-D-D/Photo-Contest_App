@@ -1,5 +1,6 @@
 package com.example.demo.services;
 import com.example.demo.models.Contest;
+import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ContestService {
     void save(Contest contest);
 
     Contest addJury(long contestId,User juryToAdd,User user);
+
+
 }
