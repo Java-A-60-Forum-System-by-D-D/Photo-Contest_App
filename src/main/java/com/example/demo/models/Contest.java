@@ -30,7 +30,7 @@ public class Contest extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Phase phase = Phase.NOT_STARTED;
 
-    @OneToMany(mappedBy = "contest")
+    @OneToMany(mappedBy = "contest", fetch = FetchType.EAGER)
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;

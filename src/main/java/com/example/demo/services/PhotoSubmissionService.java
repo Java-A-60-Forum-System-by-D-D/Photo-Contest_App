@@ -19,7 +19,7 @@ public interface PhotoSubmissionService {
 
     void save(PhotoSubmission photoSubmission);
 
-    List<PhotoSubmission> getAScoreAndComments(Contest contest, User user);
+    List<PhotoSubmission> getAScoreAndComments( User user);
 
-    List<PhotoSubmission> findAllContestSubmissionsByOthers(Contest contest, User user);
+    List<PhotoSubmission> findAllContestSubmissionsByOthers( User user);
 }

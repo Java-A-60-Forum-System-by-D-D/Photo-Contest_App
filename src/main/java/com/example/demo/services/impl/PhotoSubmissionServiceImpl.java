@@ -84,18 +84,18 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     }
 
     @Override
-    public List<PhotoSubmission> getAScoreAndComments(Contest contest, User user) {
-        if(!contest.getPhase().equals(Phase.FINISHED)){
-            throw new EntityNotFoundException("Contest is not finished");
-        }
-        return photoSubmissionRepository.findPhotoSubmissionByContest_IdAndCreator_Id(contest.getId(), user.getId());
+    public List<PhotoSubmission> getAScoreAndComments(User user) {
+//        if(!contest.getPhase().equals(Phase.FINISHED)){
+//            throw new EntityNotFoundException("Contest is not finished");
+//        }
+        return photoSubmissionRepository.findPhotoSubmissionsByCreator_IdAndContest_Phase_Finished(user.getId(), Phase.FINISHED);
     }
 
     @Override
-    public List<PhotoSubmission> findAllContestSubmissionsByOthers(Contest contest, User user) {
-        if(!contest.getPhase().equals(Phase.FINISHED)){
-            throw new EntityNotFoundException("Contest is not finished");
-        }
-        return photoSubmissionRepository.findPhotoSubmissionsByContest_Id(contest.getId(), user.getId());
+    public List<PhotoSubmission> findAllContestSubmissionsByOthers(User user) {
+//        if(!contest.getPhase().equals(Phase.FINISHED)){
+//            throw new EntityNotFoundException("Contest is not finished");
+//        }
+        return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers( user.getId(), Phase.FINISHED);
     }
 }

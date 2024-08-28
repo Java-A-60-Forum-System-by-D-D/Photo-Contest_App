@@ -6,11 +6,14 @@ import com.example.demo.models.User;
 import com.example.demo.models.dto.PhotoSubmissionDto;
 import com.example.demo.models.dto.PhotoSubmissionReviewsView;
 import com.example.demo.models.dto.PhotoSubmissionViewDto;
+import com.example.demo.models.dto.ReviewView;
 import jakarta.persistence.Column;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -36,12 +39,18 @@ public class PhotoMapper {
     }
     public PhotoSubmissionReviewsView createPhotoSubmissionReviewView(PhotoSubmission photoSubmission) {
        PhotoSubmissionReviewsView photoSubmissionViewDto = modelMapper.map(photoSubmission, PhotoSubmissionReviewsView.class);
-       Map<String,Integer> reviewsScoreAndComments = new HashMap<>();
+        List<ReviewView> reviews = new ArrayList<>();
         photoSubmission.getReviews()
-                .stream().forEach(r ->
-                                reviewsScoreAndComments.put(r.getComment(), r.getScore()));
+                .forEach(r ->{
+                    ReviewView reviewView = new ReviewView();
+                    reviewView.setScore(r.getScore());
+                    reviewView.setComment(r.getComment());
+                    reviewView.setJuryNames(r.getJury().getFirstName() + " " + r.getJury().getLastName());
+                    reviews.add(reviewView);
+                        });
 
-       photoSubmissionViewDto.setReviewsScoreAndComments( reviewsScoreAndComments);
+
+       photoSubmissionViewDto.setReviews(reviews);
        return photoSubmissionViewDto;
     }
 }
