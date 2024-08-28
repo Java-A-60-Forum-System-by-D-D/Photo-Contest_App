@@ -123,6 +123,9 @@ public class ContestServiceImpl implements ContestService {
 
         juryToAdd.getJurorContests()
                  .add(contest);
+
+        juryToAdd.setTotalScore(juryToAdd.getTotalScore()+3);
+
         userService.save(juryToAdd);
 
 
