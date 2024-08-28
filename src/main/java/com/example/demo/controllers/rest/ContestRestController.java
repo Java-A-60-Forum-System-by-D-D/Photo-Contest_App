@@ -3,10 +3,7 @@ package com.example.demo.controllers.rest;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
-import com.example.demo.models.dto.ContestDto;
-import com.example.demo.models.dto.ContestViewDto;
-import com.example.demo.models.dto.PhotoSubmissionDto;
-import com.example.demo.models.dto.PhotoSubmissionViewDto;
+import com.example.demo.models.dto.*;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.models.mappers.PhotoMapper;
 import com.example.demo.services.ContestService;
@@ -40,25 +37,28 @@ public class ContestRestController {
     @GetMapping
     public Map<String, List<ContestViewDto>> getAllContests() {
         Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+                                                             .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
         List<ContestViewDto> openContests = contestService.getOpenContests()
-                .stream()
-                .map(contestMapper::createContestViewDto).toList();
+                                                          .stream()
+                                                          .map(contestMapper::createContestViewDto)
+                                                          .toList();
         List<ContestViewDto> participatedContests = contestService.getAllParticipatedContests(user)
-                .stream()
-                .map(contestMapper::createContestViewDto).toList();
+                                                                  .stream()
+                                                                  .map(contestMapper::createContestViewDto)
+                                                                  .toList();
         List<ContestViewDto> finishedContests = contestService.getFinishedContests(user)
-                .stream()
-                .map(contestMapper::createContestViewDto).toList();
+                                                              .stream()
+                                                              .map(contestMapper::createContestViewDto)
+                                                              .toList();
         return Map.of("open", openContests, "participated", participatedContests, "finished", finishedContests);
     }
 
     @PostMapping
     public ContestViewDto createContest(@Valid @RequestBody ContestDto contestDto) {
         Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+                                                             .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
         Contest contest = contestMapper.createContestFromDto(contestDto, user);
@@ -77,16 +77,16 @@ public class ContestRestController {
     public List<PhotoSubmissionViewDto> getAllPhotoSubmissionsByContestId(@PathVariable long id) {
         Contest contest = contestService.getContestById(id);
         List<PhotoSubmissionViewDto> photoSubmissions = contest.getSubmissions()
-                .stream()
-                .map(photoMapper::toPhotoSubmissionViewDto)
-                .toList();
+                                                               .stream()
+                                                               .map(photoMapper::toPhotoSubmissionViewDto)
+                                                               .toList();
         return photoSubmissions;
     }
 
     @PostMapping("/{id}/photo-submissions")
     public PhotoSubmissionViewDto createPhotoSubmission(@PathVariable("id") long id, @Valid @RequestBody PhotoSubmissionDto photoSubmissionDto) {
         Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+                                                             .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
         Contest contest = contestService.getContestById(id);
@@ -95,5 +95,19 @@ public class ContestRestController {
         photoSubmissionService.createPhotoSubmission(photoSubmission, user);
 
         return photoMapper.toPhotoSubmissionViewDto(photoSubmission);
+    }
+
+    @PutMapping("/{id}")
+    public ContestViewDto addJury(@PathVariable("id") long id, @RequestBody JuryDTO juryDTO) {
+
+        Authentication authentication = SecurityContextHolder.getContext()
+                                                             .getAuthentication();
+        String mail = authentication.getName();
+        User user = userService.getUserByEmail(mail);
+
+        User juryToAdd = userService.getUserByEmail(juryDTO.getEmail());
+
+        return contestMapper.createContestViewDto(contestService.addJury(id, juryToAdd,user));
+
     }
 }

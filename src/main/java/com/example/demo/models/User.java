@@ -30,7 +30,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @OneToMany(mappedBy = "organizer")
+    @OneToMany(mappedBy = "organizer",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Contest> organizedContests;
 
@@ -38,7 +38,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     @ManyToMany(mappedBy = "participants",fetch = FetchType.EAGER)
     private List<Contest> participatedContests;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
             name = "jury_contests",
