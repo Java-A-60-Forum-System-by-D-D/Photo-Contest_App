@@ -4,12 +4,15 @@ import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.*;
+import com.example.demo.models.filtering.PhotoSubmissionFilterOptions;
+import com.example.demo.models.filtering.PhotoSubmissionSpecification;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.PhotoSubmissionRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +34,14 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
 
     @Override
     public List<PhotoSubmission> getAllPhotoSubmissions() {
+
         return photoSubmissionRepository.findAll();
+    }
+
+    @Override
+    public List<PhotoSubmission> getPhotoSubmissions(PhotoSubmissionFilterOptions filterOptions) {
+        Specification<PhotoSubmission> spec = PhotoSubmissionSpecification.filterByOptions(filterOptions);
+        return photoSubmissionRepository.findAll(spec);
     }
 
     @Override
@@ -41,7 +51,9 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
                 .contains(photoSubmission.getContest())) {
             throw new EntityDuplicateException("User already submitted photo for this contest");
         }
-        if(!photoSubmission.getContest().getPhase().equals(Phase.PHASE_1)){
+        if (!photoSubmission.getContest()
+                            .getPhase()
+                            .equals(Phase.PHASE_1)) {
             throw new EntityDuplicateException("Contest is not in phase 1");
         }
 
@@ -66,10 +78,11 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     }
 
 
-
     @Override
     public PhotoSubmission getPhotoSubmissionById(long id) {
-        return photoSubmissionRepository.findById(id).stream().findFirst()
+        return photoSubmissionRepository.findById(id)
+                                        .stream()
+                                        .findFirst()
                                         .orElseThrow(() -> new EntityNotFoundException(PHOTO_SUBMISSION_NOT_FOUND + id));
     }
 
@@ -96,6 +109,6 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
 //        if(!contest.getPhase().equals(Phase.FINISHED)){
 //            throw new EntityNotFoundException("Contest is not finished");
 //        }
-        return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers( user.getId(), Phase.FINISHED);
+        return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers(user.getId(), Phase.FINISHED);
     }
 }

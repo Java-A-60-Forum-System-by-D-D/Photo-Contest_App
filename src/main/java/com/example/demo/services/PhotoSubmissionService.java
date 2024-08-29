@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
+import com.example.demo.models.filtering.PhotoSubmissionFilterOptions;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface PhotoSubmissionService {
     List<PhotoSubmission> getAScoreAndComments( User user);
 
     List<PhotoSubmission> findAllContestSubmissionsByOthers( User user);
+    List<PhotoSubmission> getPhotoSubmissions(PhotoSubmissionFilterOptions filterOptions);
 }

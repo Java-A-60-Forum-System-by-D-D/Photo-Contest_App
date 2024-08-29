@@ -3,7 +3,9 @@ package com.example.demo.repositories;
 import com.example.demo.models.Category;
 import com.example.demo.models.Phase;
 import com.example.demo.models.PhotoSubmission;
+import com.example.demo.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PhotoSubmissionRepository extends JpaRepository<PhotoSubmission, Long> {
+public interface PhotoSubmissionRepository extends JpaRepository<PhotoSubmission, Long>, JpaSpecificationExecutor<PhotoSubmission> {
 
     @Query("Select p from PhotoSubmission p join PhotoReview r on p.id = r.id where r.isReviewed = true and r.jury.id = :id")
     List<PhotoSubmission> findByJuriIdAndReviewed(@Param("id") long id);
