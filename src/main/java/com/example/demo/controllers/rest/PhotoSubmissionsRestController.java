@@ -45,7 +45,7 @@ public class PhotoSubmissionsRestController {
                                                                @RequestParam(required = false) String username,
                                                                @RequestParam(required = false) String sortBy,
                                                                @RequestParam(required = false) String sortDirection) {
-        PhotoSubmissionFilterOptions filterOptions = new PhotoSubmissionFilterOptions(title, username, sortBy, sortDirection);
+        PhotoSubmissionFilterOptions filterOptions = new PhotoSubmissionFilterOptions(title, sortBy, sortDirection);
         return photoSubmissionService.getPhotoSubmissions(filterOptions)
                                      .stream()
                                      .map(photoMapper::toPhotoSubmissionViewDto)
