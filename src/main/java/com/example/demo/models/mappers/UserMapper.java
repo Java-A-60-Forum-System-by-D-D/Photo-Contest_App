@@ -5,6 +5,7 @@ import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserDto;
+import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.dto.UserViewDto;
 import com.example.demo.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,6 +39,16 @@ public class UserMapper {
         userViewDto.setFirstName(user.getFirstName());
         userViewDto.setLastName(user.getLastName());
         return userViewDto;
+    }
+
+    public User updateUserFromDto(UpdateUserDTO updateUserDTO, User userToUpdate) {
+
+        userToUpdate.setFirstName(updateUserDTO.getFirstName());
+        userToUpdate.setLastName(updateUserDTO.getLastName());
+        userToUpdate.setUsername(updateUserDTO.getUsername());
+        userToUpdate.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
+
+        return userToUpdate;
     }
 
     public AuthUser mapLoginUserDtoToAuthUser(LoginUserDto loginUserDto) {

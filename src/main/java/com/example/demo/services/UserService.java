@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.User;
+import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.filtering.UserFilterOptions;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface UserService {
     List<User> findUsersByRoleOrganizer(String role);
 
     List<User> getUsers(UserFilterOptions userFilterOptions);
+
+    User updateUser(User userToUpdate);
 }

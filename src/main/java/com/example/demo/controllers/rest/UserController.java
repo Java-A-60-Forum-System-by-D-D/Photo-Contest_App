@@ -1,14 +1,17 @@
 package com.example.demo.controllers.rest;
 
 import com.example.demo.models.User;
+import com.example.demo.models.dto.RegisterUserDto;
+import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.dto.UserViewDto;
 import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -38,5 +41,28 @@ public class UserController {
                                              .toList();
 
         return users;
+    }
+
+
+    @PutMapping
+    @RequestMapping("/{id}")
+    public UserViewDto updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+
+        Authentication authentication = SecurityContextHolder.getContext()
+                                                             .getAuthentication();
+        User loggedUser = userService.getUserByEmail(authentication.getName());
+        User userToUpdate = userService.getUserById(id);
+
+        if (!userToUpdate.getEmail()
+                         .equalsIgnoreCase(loggedUser.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only update your own profile");
+        }
+
+        userToUpdate = userMapper.updateUserFromDto(updateUserDTO, userToUpdate);
+
+
+        return userMapper.mapUserToUserViewDto(userService.updateUser(userToUpdate));
+
+
     }
 }

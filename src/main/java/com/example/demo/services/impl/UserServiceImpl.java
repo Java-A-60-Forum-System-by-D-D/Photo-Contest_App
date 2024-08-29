@@ -3,8 +3,10 @@ package com.example.demo.services.impl;
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
+import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.filtering.UserSpecification;
+import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
@@ -77,6 +79,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers(UserFilterOptions userFilterOptions) {
         Specification<User> spec = UserSpecification.filterByOptions(userFilterOptions);
         return userRepository.findAll(spec);
+    }
+
+    @Override
+    public User updateUser(User userToUpdate) {
+
+        return userRepository.save(userToUpdate);
     }
 
 
