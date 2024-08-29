@@ -1,38 +1,24 @@
 package com.example.demo.models.filtering;
 
+
+import lombok.Data;
+
+@Data
 public class UserFilterOptions {
     private String username;
     private String firstName;
     private String lastName;
+    private String sortBy;
+    private String sortDirection;
 
-    // Constructors, getters, and setters
-    public UserFilterOptions(String username, String firstName, String lastName) {
+
+    public UserFilterOptions(String username, String firstName, String lastName, String sortBy, String sortDirection) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sortBy = sortBy;
+        this.sortDirection = sortDirection;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 }

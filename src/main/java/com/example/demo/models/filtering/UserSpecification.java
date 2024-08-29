@@ -1,6 +1,7 @@
 package com.example.demo.models.filtering;
 
 import com.example.demo.models.User;
+import com.example.demo.models.filtering.UserFilterOptions;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,8 +21,15 @@ public class UserSpecification {
                 predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("lastName"), options.getLastName()));
             }
 
+            if (options.getSortBy() != null && options.getSortDirection() != null) {
+                if (options.getSortDirection().equalsIgnoreCase("asc")) {
+                    query.orderBy(criteriaBuilder.asc(root.get(options.getSortBy())));
+                } else {
+                    query.orderBy(criteriaBuilder.desc(root.get(options.getSortBy())));
+                }
+            }
+
             return predicate;
         };
     }
-
 }

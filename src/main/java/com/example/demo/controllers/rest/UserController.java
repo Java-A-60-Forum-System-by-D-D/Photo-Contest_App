@@ -27,9 +27,11 @@ public class UserController {
     @GetMapping
     public List<UserViewDto> getUsers(@RequestParam(required = false) String username,
                                       @RequestParam(required = false) String firstName,
-                                      @RequestParam(required = false) String lastName) {
+                                      @RequestParam(required = false) String lastName,
+                                      @RequestParam(required = false) String sortBy,
+                                      @RequestParam(required = false) String sortDirection) {
 
-        UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName);
+        UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName, sortBy, sortDirection);
         List<UserViewDto> users = userService.getUsers(userFilterOptions)
                                              .stream()
                                              .map(userMapper::mapUserToUserViewDto)
