@@ -87,5 +87,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(userToUpdate);
     }
 
+    @Override
+    public User calculateLevel(User user) {
+        int score = user.getTotalScore();
+
+        if (score < 51) {
+            user.setRole(UserRole.JUNKIE);
+        } else if (score < 100) {
+            user.setRole(UserRole.ENTHUSIAST);
+        } else if (score < 151) {
+            user.setRole(UserRole.MASTER);
+        } else {
+            user.setRole(UserRole.DICTATOR);
+        }
+
+        return user;
+    }
+
 
 }

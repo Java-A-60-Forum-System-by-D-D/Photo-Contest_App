@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getUsers(UserFilterOptions userFilterOptions);
 
     User updateUser(User userToUpdate);
+
+    User calculateLevel(User user);
 }

@@ -8,4 +8,5 @@ public class UserViewDto {
     private String email;
     private String firstName;
     private String lastName;
+    private int totalScore;
 }

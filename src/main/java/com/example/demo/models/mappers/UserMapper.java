@@ -38,6 +38,7 @@ public class UserMapper {
         userViewDto.setEmail(user.getEmail());
         userViewDto.setFirstName(user.getFirstName());
         userViewDto.setLastName(user.getLastName());
+        userViewDto.setTotalScore(user.getTotalScore());
         return userViewDto;
     }
 
