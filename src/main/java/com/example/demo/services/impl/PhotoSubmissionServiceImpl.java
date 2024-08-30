@@ -56,11 +56,20 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
                             .equals(Phase.PHASE_1)) {
             throw new EntityDuplicateException("Contest is not in phase 1");
         }
-
+        Contest currentContest = photoSubmission.getContest();
+        if(user.getJurorContests().contains(currentContest)){
+            throw new AuthorizationUserException("User is a juror for this contest");
+        }
+        if(!currentContest.isOpen() && !currentContest.getInvitedUsers().contains(user)){
+            throw new AuthorizationUserException("User is not invited to this contest");
+        }
 
         user.getParticipatedContests()
             .add(photoSubmission.getContest());
-
+        user.setTotalScore(currentContest.getInvitedUsers().contains(user)
+                ? user.getTotalScore() + 3
+                : user.getTotalScore() + 1);
+        userService.calculateLevel(user);
         userService.save(user);
 
         Contest contest = photoSubmission.getContest();

@@ -25,4 +25,6 @@ public class ContestDto {
     @NotNull
     private Boolean isOpen;
 
+    private List<User> invitedUsers;
+
 }

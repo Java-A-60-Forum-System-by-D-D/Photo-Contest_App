@@ -26,5 +26,6 @@ public interface ContestRepository extends JpaRepository<Contest,Long> {
     @Query("Select c from Contest c join c.participants p on p.id = :userId where c.phase = 'FINISHED'")
     List<Contest> findAllFinished(@Param("userId")long userId);
 
-
+    @Query("Select c from Contest c where c.phase != 'FINISHED'")
+    List<Contest> findAllUnfinishedContests();
 }

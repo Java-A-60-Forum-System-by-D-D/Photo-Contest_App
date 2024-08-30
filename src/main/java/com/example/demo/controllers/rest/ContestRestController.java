@@ -92,6 +92,7 @@ public class ContestRestController {
         Contest contest = contestService.getContestById(id);
         //todo check Contest Phase (if it is PHASE_1)
         PhotoSubmission photoSubmission = photoMapper.createPhotoSubmissionFromDto(photoSubmissionDto, user, contest);
+
         photoSubmissionService.createPhotoSubmission(photoSubmission, user);
 
         return photoMapper.toPhotoSubmissionViewDto(photoSubmission);

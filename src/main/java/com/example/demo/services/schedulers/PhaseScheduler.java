@@ -31,10 +31,10 @@ public class PhaseScheduler {
     @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
     public void startPhase2() {
         LocalDateTime now = LocalDateTime.now();
-        //todo, list all contest that are not in Phase.Finished
-        List<Contest> contests = contestRepository.findAll();
 
-        for (Contest contest : contests) {
+        List<Contest> unFinishedContests = contestRepository.findAllUnfinishedContests();
+
+        for (Contest contest : unFinishedContests) {
             if (contest.getStartPhase1()
                        .isBefore(now) && contest.getPhase()
                                                 .equals(Phase.NOT_STARTED)) {

@@ -35,6 +35,9 @@ public class Contest extends BaseEntity {
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;
+    @OneToMany
+    @Transient
+    private List<User> invitedUsers;
 
 
 
@@ -50,9 +53,6 @@ public class Contest extends BaseEntity {
     private LocalDateTime startPhase3;
 
 
-
-
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "contest_participants",
@@ -61,7 +61,15 @@ public class Contest extends BaseEntity {
     private List<User> participants;
 
 
+    public List<User> getInvitedUsers() {
+        return isOpen ? null : invitedUsers;
+    }
 
+    public void setInvitedUsers(List<User> invitedUsers) {
+        if (!isOpen) {
+            this.invitedUsers = invitedUsers;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
