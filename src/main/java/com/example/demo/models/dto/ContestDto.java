@@ -23,7 +23,7 @@ public class ContestDto {
     private String category;
 
     @NotNull
-    private Boolean isOpen;
+    private String type;
 
     private List<User> invitedUsers;
 

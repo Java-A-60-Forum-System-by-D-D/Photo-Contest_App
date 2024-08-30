@@ -6,9 +6,7 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.*;
 import com.example.demo.models.filtering.PhotoSubmissionFilterOptions;
 import com.example.demo.models.filtering.PhotoSubmissionSpecification;
-import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.PhotoSubmissionRepository;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
@@ -60,7 +58,7 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
         if (user.getJurorContests().contains(currentContest)) {
             throw new AuthorizationUserException("User is a juror for this contest");
         }
-        if (!currentContest.isOpen()) {
+        if (currentContest.getType().equals(Type.INVITATIONAL)) {
             if (currentContest.getInvitedUsers().contains(user)) {
                 throw new AuthorizationUserException("User is not invited to this contest");
 

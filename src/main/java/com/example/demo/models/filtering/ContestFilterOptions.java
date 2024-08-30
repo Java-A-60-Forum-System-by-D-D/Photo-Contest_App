@@ -2,18 +2,22 @@ package com.example.demo.models.filtering;
 
 import com.example.demo.models.Category;
 import com.example.demo.models.Phase;
+import com.example.demo.models.Type;
 import lombok.Data;
 
 @Data
 public class ContestFilterOptions {
     private String title;
-    private Category category;
-    //todo type?
+    private String category;
+    private Type type;
     private Phase phase;
+    private String username;
 
-    public ContestFilterOptions(String title, Category category, Phase phase) {
+    public ContestFilterOptions(String title, String category, Type type, Phase phase, String username) {
         this.title = title;
         this.category = category;
+        this.type = type;
         this.phase = phase;
+        this.username = username;
     }
 }

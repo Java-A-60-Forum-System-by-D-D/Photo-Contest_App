@@ -2,6 +2,8 @@ package com.example.demo.services;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
+import com.example.demo.models.dto.ContestSummaryDTO;
+import com.example.demo.models.filtering.ContestFilterOptions;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +28,5 @@ public interface ContestService {
     Contest addJury(long contestId,User juryToAdd,User user);
 
 
+    List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions);
 }

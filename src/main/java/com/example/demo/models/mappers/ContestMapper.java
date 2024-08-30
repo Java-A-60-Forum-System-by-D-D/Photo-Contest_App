@@ -1,8 +1,8 @@
 package com.example.demo.models.mappers;
 
-import com.example.demo.models.Category;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
+import com.example.demo.models.Type;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;
 import com.example.demo.models.dto.ContestSummaryDTO;
@@ -39,7 +39,7 @@ public class ContestMapper {
         contest.setStartPhase2(startPhase2);
         LocalDateTime startPhase3 = startPhase2.plusHours(12);
         contest.setStartPhase3(startPhase3);
-        contest.setOpen(contestDto.getIsOpen());
+        contest.setType(Type.valueOf(contestDto.getType()));
         return contest;
     }
 
@@ -55,7 +55,7 @@ public class ContestMapper {
         contestViewDto.setStartPhase1(contest.getStartPhase1());
         contestViewDto.setStartPhase2(contest.getStartPhase2());
         contestViewDto.setStartPhase3(contest.getStartPhase3());
-        contestViewDto.setIsOpen(contest.isOpen());
+        contestViewDto.setType(contest.getType().toString());
         return contestViewDto;
     }
 

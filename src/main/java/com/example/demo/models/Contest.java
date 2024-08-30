@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -23,8 +22,8 @@ public class Contest extends BaseEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "is_open", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean isOpen;
+    @Enumerated(EnumType.STRING)
+    private Type type;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -63,14 +62,15 @@ public class Contest extends BaseEntity {
 
 
     public List<User> getInvitedUsers() {
-        return isOpen ? new ArrayList<>() : invitedUsers;
+        return type.equals(Type.OPEN) ? new ArrayList<>() : invitedUsers;
     }
 
     public void setInvitedUsers(List<User> invitedUsers) {
-        if (!isOpen) {
+        if (type.equals(Type.INVITATIONAL)) {
             this.invitedUsers = invitedUsers;
         }
     }
+
 
     @Override
     public boolean equals(Object o) {

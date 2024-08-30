@@ -1,11 +1,11 @@
 package com.example.demo.controllers.rest;
 
-import com.example.demo.models.Contest;
-import com.example.demo.models.PhotoSubmission;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.*;
+import com.example.demo.models.filtering.ContestFilterOptions;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.models.mappers.PhotoMapper;
+import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
@@ -32,13 +32,15 @@ public class ContestRestController {
     private final ContestMapper contestMapper;
     private final PhotoMapper photoMapper;
     private final PhotoSubmissionService photoSubmissionService;
+    private final CategoryService categoryService;
 
-    public ContestRestController(ContestService contestService, UserService userService, ContestMapper contestMapper, PhotoMapper photoMapper, PhotoSubmissionService photoSubmissionService) {
+    public ContestRestController(ContestService contestService, UserService userService, ContestMapper contestMapper, PhotoMapper photoMapper, PhotoSubmissionService photoSubmissionService, CategoryService categoryService) {
         this.contestService = contestService;
         this.userService = userService;
         this.contestMapper = contestMapper;
         this.photoMapper = photoMapper;
         this.photoSubmissionService = photoSubmissionService;
+        this.categoryService = categoryService;
     }
 
     @Operation(summary = "View a list of all contests")
@@ -47,23 +49,40 @@ public class ContestRestController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping
-    public Map<String, List<ContestSummaryDTO>> getAllContests() {
+    public Map<String, List<ContestSummaryDTO>> getAllContests(@RequestParam(required = false) String title,
+                                                               @RequestParam(required = false) String category,
+                                                               @RequestParam(required = false) String type,
+                                                               @RequestParam(required = false) String phase,
+                                                               @RequestParam(required = false) String username) {
+
+        //todo add listing and filtering of contests
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
-        List<ContestSummaryDTO> openContests = contestService.getOpenContests()
-                .stream()
-                .map(contestMapper::createFinishedContestViewDto)
-                .toList();
-        List<ContestSummaryDTO> participatedContests = contestService.getAllParticipatedContests(user)
-                .stream()
-                .map(contestMapper::createFinishedContestViewDto)
-                .toList();
-        List<ContestSummaryDTO> finishedContests = contestService.getFinishedContests(user)
-                .stream()
-                .map(contestMapper::createFinishedContestViewDto)
-                .toList();
-        return Map.of("open", openContests, "participated", participatedContests, "finished", finishedContests);
+//        Category categoryToFind = categoryService.getCategoryByName(category);
+        Phase phaseEnum = null;
+        if (phase != null) {
+            phaseEnum = Phase.valueOf(phase.toUpperCase());
+        }
+        Type typeEnum = null;
+        if(type != null){
+            typeEnum = Type.valueOf(type.toUpperCase());
+        }
+        ContestFilterOptions filterOptions = new ContestFilterOptions(title, category, typeEnum, phaseEnum,username);
+        List<Contest> contests = contestService.getAllContestsByOptions(filterOptions);
+//        List<ContestSummaryDTO> openContests = contestService.getOpenContests()
+//                .stream()
+//                .map(contestMapper::createFinishedContestViewDto)
+//                .toList();
+//        List<ContestSummaryDTO> participatedContests = contestService.getAllParticipatedContests(user)
+//                .stream()
+//                .map(contestMapper::createFinishedContestViewDto)
+//                .toList();
+//        List<ContestSummaryDTO> finishedContests = contestService.getFinishedContests(user)
+//                .stream()
+//                .map(contestMapper::createFinishedContestViewDto)
+//                .toList();
+       return Map.of("contests", contests.stream().map(contestMapper::createFinishedContestViewDto).toList());
     }
 
     @Operation(summary = "Create a new contest")

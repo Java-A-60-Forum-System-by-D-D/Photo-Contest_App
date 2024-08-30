@@ -7,6 +7,7 @@ import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
+import com.example.demo.models.filtering.ContestFilterOptions;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.UserService;
@@ -132,6 +133,11 @@ public class ContestServiceImpl implements ContestService {
 
 
         return contest;
+    }
+
+    @Override
+    public List<Contest> getAllContestsByOptions( ContestFilterOptions filterOptions) {
+        return contestRepository.findAllByFilterOptions(filterOptions.getTitle(), filterOptions.getCategory(), filterOptions.getType(), filterOptions.getPhase(), filterOptions.getUsername());
     }
 
 

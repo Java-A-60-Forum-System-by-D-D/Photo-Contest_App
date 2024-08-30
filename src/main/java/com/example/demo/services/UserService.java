@@ -21,4 +21,6 @@ public interface UserService {
     User updateUser(User userToUpdate);
 
     User calculateLevel(User user);
+
+    User getUserByUsername(String username);
 }

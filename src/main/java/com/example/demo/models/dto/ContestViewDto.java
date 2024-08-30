@@ -13,6 +13,6 @@ public class ContestViewDto {
     private LocalDateTime startPhase1;
     private LocalDateTime startPhase2;
     private LocalDateTime startPhase3;
-    private Boolean isOpen;
+    private String type;
 
 }
