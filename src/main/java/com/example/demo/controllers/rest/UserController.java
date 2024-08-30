@@ -7,6 +7,11 @@ import com.example.demo.models.dto.UserViewDto;
 import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "users", description = "User operations")
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
@@ -27,12 +33,18 @@ public class UserController {
     }
 
 
+    @Operation(summary = "View a list of available users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved list"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping
-    public List<UserViewDto> getUsers(@RequestParam(required = false) String username,
-                                      @RequestParam(required = false) String firstName,
-                                      @RequestParam(required = false) String lastName,
-                                      @RequestParam(required = false) String sortBy,
-                                      @RequestParam(required = false) String sortDirection) {
+    public List<UserViewDto> getUsers(@Parameter(description = "Username to filter users by", required = false) @RequestParam(required = false) String username,
+                                      @Parameter(description = "First name to filter users by", required = false) @RequestParam(required = false) String firstName,
+                                      @Parameter(description = "Last name to filter users by", required = false) @RequestParam(required = false) String lastName,
+                                      @Parameter(description = "Field to sort users by", required = false) @RequestParam(required = false) String sortBy,
+                                      @Parameter(description = "Direction to sort users by", required = false) @RequestParam(required = false) String sortDirection) {
 
         UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName, sortBy, sortDirection);
         List<UserViewDto> users = userService.getUsers(userFilterOptions)
@@ -43,10 +55,16 @@ public class UserController {
         return users;
     }
 
-
-    @PutMapping
-    @RequestMapping("/{id}")
-    public UserViewDto updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    @Operation(summary = "Update a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated user"),
+            @ApiResponse(responseCode = "403", description = "You can only update your own profile"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PutMapping("/{id}")
+    public UserViewDto updateUser(@Parameter(description = "ID of the user to update", required = true) @PathVariable Long id,
+                                  @Parameter(description = "Updated user information", required = true) @RequestBody UpdateUserDTO updateUserDTO){
 
         Authentication authentication = SecurityContextHolder.getContext()
                                                              .getAuthentication();
