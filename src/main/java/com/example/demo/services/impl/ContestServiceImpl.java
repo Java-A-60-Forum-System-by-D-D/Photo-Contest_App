@@ -13,8 +13,8 @@ import com.example.demo.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ContestServiceImpl implements ContestService {
@@ -132,6 +132,70 @@ public class ContestServiceImpl implements ContestService {
 
 
         return contest;
+    }
+
+
+    public TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users) {
+
+        TreeSet<Integer> top3Scores = submissions.stream()
+                                                 .map(PhotoSubmission::getReviewScore)
+                                                 .collect(Collectors.toCollection(() -> new TreeSet<Integer>(Comparator.reverseOrder())));
+
+        TreeSet<Integer> finalTop3Scores = top3Scores.stream()
+                                                     .limit(3)
+                                                     .collect(Collectors.toCollection(TreeSet::new));
+
+        TreeMap<Integer, List<User>> top3 = submissions.stream()
+                                                       .filter(submission -> finalTop3Scores.contains(submission.getReviewScore()))
+                                                       .collect(Collectors.groupingBy(
+                                                               PhotoSubmission::getReviewScore,
+                                                               () -> new TreeMap<>(Comparator.reverseOrder()),
+                                                               Collectors.mapping(PhotoSubmission::getCreator, Collectors.toList())
+                                                       ));
+
+        ranking(top3);
+
+        return top3;
+
+
+    }
+
+
+    public void ranking(TreeMap<Integer, List<User>> top3) {
+
+        List<Integer> scores = new ArrayList<>(top3.keySet());
+        if (scores.size() > 0) {
+            List<User> highestUsers = top3.get(scores.get(0));
+            if (highestUsers.size() == 1) {
+                highestUsers.get(0)
+                            .setTotalScore(highestUsers.get(0)
+                                                       .getTotalScore() + 50);
+            } else {
+                highestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 40));
+            }
+        }
+
+        if (scores.size() > 1) {
+            List<User> secondHighestUsers = top3.get(scores.get(1));
+            if (secondHighestUsers.size() == 1) {
+                secondHighestUsers.get(0)
+                                  .setTotalScore(secondHighestUsers.get(0)
+                                                                   .getTotalScore() + 35);
+            } else {
+                secondHighestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 25));
+            }
+        }
+
+        if (scores.size() > 2) {
+            List<User> thirdHighestUsers = top3.get(scores.get(2));
+            if (thirdHighestUsers.size() == 1) {
+                thirdHighestUsers.get(0)
+                                 .setTotalScore(thirdHighestUsers.get(0)
+                                                                 .getTotalScore() + 20);
+            } else {
+                thirdHighestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 10));
+            }
+        }
     }
 
 

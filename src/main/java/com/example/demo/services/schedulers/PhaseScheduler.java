@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.models.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -69,6 +69,7 @@ public class PhaseScheduler {
                                     });
 
                            });
+
 
 
                 userRepository.saveAll(users);

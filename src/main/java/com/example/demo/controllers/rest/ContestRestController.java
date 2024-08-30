@@ -35,22 +35,22 @@ public class ContestRestController {
     }
 
     @GetMapping
-    public Map<String, List<ContestViewDto>> getAllContests() {
+    public Map<String, List<ContestSummaryDTO>> getAllContests() {
         Authentication authentication = SecurityContextHolder.getContext()
                                                              .getAuthentication();
         String email = authentication.getName();
         User user = userService.getUserByEmail(email);
-        List<ContestViewDto> openContests = contestService.getOpenContests()
+        List<ContestSummaryDTO> openContests = contestService.getOpenContests()
                                                           .stream()
-                                                          .map(contestMapper::createContestViewDto)
+                                                          .map(contestMapper::createFinishedContestViewDto)
                                                           .toList();
-        List<ContestViewDto> participatedContests = contestService.getAllParticipatedContests(user)
+        List<ContestSummaryDTO> participatedContests = contestService.getAllParticipatedContests(user)
                                                                   .stream()
-                                                                  .map(contestMapper::createContestViewDto)
+                                                                  .map(contestMapper::createFinishedContestViewDto)
                                                                   .toList();
-        List<ContestViewDto> finishedContests = contestService.getFinishedContests(user)
+        List<ContestSummaryDTO> finishedContests = contestService.getFinishedContests(user)
                                                               .stream()
-                                                              .map(contestMapper::createContestViewDto)
+                                                              .map(contestMapper::createFinishedContestViewDto)
                                                               .toList();
         return Map.of("open", openContests, "participated", participatedContests, "finished", finishedContests);
     }

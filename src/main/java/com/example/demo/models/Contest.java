@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -34,6 +35,7 @@ public class Contest extends BaseEntity {
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;
+
 
 
     @Column(name = "start_date", nullable = false)
