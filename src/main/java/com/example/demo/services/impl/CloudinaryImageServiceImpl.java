@@ -1,7 +1,8 @@
-package com.example.demo.services;
+package com.example.demo.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.demo.services.CloudinaryImageService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
