@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +85,7 @@ public class ContestRestController {
     }
 
     @PostMapping("/{id}/photo-submissions")
-    public PhotoSubmissionViewDto createPhotoSubmission(@PathVariable("id") long id, @Valid @RequestBody PhotoSubmissionDto photoSubmissionDto) {
+    public PhotoSubmissionViewDto createPhotoSubmission(@PathVariable("id") long id, @Valid @RequestBody PhotoSubmissionDto photoSubmissionDto) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext()
                                                              .getAuthentication();
         String email = authentication.getName();

@@ -52,72 +52,75 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
             throw new EntityDuplicateException("User already submitted photo for this contest");
         }
         if (!photoSubmission.getContest()
-                            .getPhase()
-                            .equals(Phase.PHASE_1)) {
+                .getPhase()
+                .equals(Phase.PHASE_1)) {
             throw new EntityDuplicateException("Contest is not in phase 1");
         }
         Contest currentContest = photoSubmission.getContest();
-        if(user.getJurorContests().contains(currentContest)){
+        if (user.getJurorContests().contains(currentContest)) {
             throw new AuthorizationUserException("User is a juror for this contest");
         }
-        if(!currentContest.isOpen() && !currentContest.getInvitedUsers().contains(user)){
-            throw new AuthorizationUserException("User is not invited to this contest");
+        if (!currentContest.isOpen()) {
+            if (currentContest.getInvitedUsers().contains(user)) {
+                throw new AuthorizationUserException("User is not invited to this contest");
+
+            }
         }
 
-        user.getParticipatedContests()
-            .add(photoSubmission.getContest());
-        user.setTotalScore(currentContest.getInvitedUsers().contains(user)
-                ? user.getTotalScore() + 3
-                : user.getTotalScore() + 1);
-        userService.calculateLevel(user);
-        userService.save(user);
+            user.getParticipatedContests()
+                    .add(photoSubmission.getContest());
+            user.setTotalScore(currentContest.getInvitedUsers().contains(user)
+                    ? user.getTotalScore() + 3
+                    : user.getTotalScore() + 1);
+            userService.calculateLevel(user);
+            userService.save(user);
 
-        Contest contest = photoSubmission.getContest();
-        contest.getParticipants()
-               .add(user);
-        contestService.save(contest);
-
-
-        return photoSubmissionRepository.save(photoSubmission);
-    }
-
-    @Override
-    public List<PhotoSubmission> getAllReviewedPhotos(PhotoSubmission photoSubmission, User user) {
-        return photoSubmissionRepository.findByJuriIdAndReviewed(user.getId());
-    }
+            Contest contest = photoSubmission.getContest();
+            contest.getParticipants()
+                    .add(user);
+            contestService.save(contest);
 
 
-    @Override
-    public PhotoSubmission getPhotoSubmissionById(long id) {
-        return photoSubmissionRepository.findById(id)
-                                        .stream()
-                                        .findFirst()
-                                        .orElseThrow(() -> new EntityNotFoundException(PHOTO_SUBMISSION_NOT_FOUND + id));
-    }
+            return photoSubmissionRepository.save(photoSubmission);
+        }
 
-    @Override
-    public List<PhotoSubmission> getNotReviewedPhotos() {
-        return photoSubmissionRepository.findNotReviewedPhotos();
-    }
+        @Override
+        public List<PhotoSubmission> getAllReviewedPhotos (PhotoSubmission photoSubmission, User user){
+            return photoSubmissionRepository.findByJuriIdAndReviewed(user.getId());
+        }
 
-    @Override
-    public void save(PhotoSubmission photoSubmission) {
-        photoSubmissionRepository.save(photoSubmission);
-    }
 
-    @Override
-    public List<PhotoSubmission> getAScoreAndComments(User user) {
+        @Override
+        public PhotoSubmission getPhotoSubmissionById ( long id){
+            return photoSubmissionRepository.findById(id)
+                    .stream()
+                    .findFirst()
+                    .orElseThrow(() -> new EntityNotFoundException(PHOTO_SUBMISSION_NOT_FOUND + id));
+        }
+
+        @Override
+        public List<PhotoSubmission> getNotReviewedPhotos () {
+            return photoSubmissionRepository.findNotReviewedPhotos();
+        }
+
+        @Override
+        public void save (PhotoSubmission photoSubmission){
+            photoSubmissionRepository.save(photoSubmission);
+        }
+
+        @Override
+        public List<PhotoSubmission> getAScoreAndComments (User user){
 //        if(!contest.getPhase().equals(Phase.FINISHED)){
 //            throw new EntityNotFoundException("Contest is not finished");
 //        }
-        return photoSubmissionRepository.findPhotoSubmissionsByCreator_IdAndContest_Phase_Finished(user.getId(), Phase.FINISHED);
-    }
+            return photoSubmissionRepository.findPhotoSubmissionsByCreator_IdAndContest_Phase_Finished(user.getId(), Phase.FINISHED);
+        }
 
-    @Override
-    public List<PhotoSubmission> findAllContestSubmissionsByOthers(User user) {
+        @Override
+        public List<PhotoSubmission> findAllContestSubmissionsByOthers (User user){
 //        if(!contest.getPhase().equals(Phase.FINISHED)){
 //            throw new EntityNotFoundException("Contest is not finished");
 //        }
-        return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers(user.getId(), Phase.FINISHED);
+            return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers(user.getId(), Phase.FINISHED);
+        }
     }
-}

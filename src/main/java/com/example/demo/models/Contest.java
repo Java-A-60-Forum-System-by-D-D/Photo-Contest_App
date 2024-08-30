@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,7 +63,7 @@ public class Contest extends BaseEntity {
 
 
     public List<User> getInvitedUsers() {
-        return isOpen ? null : invitedUsers;
+        return isOpen ? new ArrayList<>() : invitedUsers;
     }
 
     public void setInvitedUsers(List<User> invitedUsers) {
