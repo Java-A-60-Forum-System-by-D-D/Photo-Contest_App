@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public static final String USER_NOT_FOUND = "User not found: ";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationService authenticationService;
 
 
     @Override
@@ -39,10 +38,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationService authenticationService) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationService = authenticationService;
+
 
     }
 

@@ -7,7 +7,10 @@ import com.example.demo.models.dto.UserViewDto;
 import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
+import com.example.demo.services.impl.RestAuthenticationServiceImpl;
+import com.example.demo.services.schedulers.RestAuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +26,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class AuthRestController {
     private final UserService userService;
     private final UserMapper userMapper;
-    private final AuthenticationService authenticationService;
+    private final RestAuthenticationService authenticationService;
 
-    public AuthRestController(UserService userService, UserMapper userMapper, AuthenticationService authenticationService) {
+
+        public AuthRestController(UserService userService, UserMapper userMapper, RestAuthenticationServiceImpl authenticationService) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.authenticationService = authenticationService;

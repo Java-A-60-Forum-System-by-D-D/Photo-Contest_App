@@ -10,7 +10,7 @@ public interface AuthenticationService {
 
     Optional<AuthUser> findByUsername(String username);
 
-    LoginUserDto loginUser(LoginUserDto loginUserDto);
+//    LoginUserDto loginUser(LoginUserDto loginUserDto);
 
     AuthUser saveAuthUser(AuthUser authUser);
 }

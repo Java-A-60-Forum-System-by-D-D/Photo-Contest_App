@@ -7,6 +7,7 @@ import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.UserService;
 import com.nimbusds.jose.proc.SecurityContext;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +25,7 @@ public class AuthenticationMVCController {
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationMVCController(UserService userService, UserMapper userMapper, AuthenticationManager authenticationManager) {
+    public AuthenticationMVCController(UserService userService, UserMapper userMapper,@Qualifier("mvcAuthenticationManager") AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.authenticationManager = authenticationManager;

@@ -3,6 +3,7 @@ package com.example.demo.controllers.mvc;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeMVCController {
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
 
-    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager) {
+
+    public HomeMVCController(UserService userService) {
         this.userService = userService;
-        this.authenticationManager = authenticationManager;
+
     }
     @GetMapping(value = {"/home", "/"})
     public String home(Model model) {
@@ -36,17 +37,17 @@ public class HomeMVCController {
         return "index";
     }
 
-    @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute("loginUserDto") LoginUserDto loginUserDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "index";
-
-        }
-        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        model.addAttribute("user", loginUserDto);
-
-
-        return "index";
-    }
+//    @PostMapping("/login")
+//    public String loginUser(@Valid @ModelAttribute("loginUserDto") LoginUserDto loginUserDto, BindingResult bindingResult, Model model) {
+//        if (bindingResult.hasErrors()) {
+//            return "index";
+//
+//        }
+//        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
+//        SecurityContextHolder.getContext().setAuthentication(auth);
+//        model.addAttribute("user", loginUserDto);
+//
+//
+//        return "index";
+//    }
 }

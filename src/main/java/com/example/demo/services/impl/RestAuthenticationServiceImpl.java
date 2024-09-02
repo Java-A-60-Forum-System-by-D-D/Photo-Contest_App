@@ -7,7 +7,9 @@ import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.repositories.AuthUserRepository;
 import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.TokenService;
+import com.example.demo.services.schedulers.RestAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,9 +19,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class RestAuthenticationServiceImpl implements RestAuthenticationService {
     public static final String USER_DOES_NOT_EXIST = "User does not exist";
     public static final String PASSWORD_MISMATCH = "Password mismatch";
+
+
+
     private final AuthUserRepository authUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -27,7 +32,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PhotoContestUserDetails photoContestUserDetails;
 
     @Autowired
-    public AuthenticationServiceImpl(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService, PhotoContestUserDetails photoContestUserDetails) {
+    public RestAuthenticationServiceImpl(AuthUserRepository authUserRepository,
+                                         PasswordEncoder passwordEncoder,
+                                         @Qualifier("restAuthenticationManager") AuthenticationManager authenticationManager,
+                                         TokenService tokenService,
+                                         PhotoContestUserDetails photoContestUserDetails) {
         this.authUserRepository = authUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -70,4 +79,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthUser saveAuthUser(AuthUser authUser) {
         return authUserRepository.save(authUser);
     }
+
+
+
 }

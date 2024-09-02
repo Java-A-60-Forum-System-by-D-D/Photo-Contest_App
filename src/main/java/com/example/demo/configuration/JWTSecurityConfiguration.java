@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -45,8 +46,9 @@ public class JWTSecurityConfiguration {
     }
 
 
-    @Bean
-    public AuthenticationManager authManager(@Qualifier("photoContestUserDetails") UserDetailsService detailsService){
+    @Bean("restAuthenticationManager")
+    @Primary
+    public AuthenticationManager restAuthenticationManager(@Qualifier("photoContestUserDetails") UserDetailsService detailsService){
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
         daoProvider.setUserDetailsService(detailsService);
         daoProvider.setPasswordEncoder(passwordEncoder());
