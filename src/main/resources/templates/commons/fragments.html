@@ -2,11 +2,84 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:fragment="head">
+
+    <meta charset="utf-8">
+    <meta name="author" content="templatemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>SnapX Photography by TemplateMo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="../../static/css/fontawesome.css" th:href="@{/css/fontawesome.css}">
+    <link rel="stylesheet" href="../../static/css/templatemo-snapx-photography.css" th:href="@{/css/templatemo-snapx-photography.css}">
+    <link rel="stylesheet" href="../../static/css/owl.css" th:href="@{/css/owl.css}">
+    <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <!--
+
+    TemplateMo 576 SnapX Photography
+
+    https://templatemo.com/tm-576-snapx-photography
+
+    -->
 </head>
 <body>
+<header class="header-area header-sticky" th:fragment="nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!--              Navigation-->
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="../static/images/logo.png" alt="SnapX Photography Template">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a  th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
+                        <li class="has-sub">
+                            <a href="javascript:void(0)">Photos &amp; Videos</a>
+                            <ul class="sub-menu">
+                                <li><a href="contests.html">Contests</a></li>
+                                <li><a href="contest-details.html">Single Contest</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="users.html">Users</a></li>
+                        <li> <form th:method="get" th:action="@{/}">
+                            <label class="text-grey" th:text="#{navbar_language}" for="lang">Language</label>
+                            <select
+                                    onchange="this.form.submit()"
+                                    id="lang"
+                                    name="lang">
+                                <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                                <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
+                            </select>
+                        </form></li>
+
+                    </ul>
+                    <div class="border-button">
+                        <a id="modal_trigger" href="#modal"
+                           class="sign-in-up"><i class="fa fa-user"></i> Sign In/Up</a>
+                    </div>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+
+</header>
 
 </body>
 </html>

@@ -8,6 +8,7 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -58,7 +59,10 @@ public class JWTSecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations())).permitAll();
+                    auth.requestMatchers("/css/**", "/js/**", "/images/**", "/webfonts/**", "/resources/**").permitAll();
                     auth.requestMatchers("api/auth/**").permitAll();
+
                     auth.anyRequest().permitAll();
                 })
                 .oauth2ResourceServer(oauth2 -> oauth2

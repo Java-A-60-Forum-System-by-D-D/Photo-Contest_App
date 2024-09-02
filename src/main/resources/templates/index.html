@@ -1,26 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
-  <head>
+  <head th:replace="~{commons/fragments::head}">
 
-    <meta charset="utf-8">
-    <meta name="author" content="templatemo">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
-    <title>SnapX Photography by TemplateMo</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="../static/css/fontawesome.css">
-    <link rel="stylesheet" href="../static/css/templatemo-snapx-photography.css">
-    <link rel="stylesheet" href="../static/css/owl.css">
-    <link rel="stylesheet" href="../static/css/animate.css">
-    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 <!--
 
 TemplateMo 576 SnapX Photography
@@ -34,51 +17,8 @@ https://templatemo.com/tm-576-snapx-photography
 
 
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
-                        <img src="../static/images/logo.png" alt="SnapX Photography Template">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="index.html" class="active" th:text="#{navbar_home}">Home</a></li>
-                        <li class="has-sub">
-                            <a href="javascript:void(0)">Photos &amp; Videos</a>
-                            <ul class="sub-menu">
-                                <li><a href="contests.html">Contests</a></li>
-                                <li><a href="contest-details.html">Single Contest</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="users.html">Users</a></li>
-                        <li> <form th:method="get">
-                          <label class="text-grey" th:text="#{navbar_language}" for="lang"></label>
-                          <select
-                                  onchange="this.form.submit()"
-                                  id="lang"
-                                  name="lang">
-                            <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
-                            <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
-                          </select>
-                        </form></li>
+  <header class="header-area header-sticky" th:replace="~{commons/fragments::nav}">
 
-                    </ul>   
-                    <div class="border-button">
-                      <a id="modal_trigger" href="#modal" class="sign-in-up"><i class="fa fa-user"></i> Sign In/Up</a>
-                    </div>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
-    </div>
   </header>
   <!-- ***** Header Area End ***** -->
 
@@ -116,13 +56,13 @@ https://templatemo.com/tm-576-snapx-photography
 
         <!-- Username & Password Login form -->
         <div class="user_login">
-            <form action="" method="post">
+            <form th:action="@{/login}" method="post" th:object="${loginUserDto}" >
                 <label>Email / Username</label>
-                <input name="username" type="text" id="username" />
+                <input name="username" type="text" th:field="*{email}"/>
               <br />
 
                 <label>Password</label>
-                <input name="password" type="password" id="password" />
+                <input name="password" type="password"  th:field="*{password}"/>
               <br />
 
                 <div class="checkbox">
@@ -141,7 +81,7 @@ https://templatemo.com/tm-576-snapx-photography
 
         <!-- Register Form -->
         <div class="user_register">
-            <form action="" method="post">
+            <form  method="post">
                 <label>Username</label>
                 <input name="username" type="text" id="username" />
                 <br />
@@ -165,7 +105,7 @@ https://templatemo.com/tm-576-snapx-photography
                 </div>
             </form>
         </div>
-        
+
     </section>
   </div>
 
@@ -596,18 +536,42 @@ https://templatemo.com/tm-576-snapx-photography
       </div>
     </div>
   </footer>
+<!--  <script>-->
+<!--    $(document).ready(function() {-->
+<!--      $('#modal_trigger').click(function(e) {-->
+<!--        e.preventDefault();-->
+<!--        $('#modal').fadeIn();-->
+<!--      });-->
+
+<!--      $('.modal_close').click(function() {-->
+<!--        $('#modal').fadeOut();-->
+<!--      });-->
+
+<!--      $('#register_form').click(function(e) {-->
+<!--        e.preventDefault();-->
+<!--        $('.user_login').hide();-->
+<!--        $('.user_register').show();-->
+<!--      });-->
+
+<!--      $('#login_form').click(function(e) {-->
+<!--        e.preventDefault();-->
+<!--        $('.user_register').hide();-->
+<!--        $('.user_login').show();-->
+<!--      });-->
+<!--    });-->
+<!--  </script>-->
 
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
-  <script src="assets/js/isotope.min.js"></script>
-  <script src="assets/js/owl-carousel.js"></script>
+  <script src="/js/isotope.min.js"></script>
+  <script src="/js/owl-carousel.js"></script>
 
-  <script src="assets/js/tabs.js"></script>
-  <script src="assets/js/popup.js"></script>
-  <script src="assets/js/custom.js"></script>
+  <script src="/js/tabs.js" ></script>
+  <script src="/js/popup.js" th:href="@{/js/popup.js}"></script>
+  <script src="/js/custom.js"></script>
 
   </body>
 </html>
