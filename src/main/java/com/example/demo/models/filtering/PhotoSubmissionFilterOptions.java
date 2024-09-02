@@ -10,7 +10,7 @@ public class PhotoSubmissionFilterOptions {
     private String sortDirection;
 
     // Constructors, getters, and setters
-    public PhotoSubmissionFilterOptions(String title, String sortBy, String sortDirection) {
+    public PhotoSubmissionFilterOptions(String title, String sortBy, String sortDirection, String username) {
         this.title = title;
         this.sortBy = sortBy;
         this.sortDirection = sortDirection;
