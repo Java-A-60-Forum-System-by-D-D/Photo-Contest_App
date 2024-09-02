@@ -3,10 +3,7 @@ package com.example.demo.models.mappers;
 import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
-import com.example.demo.models.dto.LoginUserDto;
-import com.example.demo.models.dto.RegisterUserDto;
-import com.example.demo.models.dto.UpdateUserDTO;
-import com.example.demo.models.dto.UserViewDto;
+import com.example.demo.models.dto.*;
 import com.example.demo.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -59,4 +56,12 @@ public class UserMapper {
     }
 
 
+    public User createUserFromMVCDto(RegisterUserMVCDTO registerUserMVCDTO) {
+        User user = new User();
+        user.setUsername(registerUserMVCDTO.getUsername());
+        user.setEmail(registerUserMVCDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(registerUserMVCDTO.getPassword()));
+        user.setRole(UserRole.JUNKIE);
+        return user;
+    }
 }

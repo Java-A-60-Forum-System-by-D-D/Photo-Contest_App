@@ -46,9 +46,11 @@
                     <ul class="nav">
                         <li><a  th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
                         <li class="has-sub">
-                            <a href="javascript:void(0)">Photos &amp; Videos</a>
+                            <a href="javascript:void(0)">Dashboard</a>
                             <ul class="sub-menu">
-                                <li><a href="contests.html">Contests</a></li>
+                                <li><a href="contests.html" sec:authorize="hasRole('ORGANIZER')">New Contest</a></li>
+                                <li><a href="contest-details.html">Single Contest</a></li>
+                                <li><a href="contest-details.html">Single Contest</a></li>
                                 <li><a href="contest-details.html">Single Contest</a></li>
                             </ul>
                         </li>

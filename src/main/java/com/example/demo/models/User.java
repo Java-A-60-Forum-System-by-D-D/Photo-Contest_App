@@ -18,10 +18,10 @@ import java.util.Objects;
 @DiscriminatorValue("USER")
 public class User extends AuthUser implements UserDetails, GrantedAuthority {
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "total_score")
