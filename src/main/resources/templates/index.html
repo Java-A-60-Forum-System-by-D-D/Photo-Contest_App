@@ -57,8 +57,8 @@ https://templatemo.com/tm-576-snapx-photography
         <!-- Username & Password Login form -->
         <div class="user_login">
             <form th:action="@{/login}" method="post" th:object="${loginUserDto}" >
-                <label>Email / Username</label>
-                <input name="username" type="text" th:field="*{email}"/>
+                <label>Email</label>
+                <input name="email" type="text" th:field="*{email}"/>
               <br />
 
                 <label>Password</label>
@@ -66,8 +66,8 @@ https://templatemo.com/tm-576-snapx-photography
               <br />
 
                 <div class="checkbox">
-                    <input id="remember" type="checkbox" />
-                    <label for="remember">Remember me on this computer</label>
+                    <input id="rememberme" name="rememberme" type="checkbox" />
+                    <label for="rememberme">Remember me on this computer</label>
                 </div>
 
                 <div class="action_btns">

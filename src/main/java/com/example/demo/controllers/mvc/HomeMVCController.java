@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeMVCController {
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
 
-    public HomeMVCController(UserService userService) {
+
+
+    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager) {
         this.userService = userService;
-
+        this.authenticationManager = authenticationManager;
     }
     @GetMapping(value = {"/home", "/"})
     public String home(Model model) {
@@ -37,17 +40,17 @@ public class HomeMVCController {
         return "index";
     }
 
-//    @PostMapping("/login")
-//    public String loginUser(@Valid @ModelAttribute("loginUserDto") LoginUserDto loginUserDto, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            return "index";
-//
-//        }
-//        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(auth);
-//        model.addAttribute("user", loginUserDto);
-//
-//
-//        return "index";
-//    }
+    @PostMapping("/login")
+    public String loginUser(@Valid @ModelAttribute("loginUserDto") LoginUserDto loginUserDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "index";
+
+        }
+        Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        model.addAttribute("user", loginUserDto);
+
+
+        return "index";
+    }
 }
