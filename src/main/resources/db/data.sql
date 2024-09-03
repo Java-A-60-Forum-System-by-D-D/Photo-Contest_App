@@ -2,18 +2,18 @@
 USE photo_contest;
 
 -- Insert 10 users into `auth_users`, with only two being organizers
-INSERT INTO auth_users (username, password, email, first_name, last_name, role, dtype)
+INSERT INTO auth_users (username, password, email, first_name, last_name, role, dtype, total_score)
 VALUES
-    ('user1', 'password1', 'user1@example.com', 'John', 'Doe', 'ORGANIZER', 'USER'),
-    ('user2', 'password2', 'user2@example.com', 'Jane', 'Smith', 'ORGANIZER', 'USER'),
-    ('user3', 'password3', 'user3@example.com', 'Alice', 'Johnson', 'JUNKIE', 'USER'),
-    ('user4', 'password4', 'user4@example.com', 'Bob', 'Brown', 'JUNKIE', 'USER'),
-    ('user5', 'password5', 'user5@example.com', 'Charlie', 'Davis', 'JUNKIE', 'USER'),
-    ('user6', 'password6', 'user6@example.com', 'David', 'Wilson', 'JUNKIE', 'USER'),
-    ('user7', 'password7', 'user7@example.com', 'Eve', 'Miller', 'JUNKIE', 'USER'),
-    ('user8', 'password8', 'user8@example.com', 'Frank', 'Moore', 'JUNKIE', 'USER'),
-    ('user9', 'password9', 'user9@example.com', 'Grace', 'Taylor', 'JUNKIE', 'USER'),
-    ('user10', 'password10', 'user10@example.com', 'Hank', 'Anderson', 'JUNKIE', 'USER');
+    ('user1', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user1@example.com', 'John', 'Doe', 'ORGANIZER', 'USER', 0),
+    ('user2', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user2@example.com', 'Jane', 'Smith', 'ORGANIZER', 'USER', 0),
+    ('user3', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user3@example.com', 'Alice', 'Johnson', 'JUNKIE', 'USER', 0),
+    ('user4', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user4@example.com', 'Bob', 'Brown', 'JUNKIE', 'USER', 0),
+    ('user5', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user5@example.com', 'Charlie', 'Davis', 'JUNKIE', 'USER', 0),
+    ('user6', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user6@example.com', 'David', 'Wilson', 'JUNKIE', 'USER', 0),
+    ('user7', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user7@example.com', 'Eve', 'Miller', 'JUNKIE', 'USER', 0),
+    ('user8', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user8@example.com', 'Frank', 'Moore', 'JUNKIE', 'USER', 0),
+    ('user9', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user9@example.com', 'Grace', 'Taylor', 'JUNKIE', 'USER', 0),
+    ('user10', '$2a$10$E8wyRbXxr4u7UzdQZ.DpqePn.7iTgyFXlajICHjWQ1hPa5pa6XLQy', 'user10@example.com', 'Hank', 'Anderson', 'JUNKIE', 'USER', 0);
 
 -- Insert specified categories into `categories`
 INSERT INTO categories (name, description)

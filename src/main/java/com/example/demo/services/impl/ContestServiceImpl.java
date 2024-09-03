@@ -136,7 +136,7 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public List<Contest> getAllContestsByOptions( ContestFilterOptions filterOptions) {
+    public List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions) {
         return contestRepository.findAllByFilterOptions(filterOptions.getTitle(), filterOptions.getCategory(), filterOptions.getType(), filterOptions.getPhase(), filterOptions.getUsername());
     }
 

@@ -25,7 +25,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     private String lastName;
 
     @Column(name = "total_score")
-    private int totalScore;
+    private Integer totalScore = 0;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
