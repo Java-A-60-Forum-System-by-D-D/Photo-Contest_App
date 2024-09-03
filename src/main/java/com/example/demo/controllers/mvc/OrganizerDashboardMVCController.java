@@ -52,8 +52,9 @@ public class OrganizerDashboardMVCController {
             redirectAttributes.addFlashAttribute("contestDto", contestDto);
             return "create-contest";
         }
-        User user = userService.getUserByUsername(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestMapper.createContestFromDto(contestDto, user);
+
         contestService.createContest(contest, user);
 
         return "redirect:/home";

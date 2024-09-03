@@ -60,7 +60,7 @@ public class MVCAuthenticationServiceImpl implements MVCAuthenticationService {
             LoginUserDto loggInUserDTO = new LoginUserDto();
             loggInUserDTO.setEmail(user.getEmail());
             loggInUserDTO.setPassword(user.getPassword());
-
+            photoContestUserDetails.loadUserByUsername(user.getEmail());
             return loggInUserDTO;
         } catch (AuthenticationException e) {
             throw new AuthorizationUserException("Invalid email or password");

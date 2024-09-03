@@ -10,7 +10,7 @@
 
 <div class="container">
     <h2>Create Contest</h2>
-    <form th:action="@{/create-contest}" th:method="post" th:object="${contestDto}">
+    <form th:action="@{/admin/createContest}" th:method="post" th:object="${contestDto}">
         <div class="form-group">
             <label for="title">Contest Title</label>
             <input type="text" id="title" name="title" th:field="*{title}" class="form-control" required>

@@ -39,7 +39,7 @@ public class ContestMapper {
         contest.setStartPhase2(startPhase2);
         LocalDateTime startPhase3 = startPhase2.plusHours(12);
         contest.setStartPhase3(startPhase3);
-        contest.setType(Type.valueOf(contestDto.getType()));
+        contest.setType(Type.valueOf(contestDto.getType().toUpperCase(Locale.ROOT)));
         return contest;
     }
 

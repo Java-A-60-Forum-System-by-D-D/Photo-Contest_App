@@ -45,6 +45,7 @@ public class MVCSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/css/**", "/js/**", "/images/**").permitAll();
                     auth.requestMatchers("/", "/home", "/home/**", "/login", "/register", "/errors/**").permitAll();
+                    
                     auth.anyRequest().authenticated();
 
                 })
