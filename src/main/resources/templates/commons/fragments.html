@@ -44,17 +44,17 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a  th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
+                        <li><a th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
                         <li class="has-sub">
                             <a href="javascript:void(0)">Dashboard</a>
                             <ul class="sub-menu">
-                                <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
+                                <th:block sec:authorize="!hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/admin/createContest}">New Contest</a></li>
                                     <li><a href="contest-details.html">Contests in Phase One</a></li>
                                     <li><a href="contest-details.html">Contest in Phase Two</a></li>
                                     <li><a href="contest-details.html">Finished</a></li>
                                 </th:block>
-                                <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
+                                <th:block sec:authorize="hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a href="open-contest-details.html">Open Contests</a></li>
                                     <li><a href="contest-details.html">Your Contests</a></li>
                                     <li><a href="contest-details.html">Finished Contests</a></li>
