@@ -9,6 +9,7 @@ import com.example.demo.services.CategoryService;
 import org.springframework.stereotype.Service;
 
 import javax.security.sasl.AuthenticationException;
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -42,6 +43,11 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(name);
         category.setDescription(description);
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 
 

@@ -48,14 +48,14 @@
                         <li class="has-sub">
                             <a href="javascript:void(0)">Dashboard</a>
                             <ul class="sub-menu">
-                                <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
-                                <li><a href="contests.html" >New Contest</a></li>
-                                <li><a href="contest-details.html">Contests in Phase One</a></li>
-                                <li><a href="contest-details.html">Contest in Phase Two</a></li>
-                                <li><a href="contest-details.html">Finished</a></li>
-                                </th:block>
                                 <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
-                                    <li><a href="contest-details.html">Open Contests</a></li>
+                                    <li><a th:href="@{/admin/createContest}">New Contest</a></li>
+                                    <li><a href="contest-details.html">Contests in Phase One</a></li>
+                                    <li><a href="contest-details.html">Contest in Phase Two</a></li>
+                                    <li><a href="contest-details.html">Finished</a></li>
+                                </th:block>
+                                <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
+                                    <li><a href="open-contest-details.html">Open Contests</a></li>
                                     <li><a href="contest-details.html">Your Contests</a></li>
                                     <li><a href="contest-details.html">Finished Contests</a></li>
                                 </th:block>
@@ -63,10 +63,10 @@
                             </ul>
                         </li>
                         <li><a href="categories.html">Categories</a></li>
-                        <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
+                        <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
                             <li><a href="users.html">Users</a></li>
                         </th:block>
-                        <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
+                        <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
                             <li><a href="users.html">Profile</a></li>
                         </th:block>
                         <li> <form th:method="get" th:action="@{/}">
