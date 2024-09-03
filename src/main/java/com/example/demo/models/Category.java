@@ -19,5 +19,7 @@ public class Category extends BaseEntity {
     private String name;
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    @Column(name = "photo_url")
+    private String photoUrl;
 
 }
