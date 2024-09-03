@@ -48,13 +48,13 @@
                         <li class="has-sub">
                             <a href="javascript:void(0)">Dashboard</a>
                             <ul class="sub-menu">
-                                <th:block sec:authorize="hasRole('ORGANIZER')">
+                                <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
                                 <li><a href="contests.html" >New Contest</a></li>
                                 <li><a href="contest-details.html">Contests in Phase One</a></li>
                                 <li><a href="contest-details.html">Contest in Phase Two</a></li>
                                 <li><a href="contest-details.html">Finished</a></li>
                                 </th:block>
-                                <th:block sec:authorize="!hasRole('ORGANIZER')">
+                                <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
                                     <li><a href="contest-details.html">Open Contests</a></li>
                                     <li><a href="contest-details.html">Your Contests</a></li>
                                     <li><a href="contest-details.html">Finished Contests</a></li>
@@ -63,10 +63,10 @@
                             </ul>
                         </li>
                         <li><a href="categories.html">Categories</a></li>
-                        <th:block sec:authorize="hasRole('ORGANIZER')">
+                        <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
                             <li><a href="users.html">Users</a></li>
                         </th:block>
-                        <th:block sec:authorize="!hasRole('ORGANIZER')">
+                        <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
                             <li><a href="users.html">Profile</a></li>
                         </th:block>
                         <li> <form th:method="get" th:action="@{/}">
@@ -81,10 +81,22 @@
                         </form></li>
 
                     </ul>
-                    <div sec:authorize="!isAuthenticated()" class="border-button">
+                    <th:block sec:authorize="!isAuthenticated()">
+
+                    <div  class="border-button">
                         <a id="modal_trigger" href="#modal"
                            class="sign-in-up"><i class="fa fa-user"></i> Sign In/Up</a>
                     </div>
+                        </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+
+                        <div  class="border-button">
+                            <form th:method="post"
+                                  th:action="@{/logout}">
+                                <input type="submit" class="sign-in-up" value="Logout">
+                            </form>
+                        </div>
+                    </th:block>
 
                     <a class='menu-trigger'>
                         <span>Menu</span>

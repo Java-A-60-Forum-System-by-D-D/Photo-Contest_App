@@ -1,6 +1,7 @@
 package com.example.demo.controllers.mvc;
 
 import com.example.demo.models.User;
+import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
@@ -63,6 +64,9 @@ public class HomeMVCController {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
         model.addAttribute("user", loginUserDto);
+        User user = userService.getUserByEmail(loginUserDto.getEmail());
+        UserRole role = user.getRole();
+        model.addAttribute("role", role);
         return "redirect:/home";
     }
 

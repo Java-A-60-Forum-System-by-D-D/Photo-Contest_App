@@ -11,4 +11,8 @@ public enum UserRole implements GrantedAuthority {
     public String getAuthority() {
         return "ROLE_" + this.name();
     }
+
+    public String toString() {
+        return this.name();
+    }
 }
