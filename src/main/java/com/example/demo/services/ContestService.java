@@ -35,4 +35,6 @@ public interface ContestService {
     List<Contest> getPhaseTwoContests();
 
     List<Contest> geFinishedContests();
+
+    Contest inviteUserToContest(long id, User userToInvite, User user);
 }

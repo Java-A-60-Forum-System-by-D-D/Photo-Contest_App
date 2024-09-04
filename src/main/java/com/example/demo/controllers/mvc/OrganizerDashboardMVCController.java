@@ -4,6 +4,7 @@ import com.example.demo.models.Contest;
 import com.example.demo.models.Type;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;
+import com.example.demo.models.dto.JuryDTO;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
@@ -42,10 +43,11 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("types", Type.values());
         return "create-contest";
     }
+
     @PostMapping("/createContest")
     public String createContest(@Valid @ModelAttribute("contestDto") ContestDto contestDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,
                                 Model model, Principal principal) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.contestDto", bindingResult);
             redirectAttributes.addFlashAttribute("contestDto", contestDto);
             return "create-contest";
@@ -58,6 +60,7 @@ public class OrganizerDashboardMVCController {
 
         return "redirect:/admin/editContest/{id}";
     }
+
     @GetMapping("/editContest/{id}")
     public String editContest(@PathVariable long id, Model model) {
         Contest contest = contestService.getContestById(id);
@@ -67,7 +70,24 @@ public class OrganizerDashboardMVCController {
         return "edit-contest";
     }
 
-    @PutMapping()
+    @PostMapping("/editContest/{id}/addJuryMember")
+    public String addJuryMember(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
+        User jury = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(principal.getName());
+        Contest contest = contestService.addJury(id, jury, user);
+        model.addAttribute("id", contest.getId());
+        return "redirect:/admin/editContest/{id}";
+    }
+    @PostMapping("/editContest/{id}/addInvitationalUser")
+    public String addInvitationalUser(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
+        User userToInvite = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(principal.getName());
+        Contest contest = contestService.inviteUserToContest(id, userToInvite, user);
+        model.addAttribute("id", contest.getId());
+        return "redirect:/admin/editContest/{id}";
+    }
+
+//    @PostMapping()
 
     @GetMapping("/phaseOne")
     public String phaseOne(Model model) {
@@ -75,12 +95,14 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("contests", phaseOneContests);
         return "phase-one";
     }
+
     @GetMapping("/phaseTwo")
     public String phaseTwo(Model model) {
         List<Contest> phaseTwoContests = contestService.getPhaseTwoContests();
         model.addAttribute("contests", phaseTwoContests);
         return "phase-one";
     }
+
     @GetMapping("/finished")
     public String finished(Model model) {
         List<Contest> finishedContests = contestService.geFinishedContests();

@@ -68,12 +68,14 @@
 <!--                    <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>-->
 <!--                    <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>-->
 
+                    <!-- Form for adding invitational users -->
                     <div class="main-content">
                         <h4>Add Invitational Users</h4>
-                        <form th:action="@{/admin/addInvitationalUser}" method="post">
+                        <form th:action="@{/admin/editContest/{id}/addInvitationalUser(id=${contestDto.getId()})}" method="post">
+                            <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="invUserEmail">User Email:</label>
-                                <input type="email" id="invUserEmail" name="invUserEmail" class="form-control" required>
+                                <input type="email" id="invUserEmail" name="email" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Add User</button>
                         </form>
@@ -82,10 +84,11 @@
                     <!-- Form for adding jury members -->
                     <div class="main-content">
                         <h4>Add Jury Members</h4>
-                        <form th:action="@{/admin/addJuryMember}" method="post">
+                        <form th:action="@{/admin/editContest/{id}/addJuryMember(id=${contestDto.getId()})}" method="post">
+                            <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="juryMemberEmail">Jury Member Email:</label>
-                                <input type="email" id="juryMemberEmail" name="juryMemberEmail" class="form-control" required>
+                                <input type="email" id="juryMemberEmail" name="email" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Add Jury Member</button>
                         </form>

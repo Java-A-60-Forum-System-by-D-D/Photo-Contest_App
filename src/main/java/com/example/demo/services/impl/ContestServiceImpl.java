@@ -134,6 +134,7 @@ public class ContestServiceImpl implements ContestService {
 
 
         return contest;
+        //todo need to add notification for invitation
     }
 
     @Override
@@ -154,6 +155,32 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<Contest> geFinishedContests() {
         return contestRepository.findAllByPhase_Finished();
+    }
+
+    @Override
+    public Contest inviteUserToContest(long id, User userToInvite, User user) {
+       Contest contest = getContestById(id);
+        List<Contest> organizedContests = user.getOrganizedContests();
+        UserRole userToInviteRole = userToInvite.getRole();
+        UserRole userRole = user.getRole();
+
+        if (!userRole.equals(UserRole.ORGANIZER)) {
+            throw new AuthorizationUserException("User is not organizer");
+        } else if (!organizedContests
+                .contains(contest)) {
+            throw new AuthorizationUserException("User is not the organizer of this contest");
+        } else if (userToInviteRole
+                .equals(UserRole.ORGANIZER)) {
+            throw new AuthorizationUserException("The user you want to invite is not a photographer");
+        } else if (userToInvite.getParticipatedContests()
+                .contains(contest)) {
+            throw new EntityDuplicateException("The user is already invited to this contest");
+        }
+            userToInvite.getParticipatedContests()
+                       .add(contest);
+            userService.saveUser(userToInvite);
+            return contest;
+    //todo need to add notification for invitation
     }
 
 
