@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{commons/fragments::head}">
+
+</head>
+<body>
+<header th:replace="~{commons/fragments::header}"></header>
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 header-text">
+                <h2 class="space-need" th:text="${contestDto.title}">A Walk In The Nature <em>Contest</em></h2>
+                <h6>Contest Deadline</h6>
+                <div class="main-content">
+                    <div class="counter">
+                        <div class="days">
+                            <div class="value">00</div>
+                            <span>Days</span>
+                        </div>
+                        <div class="hours">
+                            <div class="value">00</div>
+                            <span>Hours</span>
+                        </div>
+                        <div class="minutes">
+                            <div class="value">00</div>
+                            <span>Minutes</span>
+                        </div>
+                        <div class="seconds">
+                            <div class="value">00</div>
+                            <span>Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="contest-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="top-content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <span class="open" th:text="${contestDto.getPhase().name()}">Open Contest</span>
+                            <span class="wish-list"><i class="fa fa-heart"></i> Add To Your Favorites</span>
+                        </div>
+                        <div class="col-lg-8">
+                            <ul>
+                                <li><i class="fa fa-medal"></i> <span>Award:</span> $2,400</li>
+                                <li><span>Time left:</span> 7 Days</li>
+                                <li><span>Participants:</span> 118</li>
+                                <li><span>Submittions:</span> 280</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="main-content">
+                    <h4>Requirements Of The Contest</h4>
+                    <h6>Picture Should Have</h6>
+                    <p th:text="${contestDto.description}"></p>
+<!--                    <p>You are allowed to 100% freely use this SnapX Template for your commercial websites. You are not allowed to redistribute the template ZIP file on any other Free CSS Template collection websites.</p>-->
+                    <h6 class="second-title" th:text="'Picture photo must match the category - ' + ${contestDto.category.name}"></h6>
+<!--                    <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>-->
+<!--                    <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>-->
+
+                    <div class="main-content">
+                        <h4>Add Invitational Users</h4>
+                        <form th:action="@{/admin/addInvitationalUser}" method="post">
+                            <div class="form-group">
+                                <label for="invUserEmail">User Email:</label>
+                                <input type="email" id="invUserEmail" name="invUserEmail" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add User</button>
+                        </form>
+                    </div>
+
+                    <!-- Form for adding jury members -->
+                    <div class="main-content">
+                        <h4>Add Jury Members</h4>
+                        <form th:action="@{/admin/addJuryMember}" method="post">
+                            <div class="form-group">
+                                <label for="juryMemberEmail">Jury Member Email:</label>
+                                <input type="email" id="juryMemberEmail" name="juryMemberEmail" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Jury Member</button>
+                        </form>
+                    </div>
+
+                    <h4 class="second-title">Links To Inspire Your Photo</h4>
+                    <div class="row">
+                        <div class="col-lg-3 col-6">
+                            <div class="item">
+                                <span>JPG</span>
+                                <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="item">
+                                <span>PNG</span>
+                                <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="item">
+                                <span>PDF</span>
+                                <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="item">
+                                <span>AI</span>
+                                <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-button">
+                        <a href="#">Submit Your Photo/Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
