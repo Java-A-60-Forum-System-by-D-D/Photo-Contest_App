@@ -50,9 +50,9 @@
                             <ul class="sub-menu">
                                 <th:block sec:authorize="!hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/admin/createContest}">New Contest</a></li>
-                                    <li><a href="contest-details.html">Contests in Phase One</a></li>
-                                    <li><a href="contest-details.html">Contest in Phase Two</a></li>
-                                    <li><a href="contest-details.html">Finished</a></li>
+                                    <li><a th:href="@{/admin/phaseOne}">Phase One</a></li>
+                                    <li><a th:href="@{/admin/phaseTwo}">Phase Two</a></li>
+                                    <li><a th:href="@{/admin/finished}">Finished</a></li>
                                 </th:block>
                                 <th:block sec:authorize="hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a href="open-contest-details.html">Open Contests</a></li>

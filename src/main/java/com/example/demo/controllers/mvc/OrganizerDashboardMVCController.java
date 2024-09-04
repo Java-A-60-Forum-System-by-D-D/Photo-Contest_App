@@ -12,13 +12,11 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -54,9 +52,39 @@ public class OrganizerDashboardMVCController {
         }
         User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestMapper.createContestFromDto(contestDto, user);
+        List<User> users = userService.getAllUsers();
+        contest = contestService.createContest(contest, user);
+        redirectAttributes.addAttribute("id", contest.getId());
 
-        contestService.createContest(contest, user);
+        return "redirect:/admin/editContest/{id}";
+    }
+    @GetMapping("/editContest/{id}")
+    public String editContest(@PathVariable long id, Model model) {
+        Contest contest = contestService.getContestById(id);
+        model.addAttribute("contestDto", contest);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("types", Type.values());
+        return "edit-contest";
+    }
 
-        return "redirect:/home";
+    @PutMapping()
+
+    @GetMapping("/phaseOne")
+    public String phaseOne(Model model) {
+        List<Contest> phaseOneContests = contestService.getPhaseOneContests();
+        model.addAttribute("contests", phaseOneContests);
+        return "phase-one";
+    }
+    @GetMapping("/phaseTwo")
+    public String phaseTwo(Model model) {
+        List<Contest> phaseTwoContests = contestService.getPhaseTwoContests();
+        model.addAttribute("contests", phaseTwoContests);
+        return "phase-one";
+    }
+    @GetMapping("/finished")
+    public String finished(Model model) {
+        List<Contest> finishedContests = contestService.geFinishedContests();
+        model.addAttribute("contests", finishedContests);
+        return "phase-one";
     }
 }
