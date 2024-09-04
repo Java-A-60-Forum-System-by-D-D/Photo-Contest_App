@@ -19,6 +19,7 @@
   <link rel="stylesheet" th:href="@{/css/owl.css}">
   <link rel="stylesheet" th:href="@{/css/animate.css}">
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
 </head>
 
 <body>
@@ -67,15 +68,15 @@
   <!-- Page heading content -->
 </div>
 
-
 <div class="top-categories" th:object="${categories}">
-  <!-- Top categories content -->
   <div class="row">
     <div class="col-md-4" th:each="category : ${categories}">
       <div class="card mb-4 shadow-sm">
         <img th:src="${category.photoUrl}" class="card-img-top" alt="Category Image">
         <div class="card-body">
-          <h5 class="card-title" th:text="${category.name}">Category Name</h5>
+          <h5 class="card-title">
+            <a th:href="@{/categories/{name}(name=${category.name})}" th:text="${category.name}">Category Name</a>
+          </h5>
         </div>
       </div>
     </div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Details</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<header>
+    <!-- Header content -->
+</header>
+<main>
+    <div class="container">
+        <h1 th:text="${category.name}">Category Name</h1>
+        <img th:src="${category.photoUrl}" alt="Category Image">
+        <p th:text="${category.description}">Category Description</p>
+    </div>
+</main>
+<footer>
+    <!-- Footer content -->
+</footer>
+</body>
+</html>
