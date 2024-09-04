@@ -30,22 +30,21 @@
                             th:text="${t}">Open</option>
                 </select>
             </div>
-            <div class="form-group" id="invitedUsersField" style="display: none;">
-                <label for="invitedUsers">Invited Users</label>
-                <input type="text" id="invitedUsers" name="invitedUsers" th:field="*{invitedUsers}" class="form-control">
-            </div>
+<!--            <div class="form-group" id="invitedUsersField" style="display: none;">-->
+<!--                <label for="invitedUsers">Invited Users</label>-->
+<!--                <input type="text" id="invitedUsers" name="invitedUsers" th:field="*{invitedUsers}" class="form-control">-->
+<!--            </div>-->
             <button type="submit" class="btn btn-primary">Create Contest</button>
         </form>
     </div>
 </div>
+
 <!-- Success Modal -->
-<!-- HTML -->
-<a href="#successModal" class="trigger-modal">Open Modal</a>
-<div id="successModal" class="modal">
+<div id="successModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Success</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" aria-label="Close" onclick="closeModal()">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -53,7 +52,7 @@
             <p>Contest created successfully!</p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
         </div>
     </div>
 </div>
@@ -70,21 +69,18 @@
     }
 
     $(document).ready(function() {
-        $('.trigger-modal').leanModal({ closeButton: ".close" });
-
         // Form submission handler
         $('#createContestForm').submit(function(event) {
             event.preventDefault(); // Prevent the default form submission
 
-            // Perform the form submission with AJAX or any logic
+            // Perform the form submission with AJAX
             $.ajax({
-                url: $(this).attr('action'), // Use form's action attribute
-                type: $(this).attr('method'), // Use form's method attribute
+                url: $(this).attr('th:action'), // Use form's action attribute (Thymeleaf parsed)
+                type: $(this).attr('th:method'), // Use form's method attribute (Thymeleaf parsed)
                 data: $(this).serialize(), // Serialize form data
                 success: function(response) {
                     // Assuming response indicates success
                     $('#successModal').fadeIn(); // Show the modal
-                    $('#lean_overlay').fadeTo(200, 0.5); // Show the overlay
                 },
                 error: function() {
                     // Handle error
@@ -94,16 +90,16 @@
         });
 
         // Attach close modal functionality
-        $('#lean_overlay, .close').click(function() {
+        $('.close').click(function() {
             closeModal();
         });
-
-        function closeModal() {
-            $('#lean_overlay').fadeOut(200);
-            $('#successModal').fadeOut(200);
-        }
     });
+
+    function closeModal() {
+        $('#successModal').fadeOut(200);
+    }
 </script>
+
 <script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
 <script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
 <script src="/js/isotope.min.js" th:href="@{/js/isotope.min.js}"></script>

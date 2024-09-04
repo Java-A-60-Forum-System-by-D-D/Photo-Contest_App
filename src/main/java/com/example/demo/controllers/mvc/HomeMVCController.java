@@ -34,6 +34,9 @@ public class HomeMVCController {
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
     }
+//    @ModelAttribute
+//    public Role get
+
     @GetMapping(value = {"/home", "/"})
     public String home(Model model) {
         if (!model.containsAttribute("registerUser")) {
