@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category Details</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 150px; /* Set a fixed height */
+            object-fit: cover; /* Maintain aspect ratio */
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -13,8 +20,22 @@
 <main>
     <div class="container">
         <h1 th:text="${category.name}">Category Name</h1>
-        <img th:src="${category.photoUrl}" alt="Category Image">
+        <img th:src="${category.photoUrl}" alt="Category Image" style="width: 100%; max-width: 300px; height: auto;">
         <p th:text="${category.description}">Category Description</p>
+    </div>
+
+    <div class="top-contests" th:object="${contestsByCategory}">
+        <div class="row">
+            <div class="col-md-4" th:each="contest : ${contestsByCategory}">
+                <div class="card mb-4 shadow-sm">
+<!--                    <img th:src="${contest.photoUrl}" class="card-img-top" alt="Contest Image">-->
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${contest.title}">Contest Name</h5>
+                        <p class="card-text" th:text="${contest.description}">Contest Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <footer>

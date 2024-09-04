@@ -37,6 +37,11 @@ public interface ContestRepository extends JpaRepository<Contest,Long>, JpaSpeci
                                          @Param("type") Type type,
                                          @Param("phase") Phase phase,
                                          @Param("username") String username);
+
+
+
+    @Query("SELECT c FROM Contest c WHERE c.phase = 'FINISHED' AND c.category.id = :categoryId")
+    List<Contest> getFinishedContestsByCategory(@Param("categoryId") Long categoryId);
     @Query("select c from Contest c where c.phase = 'PHASE_2'")
     List<Contest> findAllByPhase_Phase2();
     @Query("select c from Contest c where c.phase = 'FINISHED'")

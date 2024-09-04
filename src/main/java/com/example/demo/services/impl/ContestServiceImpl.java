@@ -3,10 +3,7 @@ package com.example.demo.services.impl;
 import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityDuplicateException;
 import com.example.demo.exceptions.EntityNotFoundException;
-import com.example.demo.models.Contest;
-import com.example.demo.models.PhotoSubmission;
-import com.example.demo.models.User;
-import com.example.demo.models.UserRole;
+import com.example.demo.models.*;
 import com.example.demo.models.filtering.ContestFilterOptions;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
@@ -48,7 +45,6 @@ public class ContestServiceImpl implements ContestService {
                              .isPresent()) {
             throw new EntityDuplicateException(CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS);
         }
-
 
         Contest savedContest = contestRepository.save(contest);
 
@@ -140,6 +136,16 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions) {
         return contestRepository.findAllByFilterOptions(filterOptions.getTitle(), filterOptions.getCategory(), filterOptions.getType(), filterOptions.getPhase(), filterOptions.getUsername());
+    }
+
+    @Override
+    public List<Contest> getContestByCategoryName(Category category) {
+        List<Contest> contests = contestRepository.getFinishedContestsByCategory(category.id);
+        if (contests.isEmpty()) {
+            System.out.println("List is empty");
+            throw new EntityNotFoundException("CANT FIND CONTESTS");
+        }
+        return contests;
     }
 
     @Override

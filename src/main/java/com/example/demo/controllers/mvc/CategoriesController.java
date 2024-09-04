@@ -1,8 +1,11 @@
 package com.example.demo.controllers.mvc;
 
 
+import com.example.demo.controllers.rest.CategoryRestController;
 import com.example.demo.models.Category;
+import com.example.demo.models.Contest;
 import com.example.demo.services.CategoryService;
+import com.example.demo.services.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,15 @@ import java.util.List;
 public class CategoriesController {
 
     private final CategoryService categoryService;
+    private final ContestService contestService;
+
 
 
     @Autowired
-    public CategoriesController(CategoryService categoryService) {
+    public CategoriesController(CategoryService categoryService, ContestService contestService) {
         this.categoryService = categoryService;
+        this.contestService = contestService;
+
     }
 
 
@@ -41,7 +48,12 @@ public class CategoriesController {
     public String getCategoryPage(@PathVariable String name, Model model) {
 
         Category category = categoryService.getCategoryByName(name);
-         model.addAttribute("category", category);
+        List<Contest> contests = contestService.getContestByCategoryName(category);
+
+
+
+        model.addAttribute("category", category);
+        model.addAttribute("contestsByCategory", contests);
         return "category";
     }
 

@@ -1,4 +1,5 @@
 package com.example.demo.services;
+import com.example.demo.models.Category;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
@@ -29,6 +30,8 @@ public interface ContestService {
 
 
     List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions);
+
+    List<Contest> getContestByCategoryName(Category category);
 
     List<Contest> getPhaseOneContests();
 
