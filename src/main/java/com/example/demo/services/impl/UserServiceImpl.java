@@ -112,6 +112,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                              .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND + username));
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
 
 }

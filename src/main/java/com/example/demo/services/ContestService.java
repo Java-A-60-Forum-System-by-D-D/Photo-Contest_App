@@ -29,4 +29,10 @@ public interface ContestService {
 
 
     List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions);
+
+    List<Contest> getPhaseOneContests();
+
+    List<Contest> getPhaseTwoContests();
+
+    List<Contest> geFinishedContests();
 }

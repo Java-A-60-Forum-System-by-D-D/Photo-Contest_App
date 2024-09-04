@@ -49,6 +49,7 @@ public class ContestServiceImpl implements ContestService {
             throw new EntityDuplicateException(CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS);
         }
 
+
         Contest savedContest = contestRepository.save(contest);
 
         List<User> organizers = userService.findUsersByRoleOrganizer("ORGANIZER");
@@ -138,6 +139,21 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<Contest> getAllContestsByOptions(ContestFilterOptions filterOptions) {
         return contestRepository.findAllByFilterOptions(filterOptions.getTitle(), filterOptions.getCategory(), filterOptions.getType(), filterOptions.getPhase(), filterOptions.getUsername());
+    }
+
+    @Override
+    public List<Contest> getPhaseOneContests() {
+        return contestRepository.findAllByPhase_Phase1();
+    }
+
+    @Override
+    public List<Contest> getPhaseTwoContests() {
+        return contestRepository.findAllByPhase_Phase2();
+    }
+
+    @Override
+    public List<Contest> geFinishedContests() {
+        return contestRepository.findAllByPhase_Finished();
     }
 
 

@@ -1,7 +1,6 @@
 package com.example.demo.repositories;
 
 import com.example.demo.models.*;
-import com.example.demo.models.dto.ContestViewDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -38,4 +37,8 @@ public interface ContestRepository extends JpaRepository<Contest,Long>, JpaSpeci
                                          @Param("type") Type type,
                                          @Param("phase") Phase phase,
                                          @Param("username") String username);
+    @Query("select c from Contest c where c.phase = 'PHASE_2'")
+    List<Contest> findAllByPhase_Phase2();
+    @Query("select c from Contest c where c.phase = 'FINISHED'")
+    List<Contest> findAllByPhase_Finished();
 }

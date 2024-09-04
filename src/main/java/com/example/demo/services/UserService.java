@@ -25,4 +25,5 @@ public interface UserService {
     User getUserByUsername(String username);
 
 
+    List<User> getAllUsers();
 }
