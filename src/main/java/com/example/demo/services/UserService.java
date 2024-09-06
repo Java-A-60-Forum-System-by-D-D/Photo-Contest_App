@@ -13,7 +13,7 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    void save(User user);
+    User save(User user);
     List<User> findUsersByRoleOrganizer(String role);
 
     List<User> getUsers(UserFilterOptions userFilterOptions);

@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,13 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
             joinColumns = @JoinColumn(name = "jury_id"),
             inverseJoinColumns = @JoinColumn(name = "contest_id"))
     private List<Contest> jurorContests;
+
+    public List<Contest> getJurorContests() {
+        if (jurorContests == null) {
+            jurorContests = new ArrayList<>();
+        }
+        return jurorContests;
+    }
 
 
 
