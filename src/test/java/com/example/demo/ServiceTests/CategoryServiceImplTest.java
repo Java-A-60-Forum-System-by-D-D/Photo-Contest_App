@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.ServiceTests;
 
 import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityNotFoundException;
@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
