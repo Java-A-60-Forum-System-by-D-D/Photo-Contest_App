@@ -90,7 +90,9 @@ public class OrganizerDashboardMVCController {
 //    @PostMapping()
 
     @GetMapping("/phaseOne")
-    public String phaseOne(Model model) {
+    public String phaseOne(Model model, Principal principal) {
+
+
         List<Contest> phaseOneContests = contestService.getPhaseOneContests();
         model.addAttribute("contests", phaseOneContests);
         return "phase-one";
