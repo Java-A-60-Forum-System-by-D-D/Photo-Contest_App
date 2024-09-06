@@ -34,9 +34,6 @@ public class MVCAuthenticationImplTests {
 
 
     @Mock
-    private PasswordEncoder passwordEncoder;
-
-    @Mock
     private AuthenticationManager authenticationManager;
 
     @Mock
