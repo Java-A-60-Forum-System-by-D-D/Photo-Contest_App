@@ -72,109 +72,37 @@
     </div>
   </div>
 
-  <section class="photos-videos">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="section-heading text-center">
-            <h6>Photos &amp; Videos At SnapX</h6>
-            <h4>Our Featured <em>Photos &amp; Videos</em> At SnapX</h4>
+  <section class="contest-waiting">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h5>Finished Contests</h5>
+              </div>
+              <div class="col-lg-3 col-sm-6" th:each="contest : ${contests}" th:object="${contest}">
+                  <div class="waiting-item">
+                      <img th:src="*{photoUrl}" alt="">
+                      <div class="down-content">
+                          <h4 th:text="*{title}">Contest Title</h4>
+                          <p th:text="*{description}">Contest Description</p>
+                          <!--                          <span class="price">Price: <em >$0</em></span>-->
+                          <span class="deadline">Closed <em th:text="*{startPhase3}">0 Days</em></span>
+                      </div>
+                      <!--                      <div class="border-button">-->
+                      <!--                          <a th:href="@{/contests/{id}(id=${contest.getId()})}">Go To Contest</a>-->
+                      <!--                      </div>-->
+                  </div>
+              </div>
+              <div class="col-lg-12">
+                  <ul class="pagination">
+                      <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
+                      <li><a href="#">1</a></li>
+                      <li class="active"><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
+                  </ul>
+              </div>
           </div>
-        </div>
-        <ul>
-            <li th:each="contest : ${contests}" th:object="${contest}">
-                <div class="col-lg-4">
-                    <div class="item">
-                        <div class="thumb">
-                            <img src="../static/images/photo-video-03.jpg" alt="">
-                            <div class="top-content">
-                                <h4 th:text="*{title}"></h4>
-                                <h6><i class="fa fa-eye"></i> 1436 | <i class="fa fa-heart"></i> 256</h6>
-                            </div>
-                        </div>
-                        <div class="down-content">
-                            <div class="row">
-                                <div class="col-7">
-<!--                                    <h2>Ranked: 3rd</h2>-->
-                                </div>
-                                <div class="col-5">
-                                    <h6 th:text="'Category: '+ *{category.name}"></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-        </ul>
-<!--        <div class="col-lg-4">-->
-<!--          <div class="item">-->
-<!--            <div class="thumb">-->
-<!--              <img src="../static/images/photo-video-03.jpg" alt="">-->
-<!--              <div class="top-content">-->
-<!--                <h4>Underwater Turtle</h4>-->
-<!--                <h6><i class="fa fa-eye"></i> 1436 | <i class="fa fa-heart"></i> 256</h6>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="down-content">-->
-<!--              <div class="row">-->
-<!--                <div class="col-7">-->
-<!--                  <h2>Ranked: 3rd</h2>-->
-<!--                </div>-->
-<!--                <div class="col-5">-->
-<!--                  <h6>Category: Photos</h6>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-lg-4">-->
-<!--          <div class="item">-->
-<!--            <div class="thumb">-->
-<!--              <img src="../static/images/photo-video-04.jpg" alt="">-->
-<!--              <div class="play-button">-->
-<!--                <a href="http://youtube.com" target="_blank"><i class="fa fa-play"></i></a>-->
-<!--              </div>-->
-<!--              <div class="top-content">-->
-<!--                <h4>Greeny Place</h4>-->
-<!--                <h6><i class="fa fa-eye"></i> 1596 | <i class="fa fa-heart"></i> 512</h6>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="down-content">-->
-<!--              <div class="row">-->
-<!--                <div class="col-7">-->
-<!--                  <h2>Ranked: 4th</h2>-->
-<!--                </div>-->
-<!--                <div class="col-5">-->
-<!--                  <h6>Category: Videos</h6>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="col-lg-4">-->
-<!--          <div class="item">-->
-<!--            <div class="thumb">-->
-<!--              <img src="../static/images/photo-video-05.jpg" alt="">-->
-<!--              <div class="top-content">-->
-<!--                <h4>Rocky Mountain</h4>-->
-<!--                <h6><i class="fa fa-eye"></i> 1596 | <i class="fa fa-heart"></i> 768</h6>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="down-content">-->
-<!--              <div class="row">-->
-<!--                <div class="col-7">-->
-<!--                  <h2>Ranked: 5th</h2>-->
-<!--                </div>-->
-<!--                <div class="col-5">-->
-<!--                  <h6>Category: Random</h6>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
-    </div>
   </section>
 
 <!--  <section class="contest-win">-->
