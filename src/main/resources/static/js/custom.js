@@ -107,14 +107,14 @@
 		}
 	})();
 
-	(function init() {
+	(function() {
 		function getTimeRemaining(endtime) {
-			const t = Date.parse(endtime) - Date.parse(new Date());
+			var t = Date.parse(endtime) - Date.parse(new Date());
+			var seconds = Math.floor((t / 1000) % 60);
+			var minutes = Math.floor((t / 1000 / 60) % 60);
+			var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+			var days = Math.floor(t / (1000 * 60 * 60 * 24));
 
-			const seconds = Math.floor((t / 1000) % 60);
-			const minutes = Math.floor((t / 1000 / 60) % 60);
-			const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-			const days = Math.floor(t / (1000 * 60 * 60 * 24));
 			return {
 				'total': t,
 				'days': days,
@@ -125,8 +125,8 @@
 		}
 
 		function initializeClock(endtime) {
-			const timeinterval = setInterval(function() {
-				const t = getTimeRemaining(endtime);
+			var timeinterval = setInterval(function() {
+				var t = getTimeRemaining(endtime);
 
 				document.querySelector(".days > .value").innerText = t.days;
 				document.querySelector(".hours > .value").innerText = t.hours;
@@ -138,9 +138,18 @@
 			}, 1000);
 		}
 
-		const customEndDate = document.querySelector(".page-heading").getAttribute("data-enddate");
-		initializeClock(customEndDate);
-	})();
+		function init() {
+			var customEndDate = document.querySelector(".page-heading").getAttribute("data-enddate");
+			initializeClock(customEndDate);
+		}
+
+		// Call init when the DOM is fully loaded
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", init);
+		} else {
+			init();
+		}
+	})()
 
 
 
