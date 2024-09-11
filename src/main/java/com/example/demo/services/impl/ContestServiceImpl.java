@@ -140,7 +140,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public List<Contest> getContestByCategoryName(Category category) {
-        List<Contest> contests = contestRepository.getFinishedContestsByCategory(category.id);
+        List<Contest> contests = contestRepository.findContestByCategory_Id(category.getId());
         if (contests.isEmpty()) {
             System.out.println("List is empty");
             throw new EntityNotFoundException("CANT FIND CONTESTS");

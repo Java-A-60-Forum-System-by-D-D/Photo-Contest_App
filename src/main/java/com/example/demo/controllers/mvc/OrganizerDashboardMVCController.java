@@ -103,13 +103,13 @@ public class OrganizerDashboardMVCController {
     public String phaseTwo(Model model) {
         List<Contest> phaseTwoContests = contestService.getPhaseTwoContests();
         model.addAttribute("contests", phaseTwoContests);
-        return "phase-one";
+        return "phase-two";
     }
 
     @GetMapping("/finished")
     public String finished(Model model) {
         List<Contest> finishedContests = contestService.geFinishedContests();
         model.addAttribute("contests", finishedContests);
-        return "phase-one";
+        return "finished";
     }
 }

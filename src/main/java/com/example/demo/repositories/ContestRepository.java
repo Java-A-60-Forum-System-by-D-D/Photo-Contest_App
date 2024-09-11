@@ -48,4 +48,6 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
     List<Contest> findAllByPhase_Phase2();
     @Query("select c from Contest c where c.phase = 'FINISHED'")
     List<Contest> findAllByPhase_Finished();
+
+    List<Contest> findContestByCategory_Id(long id);
 }
