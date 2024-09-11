@@ -72,6 +72,7 @@ public class OrganizerDashboardMVCController {
 
     @PostMapping("/editContest/{id}/addJuryMember")
     public String addJuryMember(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
+        //todo catch if user hasn't got needed role - BindingResult?
         User jury = userService.getUserByEmail(email);
         User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestService.addJury(id, jury, user);

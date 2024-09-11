@@ -38,6 +38,8 @@ public class Contest extends BaseEntity {
     @OneToMany
     @Transient
     private List<User> invitedUsers;
+    @Column(name = "photo_url")
+    private String photoUrl;
 
 
 

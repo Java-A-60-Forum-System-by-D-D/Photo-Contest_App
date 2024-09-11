@@ -14,5 +14,6 @@ public class ContestViewDto {
     private LocalDateTime startPhase2;
     private LocalDateTime startPhase3;
     private String type;
+    private String photoUrl;
 
 }

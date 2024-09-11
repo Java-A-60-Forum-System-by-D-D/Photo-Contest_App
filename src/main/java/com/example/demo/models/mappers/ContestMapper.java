@@ -29,6 +29,8 @@ public class ContestMapper {
         contest.setTitle(contestDto.getTitle());
         contest.setDescription(contestDto.getDescription());
         contest.setCategory(categoryService.getCategoryByName(contestDto.getCategory()));
+        contest.setPhotoUrl(categoryService.getCategoryByName(contestDto.getCategory())
+                                           .getPhotoUrl());
         contest.setCreatedAt(LocalDateTime.now());
         contest.setUpdatedAt(LocalDateTime.now());
         contest.setOrganizer(user);
@@ -49,6 +51,7 @@ public class ContestMapper {
         contestViewDto.setDescription(contest.getDescription());
         contestViewDto.setCategory(contest.getCategory()
                                           .getName());
+        contestViewDto.setPhotoUrl(contest.getPhotoUrl());
         contestViewDto.setCreatorName(contest.getOrganizer()
                                              .getFirstName() + " " + contest.getOrganizer()
                                                                             .getLastName());

@@ -17,6 +17,8 @@ public interface ContestRepository extends JpaRepository<Contest,Long>, JpaSpeci
     List<Contest> findAllByPhase_Phase1();
 //    @Query("Select c from Contest c where c.phase = 'NOT_STARTED'")
 //    List<Contest> findAllByPhase_NotStarted();
+@Query("Select c from Contest c where c.phase = 'PHASE_1' and c.type = 'OPEN'")
+List<Contest> findAllByPhase_Phase1_AndType_Open();
 
     @Query("SELECT c FROM Contest c JOIN c.participants p on p.id=:userId")
     List<Contest> findAllParticipated(@Param("userId") long userId);

@@ -185,8 +185,15 @@ public class ContestServiceImpl implements ContestService {
             userToInvite.getParticipatedContests()
                        .add(contest);
             userService.saveUser(userToInvite);
+            contest.getParticipants().add(userToInvite);
+            contestRepository.save(contest);
             return contest;
     //todo need to add notification for invitation
+    }
+
+    @Override
+    public List<Contest> getPhaseOneContestsAndTypeOpen() {
+        return contestRepository.findAllByPhase_Phase1_AndType_Open();
     }
 
 

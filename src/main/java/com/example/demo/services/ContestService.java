@@ -6,6 +6,7 @@ import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestSummaryDTO;
 import com.example.demo.models.filtering.ContestFilterOptions;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +41,6 @@ public interface ContestService {
     List<Contest> geFinishedContests();
 
     Contest inviteUserToContest(long id, User userToInvite, User user);
+
+    List<Contest> getPhaseOneContestsAndTypeOpen();
 }

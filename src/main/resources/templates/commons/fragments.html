@@ -45,17 +45,17 @@
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
-                        <li class="has-sub">
+                        <li class="has-sub" sec:authorize="isAuthenticated()">
                             <a href="javascript:void(0)">Dashboard</a>
-                            <ul class="sub-menu">
-                                <th:block sec:authorize="!hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
+                            <ul class="sub-menu" >
+                                <th:block sec:authorize="hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/admin/createContest}">New Contest</a></li>
                                     <li><a th:href="@{/admin/phaseOne}">Phase One</a></li>
                                     <li><a th:href="@{/admin/phaseTwo}">Phase Two</a></li>
                                     <li><a th:href="@{/admin/finished}">Finished</a></li>
                                 </th:block>
-                                <th:block sec:authorize="hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
-                                    <li><a href="open-contest-details.html">Open Contests</a></li>
+                                <th:block sec:authorize="!hasRole(T(com.example.demo.models.UserRole).ORGANIZER)">
+                                    <li><a th:href="@{/user/openContests}">Open Contests</a></li>
                                     <li><a href="contest-details.html">Your Contests</a></li>
                                     <li><a href="contest-details.html">Finished Contests</a></li>
                                 </th:block>
@@ -64,12 +64,15 @@
                         </li>
 <!--                        <li><a href="categories.html">Categories</a></li>-->
                         <li><a th:href="@{/categories}">Categories</a></li>
-                        <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
-                            <li><a href="users.html">Users</a></li>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <th:block sec:authorize="hasRole('ROLE_ORGANIZER')" >
+                                <li><a href="users.html">Users</a></li>
+                            </th:block>
+                            <th:block sec:authorize="!hasRole('ROLE_ORGANIZER')">
+                                <li><a href="users.html">Profile</a></li>
+                            </th:block>
                         </th:block>
-                        <th:block sec:authorize="hasRole('ROLE_ORGANIZER')">
-                            <li><a href="users.html">Profile</a></li>
-                        </th:block>
+
                         <li> <form th:method="get" th:action="@{/}">
                             <label class="text-grey" th:text="#{navbar_language}" for="lang">Language</label>
                             <select
