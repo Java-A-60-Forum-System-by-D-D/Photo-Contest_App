@@ -16,28 +16,28 @@
   <!-- ***** Header Area End ***** -->
 
 
-  <div class="page-heading">
-    <div class="container">
+  <div class="page-heading" th:object="${contest}"  th:data-enddate="*{startPhase3}">
+    <div class="container" >
       <div class="row">
         <div class="col-lg-8 offset-lg-2 header-text">
-          <h2 class="space-need">A Walk In The Nature <em>Contest</em></h2>
+          <h2 class="space-need" th:text="*{title}">A Walk In The Nature <em>Contest</em></h2>
           <h6>Contest Deadline</h6>
           <div class="main-content">
-            <div class="counter">
+            <div class="counter" th:datetime-local="${contest.startPhase3}">
               <div class="days">
-                <div class="value">00</div>
+                <div class="value" th:text="*{daysRemaining}">00</div>
                 <span>Days</span>
               </div>
               <div class="hours">
-                <div class="value">00</div>
+                <div class="value" th:text="*{hoursRemaining}">00</div>
                 <span>Hours</span>
               </div>
               <div class="minutes">
-                <div class="value">00</div>
+                <div class="value" th:text="*{minutesRemaining}">00</div>
                 <span>Minutes</span>
               </div>
               <div class="seconds">
-                <div class="value">00</div>
+                <div class="value" th:text="*{secondsRemaining}">00</div>
                 <span>Seconds</span>
               </div>
             </div>

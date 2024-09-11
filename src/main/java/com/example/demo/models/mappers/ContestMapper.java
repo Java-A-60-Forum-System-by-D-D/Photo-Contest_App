@@ -11,6 +11,7 @@ import com.example.demo.models.dto.PlaceDTO;
 import com.example.demo.services.CategoryService;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
@@ -59,7 +60,15 @@ public class ContestMapper {
         contestViewDto.setStartPhase2(contest.getStartPhase2());
         contestViewDto.setStartPhase3(contest.getStartPhase3());
         contestViewDto.setType(contest.getType().toString());
+        calculateTimeRemaining(contestViewDto, contest.getStartPhase3());
         return contestViewDto;
+    }
+    private void calculateTimeRemaining(ContestViewDto dto, LocalDateTime startPhase3) {
+        Duration duration = Duration.between(LocalDateTime.now(), startPhase3);
+        dto.setDaysRemaining(duration.toDays());
+        dto.setHoursRemaining(duration.toHours() % 24);
+        dto.setMinutesRemaining(duration.toMinutes() % 60);
+        dto.setSecondsRemaining(duration.getSeconds() % 60);
     }
 
 //    public ContestSummaryDTO createFinishedContestViewDto(Contest contest) {

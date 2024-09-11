@@ -1,6 +1,7 @@
 package com.example.demo.controllers.mvc;
 
 import com.example.demo.models.Category;
+import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestSummaryDTO;
 import com.example.demo.models.mappers.ContestMapper;
@@ -38,10 +39,8 @@ public class UsersDashboardMVCController {
     @GetMapping("/openContests")
     public String openContests(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
-        List<ContestSummaryDTO> openContests = contestService.getPhaseOneContestsAndTypeOpen()
-                .stream()
-                .map(contestMapper::createFinishedContestViewDto)
-                .toList();
+        List<Contest> openContests = contestService.getPhaseOneContestsAndTypeOpen();
+
         model.addAttribute("contests", openContests);
 
         return "user-open-contests";
