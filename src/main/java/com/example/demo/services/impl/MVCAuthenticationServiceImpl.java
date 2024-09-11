@@ -29,17 +29,14 @@ import java.util.Optional;
 public class MVCAuthenticationServiceImpl implements MVCAuthenticationService {
 
     public static final String USER_WITH_SUCH_EMAIL_DOESNT_EXIST = "User with such email doesnt exist";
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PhotoContestUserDetails photoContestUserDetails;
 
-    public MVCAuthenticationServiceImpl(PasswordEncoder passwordEncoder,
-                                        @Qualifier("mvcAuthenticationManager") AuthenticationManager authenticationManager,
+    public MVCAuthenticationServiceImpl(@Qualifier("mvcAuthenticationManager") AuthenticationManager authenticationManager,
                                         UserRepository userRepository,
                                         PhotoContestUserDetails photoContestUserDetails) {
 
-        this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.photoContestUserDetails = photoContestUserDetails;
@@ -67,26 +64,41 @@ public class MVCAuthenticationServiceImpl implements MVCAuthenticationService {
         }
     }
 
+//    @Override
+//    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
+//
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//
+//        Cookie sessionCookie = new Cookie("SESSIONID", null);
+//        sessionCookie.setHttpOnly(true);
+//        sessionCookie.setSecure(true);
+//        sessionCookie.setPath("/**");
+//        sessionCookie.setMaxAge(0);
+//        Authentication auth = SecurityContextHolder.getContext()
+//                                                   .getAuthentication();
+//        if (auth != null) {
+//            SecurityContextHolder.getContext()
+//                                 .setAuthentication(null);
+//        }
+//
+//    }
+
+
     @Override
     public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
-
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-
-        Cookie sessionCookie = new Cookie("SESSIONID", null);
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setSecure(true);
-        sessionCookie.setPath("/**");
-        sessionCookie.setMaxAge(0);
-        Authentication auth = SecurityContextHolder.getContext()
-                                                   .getAuthentication();
-        if (auth != null) {
-            SecurityContextHolder.getContext()
-                                 .setAuthentication(null);
-        }
-
+        Cookie cookie = new Cookie("SESSIONID", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        SecurityContextHolder.clearContext();
     }
 
     @Override
