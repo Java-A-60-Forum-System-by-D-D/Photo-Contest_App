@@ -207,8 +207,6 @@ public class ContestServiceImpl implements ContestService {
         Contest contest = getContestById(id);
 
         List<User> juryList = contest.getJurorContests();
-        List<User> invitedUsers = contest.getInvitedUsers();
-
 
         juryList.stream()
                 .forEach(jury -> {
@@ -216,6 +214,9 @@ public class ContestServiceImpl implements ContestService {
                         .remove(contest);
                     userService.save(jury);
                 });
+
+
+        List<User> invitedUsers = contest.getInvitedUsers();
 
         if (invitedUsers != null) {
             invitedUsers.stream()
