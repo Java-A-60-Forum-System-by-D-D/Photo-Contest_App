@@ -50,4 +50,7 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
     List<Contest> findAllByPhase_Finished();
 
     List<Contest> findContestByCategory_Id(long id);
+
+    @Query("Select c from Contest c where c.phase = 'NOT_STARTED'")
+    List<Contest> findContestByPhase_NotStarted();
 }

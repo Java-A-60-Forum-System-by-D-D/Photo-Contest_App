@@ -196,6 +196,17 @@ public class ContestServiceImpl implements ContestService {
         return contestRepository.findAllByPhase_Phase1_AndType_Open();
     }
 
+    @Override
+    public List<Contest> getNotStartedContests() {
+        return contestRepository.findContestByPhase_NotStarted();
+    }
+
+    @Override
+    public void deleteContest(long id) {
+        Contest contest = getContestById(id);
+        List<User> juryList = userService.getUsersByJurorContests(contest);
+    }
+
 
     public TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users) {
 

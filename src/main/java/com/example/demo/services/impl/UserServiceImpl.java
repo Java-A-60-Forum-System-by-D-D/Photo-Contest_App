@@ -1,6 +1,7 @@
 package com.example.demo.services.impl;
 
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.UpdateUserDTO;
@@ -115,6 +116,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersByJurorContests(Contest contest) {
+        return userRepository.findAllByContestId(contest.getId())
     }
 
 

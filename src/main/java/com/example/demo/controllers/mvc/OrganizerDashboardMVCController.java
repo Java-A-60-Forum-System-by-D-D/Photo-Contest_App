@@ -64,9 +64,11 @@ public class OrganizerDashboardMVCController {
     @GetMapping("/editContest/{id}")
     public String editContest(@PathVariable long id, Model model) {
         Contest contest = contestService.getContestById(id);
+        String type = contest.getType().toString().toUpperCase();
         model.addAttribute("contestDto", contest);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("types", Type.values());
+        model.addAttribute("type", type);
         return "edit-contest";
     }
 
@@ -84,8 +86,21 @@ public class OrganizerDashboardMVCController {
         User userToInvite = userService.getUserByEmail(email);
         User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestService.inviteUserToContest(id, userToInvite, user);
+
         model.addAttribute("id", contest.getId());
+
         return "redirect:/admin/editContest/{id}";
+    }
+    @GetMapping("/notStarted")
+    public String notStarted(Model model){
+        List<Contest> notStartedContest = contestService.getNotStartedContests();
+        model.addAttribute("contests", notStartedContest);
+        return "not-started";
+    }
+    @PutMapping("/notStarted/{id}")
+    public String deleteCotest(@PathVariable long id){
+        contestService.deleteContest(id);
+        return "redirect:/admin/notStarted";
     }
 
 //    @PostMapping()

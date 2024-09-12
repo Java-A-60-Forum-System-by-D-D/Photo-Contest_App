@@ -43,4 +43,8 @@ public interface ContestService {
     Contest inviteUserToContest(long id, User userToInvite, User user);
 
     List<Contest> getPhaseOneContestsAndTypeOpen();
+
+    List<Contest> getNotStartedContests();
+
+    void deleteContest(long id);
 }

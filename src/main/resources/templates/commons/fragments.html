@@ -50,6 +50,7 @@
                             <ul class="sub-menu" >
                                 <th:block sec:authorize="hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/admin/createContest}">New Contest</a></li>
+                                    <li><a th:href="@{/admin/notStarted}">Not Started</a></li>
                                     <li><a th:href="@{/admin/phaseOne}">Phase One</a></li>
                                     <li><a th:href="@{/admin/phaseTwo}">Phase Two</a></li>
                                     <li><a th:href="@{/admin/finished}">Finished</a></li>
