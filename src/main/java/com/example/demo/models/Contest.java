@@ -43,6 +43,8 @@ public class Contest extends BaseEntity {
 
 
 
+
+
     @Column(name = "start_date", nullable = false)
     private LocalDateTime createdAt;
     @Column(name = "updated_date")
@@ -61,6 +63,13 @@ public class Contest extends BaseEntity {
             joinColumns = @JoinColumn(name = "contest_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> participants;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "jury_contests",
+            joinColumns = @JoinColumn(name = "contest_id"),
+            inverseJoinColumns = @JoinColumn(name = "jury_id"))
+    private List<User> jurorContests;
 
 
     public List<User> getInvitedUsers() {

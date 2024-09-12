@@ -165,7 +165,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public Contest inviteUserToContest(long id, User userToInvite, User user) {
-       Contest contest = getContestById(id);
+        Contest contest = getContestById(id);
         List<Contest> organizedContests = user.getOrganizedContests();
         UserRole userToInviteRole = userToInvite.getRole();
         UserRole userRole = user.getRole();
@@ -179,16 +179,17 @@ public class ContestServiceImpl implements ContestService {
                 .equals(UserRole.ORGANIZER)) {
             throw new AuthorizationUserException("The user you want to invite is not a photographer");
         } else if (userToInvite.getParticipatedContests()
-                .contains(contest)) {
+                               .contains(contest)) {
             throw new EntityDuplicateException("The user is already invited to this contest");
         }
-            userToInvite.getParticipatedContests()
-                       .add(contest);
-            userService.saveUser(userToInvite);
-            contest.getParticipants().add(userToInvite);
-            contestRepository.save(contest);
-            return contest;
-    //todo need to add notification for invitation
+        userToInvite.getParticipatedContests()
+                    .add(contest);
+        userService.saveUser(userToInvite);
+        contest.getParticipants()
+               .add(userToInvite);
+        contestRepository.save(contest);
+        return contest;
+        //todo need to add notification for invitation
     }
 
     @Override
@@ -204,7 +205,41 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public void deleteContest(long id) {
         Contest contest = getContestById(id);
-        List<User> juryList = userService.getUsersByJurorContests(contest);
+
+        List<User> juryList = contest.getJurorContests();
+        List<User> invitedUsers = contest.getInvitedUsers();
+
+
+        juryList.stream()
+                .forEach(jury -> {
+                    jury.getJurorContests()
+                        .remove(contest);
+                    userService.save(jury);
+                });
+
+        if (invitedUsers != null) {
+            invitedUsers.stream()
+                        .forEach(invitedUser -> {
+                            invitedUser.getParticipatedContests()
+                                       .remove(contest);
+                            userService.save(invitedUser);
+                        });
+        }
+
+        List<User> participants = contest.getParticipants();
+
+        if (participants != null) {
+            participants.stream()
+                        .forEach(participant -> {
+                            participant.getParticipatedContests()
+                                       .remove(contest);
+                            userService.save(participant);
+                        });
+        }
+
+        contestRepository.delete(contest);
+
+
     }
 
 

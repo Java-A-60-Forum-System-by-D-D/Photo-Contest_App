@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> getUsersByJurorContests(Contest contest) {
-        return userRepository.findAllByContestId(contest.getId())
+        return userRepository.findUsersByJurorContests(contest.getId());
     }
 
 
