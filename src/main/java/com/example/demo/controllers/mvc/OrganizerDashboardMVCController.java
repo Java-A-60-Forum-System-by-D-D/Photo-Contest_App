@@ -97,8 +97,8 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("contests", notStartedContest);
         return "not-started";
     }
-    @PutMapping("/notStarted/{id}")
-    public String deleteCotest(@PathVariable long id){
+    @PostMapping("/notStarted/{id}")
+    public String deleteContest(@PathVariable long id){
         contestService.deleteContest(id);
         return "redirect:/admin/notStarted";
     }
