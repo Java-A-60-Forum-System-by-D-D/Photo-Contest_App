@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category Details</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <style>
-        .card-img-top {
-            width: 100%;
-            height: 150px; /* Set a fixed height */
-            object-fit: cover; /* Maintain aspect ratio */
-        }
-    </style>
+<head th:replace="~{commons/fragments::head}">
+
+    <!--
+
+    TemplateMo 576 SnapX Photography
+
+    https://templatemo.com/tm-576-snapx-photography
+
+    -->
 </head>
 <body>
-<header>
-    <!-- Header content -->
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky" th:replace="~{commons/fragments::nav}">
+
 </header>
+<!-- ***** Header Area End ***** -->
 <main>
     <div class="container">
         <h1 th:text="${category.name}">Category Name</h1>

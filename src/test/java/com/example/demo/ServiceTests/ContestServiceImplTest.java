@@ -147,24 +147,27 @@ public class ContestServiceImplTest {
         assertThrows(EntityDuplicateException.class, () -> contestService.addJury(1L, jury, user));
     }
 
-//    @Test
-//    void inviteUserToContestInvitesUserWhenUserIsOrganizer() {
-//        User user = new User();
-//        user.setOrganizedContests(new ArrayList<>());
-//        user.setRole(UserRole.ORGANIZER);
-//        Contest contest = new Contest();
-//        user.getOrganizedContests().add(contest);
-//        User userToInvite = new User();
-//        userToInvite.setRole(UserRole.JUNKIE);
-//
-//        when(contestRepository.findById(1L)).thenReturn(Optional.of(contest));
-//        when(userService.saveUser(userToInvite)).thenReturn(userToInvite);
-//
-//        Contest result = contestService.inviteUserToContest(1L, userToInvite, user);
-//
-//        assertNotNull(result);
-//        verify(userService).saveUser(userToInvite);
-//    }
+    @Test
+    void inviteUserToContestInvitesUserWhenUserIsOrganizer() {
+        User user = new User();
+        user.setParticipatedContests(new ArrayList<>());
+        user.setOrganizedContests(new ArrayList<>());
+        user.setRole(UserRole.ORGANIZER);
+        Contest contest = new Contest();
+        contest.setParticipants(new ArrayList<>());
+        user.getOrganizedContests().add(contest);
+        User userToInvite = new User();
+        userToInvite.setRole(UserRole.JUNKIE);
+        userToInvite.setParticipatedContests(new ArrayList<>());
+
+        when(contestRepository.findById(1L)).thenReturn(Optional.of(contest));
+        when(userService.saveUser(userToInvite)).thenReturn(userToInvite);
+
+        Contest result = contestService.inviteUserToContest(1L, userToInvite, user);
+
+        assertNotNull(result);
+        verify(userService).saveUser(userToInvite);
+    }
 
     @Test
     void inviteUserToContestThrowsAuthorizationUserExceptionWhenUserIsNotOrganizer() {
@@ -184,9 +187,13 @@ public class ContestServiceImplTest {
 //        User user = new User();
 //        user.setParticipatedContests(new ArrayList<>());
 //        user.setRole(UserRole.ORGANIZER);
+//
 //        Contest contest = new Contest();
+//        contest.setParticipants(new ArrayList<>());
+//
 //        User userToInvite = new User();
 //        userToInvite.setRole(UserRole.JUNKIE);
+//        userToInvite.setParticipatedContests(new ArrayList<>());
 //        userToInvite.getParticipatedContests().add(contest);
 //
 //        when(contestRepository.findById(1L)).thenReturn(Optional.of(contest));
@@ -197,9 +204,9 @@ public class ContestServiceImplTest {
 //    @Test
 //    void calculateFinalContestPointsReturnsTop3UsersWithScores() {
 //        List<PhotoSubmission> submissions = List.of(
-//                new PhotoSubmission(1, 50),
-//                new PhotoSubmission(2, 40),
-//                new PhotoSubmission(3, 30)
+//                new PhotoSubmission(),
+//                new PhotoSubmission(),
+//                new PhotoSubmission()
 //        );
 //        List<User> users = List.of(new User(), new User(), new User());
 //
