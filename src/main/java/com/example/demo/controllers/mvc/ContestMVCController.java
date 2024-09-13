@@ -4,6 +4,7 @@ import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.models.dto.PhotoSubmissionDto;
+import com.example.demo.models.dto.PhotoSubmissionMVCDto;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.UserService;
@@ -46,7 +47,7 @@ public class ContestMVCController {
         Contest contest = contestService.getContestById(id);
         model.addAttribute("contest", contest);
         model.addAttribute("user", user);
-        model.addAttribute("submission", new PhotoSubmissionDto());
+        model.addAttribute("submission", new PhotoSubmissionMVCDto());
         return "photo-submission";
     }
 

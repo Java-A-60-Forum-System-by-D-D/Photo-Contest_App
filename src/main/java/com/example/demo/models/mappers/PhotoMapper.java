@@ -3,10 +3,7 @@ package com.example.demo.models.mappers;
 import com.example.demo.models.Contest;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
-import com.example.demo.models.dto.PhotoSubmissionDto;
-import com.example.demo.models.dto.PhotoSubmissionReviewsView;
-import com.example.demo.models.dto.PhotoSubmissionViewDto;
-import com.example.demo.models.dto.ReviewView;
+import com.example.demo.models.dto.*;
 import com.example.demo.services.CloudinaryImageService;
 import jakarta.persistence.Column;
 import org.modelmapper.ModelMapper;
@@ -41,6 +38,14 @@ public class PhotoMapper {
         photoSubmission.setCreator(user);
         photoSubmission.setContest(contest);
         photoSubmission.setPhotoUrl(cloudinaryImageService.uploadImageFromUrl(photoSubmissionDto.getPhotoUrl()));
+        return photoSubmission;
+    }
+    public PhotoSubmission createPhotoSubmissionMVCFromDto(PhotoSubmissionMVCDto photoSubmissionDto, User user, Contest contest) throws IOException {
+        PhotoSubmission photoSubmission = modelMapper.map(photoSubmissionDto, PhotoSubmission.class);
+        photoSubmission.setCreator(user);
+        photoSubmission.setContest(contest);
+        String photoUrl = cloudinaryImageService.uploadImage(photoSubmissionDto.getPhotoUrl());
+        photoSubmission.setPhotoUrl(photoUrl);
         return photoSubmission;
     }
     public PhotoSubmissionReviewsView createPhotoSubmissionReviewView(PhotoSubmission photoSubmission) {
