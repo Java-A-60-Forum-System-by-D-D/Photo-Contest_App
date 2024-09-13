@@ -41,6 +41,18 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+.centered-input {
+  width: 35%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the input box */
+  display: block; /* Ensure the input box is treated as a block element */
+}
+
+.fancy-label {
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 .clearfix:after {
   content: ".";
   display: block;

@@ -11,21 +11,21 @@
         <form id="createContestForm" th:action="@{/contests/{id}/submissions}" th:method="post"
               th:object="${submission}" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="title">Contest Title</label>
-                <input type="text" id="title" name="title" th:field="*{title}" class="form-control" required>
+                <label for="title" class="fancy-label">Photo Title</label>
+                <input type="text" id="title" name="title" th:field="*{title}" class="form-control centered-input" required>
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description" class="fancy-label">Story</label>
                 <textarea id="description" name="description" th:field="*{story}" class="form-control"
                           required></textarea>
             </div>
             <div class="form-group">
-                <label for="photoUrl">Photo URL</label>
+                <label for="photoUrl" class="fancy-label">Photo URL</label>
                 <input type="file" id="photoUrl" name="photoUrl" th:field="*{photoUrl}" class="form-control" required>
             </div>
             <div class="form-group">
-                <input type="checkbox">
-                <p>By submitting this photo, you agree to the <a href="#" onclick="openTermsModal()">terms and
+                <input type="checkbox" id="termsCheckbox">
+                <p >By submitting this photo, you agree to the <a href="#" onclick="openTermsModal()">terms and
                     conditions</a> of the contest.</p>
                 <div id="termsModal" class="modal" style="display: none;">
                     <div class="modal-content">
@@ -36,79 +36,20 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Here are the terms and conditions...</p>
+                            <p style="color: black;">By submitting this photo, you agree that the submission cannot be changed once submitted. You also give the rights over the picture to the organizer of the contest, which will only be used for the needs of the contest.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" onclick="closeTermsModal()">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="acceptTerms()">Accept</button>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Create Submission</button>
+                <button type="submit" class="btn btn-primary" id="submitButton" disabled>Create Submission</button>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Success Modal -->
-<!--<div id="successModal" class="modal" style="display: none;">-->
-<!--    <div class="modal-content">-->
-<!--        <div class="modal-header">-->
-<!--            <h5 class="modal-title">Success</h5>-->
-<!--            <button type="button" class="close" aria-label="Close" onclick="closeModal()">-->
-<!--                <span aria-hidden="true">&times;</span>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--        <div class="modal-body">-->
-<!--            <p>Contest created successfully!</p>-->
-<!--        </div>-->
-<!--        <div class="modal-footer">-->
-<!--            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<script>
-    function toggleInvitedUsers() {
-        var type = document.getElementById("type").value;
-        var invitedUsersField = document.getElementById("invitedUsersField");
-        if (type === "INVITATIONAL") {
-            invitedUsersField.style.display = "block";
-        } else {
-            invitedUsersField.style.display = "none";
-        }
-    }
-
-    $(document).ready(function () {
-        // Form submission handler
-        $('#createContestForm').submit(function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Perform the form submission with AJAX
-            $.ajax({
-                url: $(this).attr('th:action'), // Use form's action attribute (Thymeleaf parsed)
-                type: $(this).attr('th:method'), // Use form's method attribute (Thymeleaf parsed)
-                data: $(this).serialize(), // Serialize form data
-                success: function (response) {
-                    // Assuming response indicates success
-                    $('#successModal').fadeIn(); // Show the modal
-                },
-                error: function () {
-                    // Handle error
-                    alert('There was an error creating the contest.');
-                }
-            });
-        });
-
-        // Attach close modal functionality
-        $('.close').click(function () {
-            closeModal();
-        });
-    });
-
-    function closeModal() {
-        $('#successModal').fadeOut(200);
-    }
-</script>
 <script>
     function openTermsModal() {
         $('#termsModal').fadeIn();
@@ -118,8 +59,24 @@
         $('#termsModal').fadeOut(200);
     }
 
+    function acceptTerms() {
+        $('#termsCheckbox').prop('checked', true);
+        $('#submitButton').prop('disabled', false);
+        closeTermsModal();
+    }
+
     $(document).ready(function () {
-        // Attach close modal functionality
+        $('#termsCheckbox').change(function () {
+            $('#submitButton').prop('disabled', !this.checked);
+        });
+
+        $('#createContestForm').submit(function (event) {
+            if (!$('#termsCheckbox').is(':checked')) {
+                alert('You must agree to the terms and conditions before submitting.');
+                event.preventDefault();
+            }
+        });
+
         $('.close').click(function () {
             closeTermsModal();
         });
