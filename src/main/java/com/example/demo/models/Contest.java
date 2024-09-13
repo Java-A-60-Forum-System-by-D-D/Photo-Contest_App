@@ -35,7 +35,7 @@ public class Contest extends BaseEntity {
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "invited_users",
             joinColumns = @JoinColumn(name = "contest_id"),

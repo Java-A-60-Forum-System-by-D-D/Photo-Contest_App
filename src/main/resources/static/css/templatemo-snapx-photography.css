@@ -41,6 +41,18 @@ figure, header, nav, section, article, aside, footer, figcaption {
   outline: 0;
 }
 
+.inline-users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.user-email {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
 .centered-input {
   width: 35%; /* Adjust the width as needed */
   margin: 0 auto; /* Center the input box */

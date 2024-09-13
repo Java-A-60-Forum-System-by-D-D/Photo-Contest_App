@@ -64,7 +64,14 @@ public class OrganizerDashboardMVCController {
     @GetMapping("/editContest/{id}")
     public String editContest(@PathVariable long id, Model model) {
         Contest contest = contestService.getContestById(id);
-        String type = contest.getType().toString().toUpperCase();
+        String type = contest.getType()
+                             .toString()
+                             .toUpperCase();
+        List<User> invitedUsers = contest.getInvitedUsers();
+        List<User> jury = contest.getJurorContests();
+
+        model.addAttribute("invitedUsers", invitedUsers);
+        model.addAttribute("jury", jury);
         model.addAttribute("contestDto", contest);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("types", Type.values());
@@ -81,6 +88,7 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("id", contest.getId());
         return "redirect:/admin/editContest/{id}";
     }
+
     @PostMapping("/editContest/{id}/addInvitationalUser")
     public String addInvitationalUser(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
         User userToInvite = userService.getUserByEmail(email);
@@ -91,14 +99,16 @@ public class OrganizerDashboardMVCController {
 
         return "redirect:/admin/editContest/{id}";
     }
+
     @GetMapping("/notStarted")
-    public String notStarted(Model model){
+    public String notStarted(Model model) {
         List<Contest> notStartedContest = contestService.getNotStartedContests();
         model.addAttribute("contests", notStartedContest);
         return "not-started";
     }
+
     @PostMapping("/notStarted/{id}")
-    public String deleteContest(@PathVariable long id){
+    public String deleteContest(@PathVariable long id) {
         contestService.deleteContest(id);
         return "redirect:/admin/notStarted";
     }
