@@ -78,37 +78,42 @@
             <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>
             <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>
             <h4 class="second-title">Links To Inspire Your Photo</h4>
-            <div class="row">
-              <div class="col-lg-3 col-6">
-                <div class="item">
-                  <span>JPG</span>
-                  <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6">
-                <div class="item">
-                  <span>PNG</span>
-                  <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6">
-                <div class="item">
-                  <span>PDF</span>
-                  <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6">
-                <div class="item">
-                  <span>AI</span>
-                  <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
-                </div>
-              </div>
-            </div>
-            <div class="main-button" th:if="${!IsFound}">
-              <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
-            </div>
-            <div class="main-button" th:unless="${!IsFound}">
-              <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the other contests!</a>
+           <div th:if="${phase.name().equals('PHASE_1')}">
+             <div class="row" >
+               <div class="col-lg-3 col-6">
+                 <div class="item">
+                   <span>JPG</span>
+                   <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
+                 </div>
+               </div>
+               <div class="col-lg-3 col-6">
+                 <div class="item">
+                   <span>PNG</span>
+                   <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
+                 </div>
+               </div>
+               <div class="col-lg-3 col-6">
+                 <div class="item">
+                   <span>PDF</span>
+                   <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
+                 </div>
+               </div>
+               <div class="col-lg-3 col-6">
+                 <div class="item">
+                   <span>AI</span>
+                   <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
+                 </div>
+               </div>
+             </div>
+             <div class="main-button" th:if="${!IsFound}" >
+               <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
+             </div>
+             <div class="main-button" th:unless="${!IsFound}">
+               <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the other contests!</a>
+             </div>
+           </div>
+            <div th:if="${phase.name().equals('PHASE_2')}">
+
             </div>
           </div>
         </div>

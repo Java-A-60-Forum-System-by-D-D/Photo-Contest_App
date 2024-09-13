@@ -182,10 +182,10 @@ public class ContestServiceImpl implements ContestService {
                                .contains(contest)) {
             throw new EntityDuplicateException("The user is already invited to this contest");
         }
-        userToInvite.getParticipatedContests()
-                    .add(contest);
-        userService.saveUser(userToInvite);
-        contest.getParticipants()
+//        userToInvite.getInvitedContests()
+//                    .add(contest);
+//        userService.saveUser(userToInvite);
+        contest.getInvitedUsers()
                .add(userToInvite);
         contestRepository.save(contest);
         return contest;

@@ -61,7 +61,7 @@ public class ContestMVCController {
 
 
         /*todo need to figure out how to handle invitational users*/
-
+        model.addAttribute("phase", contest.getPhase());
         model.addAttribute("contest", contestViewDto);
         model.addAttribute("id", contest.getId());
         model.addAttribute("user", user);
@@ -92,6 +92,13 @@ public class ContestMVCController {
 
         return "redirect:/contests/{id}";
 
+    }
+    @GetMapping("/juryPanel")
+    public String juryPanel(Model model, Principal principal){
+        User user = userService.getUserByEmail(principal.getName());
+        model.addAttribute("contests", user.getJurorContests());
+        model.addAttribute("user", user);
+        return "jury-panel";
     }
 
 

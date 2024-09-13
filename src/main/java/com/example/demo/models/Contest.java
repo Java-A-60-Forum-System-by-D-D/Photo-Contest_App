@@ -35,9 +35,14 @@ public class Contest extends BaseEntity {
     private List<PhotoSubmission> submissions;
     @ManyToOne
     private User organizer;
-    @OneToMany
-    @Transient
+    @ManyToMany
+    @JoinTable(
+            name = "invited_users",
+            joinColumns = @JoinColumn(name = "contest_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> invitedUsers;
+
     @Column(name = "photo_url")
     private String photoUrl;
 

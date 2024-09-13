@@ -45,6 +45,7 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
     @Override
     @Transactional
     public PhotoSubmission createPhotoSubmission(PhotoSubmission photoSubmission, User user) {
+       //todo handle logic for invitational users
         if (user.getParticipatedContests()
                 .contains(photoSubmission.getContest())) {
             throw new EntityDuplicateException("User already submitted photo for this contest");

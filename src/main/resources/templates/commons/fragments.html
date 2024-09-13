@@ -54,11 +54,17 @@
                                     <li><a th:href="@{/admin/phaseOne}">Phase One</a></li>
                                     <li><a th:href="@{/admin/phaseTwo}">Phase Two</a></li>
                                     <li><a th:href="@{/admin/finished}">Finished</a></li>
+                                    <li><a th:href="@{/contests/juryPanel}">Jury Panel</a></li>
                                 </th:block>
                                 <th:block sec:authorize="!hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/user/openContests}">Open Contests</a></li>
-                                    <li><a href="contest-details.html">Your Contests</a></li>
-                                    <li><a href="contest-details.html">Finished Contests</a></li>
+                                    <li><a th:href="@{/user/openContests}">Your Contests</a></li>
+                                    <li><a th:href="@{/user/openContests}">Finished Contests</a></li>
+                                    <li sec:authorize="hasAnyAuthority('MASTER', 'DICTATOR')">
+                                        <a th:href="@{/contests/juryPanel}">Jury Panel</a>
+                                    </li>
+
+
                                 </th:block>
 
                             </ul>
@@ -74,14 +80,15 @@
                             </th:block>
                         </th:block>
 
-                        <li>
-                            <form th:action="@{/changeLanguage}" method="get">
-                                <select name="lang" onchange="this.form.submit()">
-                                    <option value="en" th:selected="${#locale.language == 'en'}">English</option>
-                                    <option value="bg" th:selected="${#locale.language == 'bg'}">Български</option>
-                                </select>
-                            </form>
-                        </li>
+<!--                        <li>-->
+<!--                            <form th:action="@{/changeLanguage}" method="get">-->
+<!--                                <select name="lang" onchange="this.form.submit()">-->
+
+<!--                                    <option value="en" th:selected="${#locale.language == 'en'}">English</option>-->
+<!--                                    <option value="bg" th:selected="${#locale.language == 'bg'}">Български</option>-->
+<!--                                </select>-->
+<!--                            </form>-->
+<!--                        </li>-->
 
                     </ul>
                     <th:block sec:authorize="!isAuthenticated()">

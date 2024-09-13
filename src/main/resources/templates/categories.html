@@ -1,62 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="author" content="templatemo">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
-  <title>SnapX Photography Categories</title>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-
-  <!-- Additional CSS Files -->
-  <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
-  <link rel="stylesheet" th:href="@{/css/templatemo-snapx-photography.css}">
-  <link rel="stylesheet" th:href="@{/css/owl.css}">
-  <link rel="stylesheet" th:href="@{/css/animate.css}">
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+<head th:replace="~{commons/fragments::head}">
 
 </head>
 
 <body>
 <!-- ***** Header Area Start ***** -->
-<header class="header-area header-sticky">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <nav class="main-nav">
-          <!-- ***** Logo Start ***** -->
-          <a href="index.html" class="logo">
-            <img src="../static/images/logo.png" alt="SnapX Photography Template">
-          </a>
-          <!-- ***** Logo End ***** -->
-          <!-- ***** Menu Start ***** -->
-          <ul class="nav">
-            <li><a href="index.html">Home</a></li>
-            <li class="has-sub">
-              <a href="javascript:void(0)" class="active">Photos &amp; Videos</a>
-              <ul class="sub-menu">
-                <!-- Sub-menu items -->
-              </ul>
-            </li>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="users.html">Users</a></li>
-          </ul>
-          <div class="border-button">
-            <!-- Border button content -->
-          </div>
-          <a class='menu-trigger'>
-            <!-- Menu trigger content -->
-          </a>
-          <!-- ***** Menu End ***** -->
-        </nav>
-      </div>
-    </div>
-  </div>
+<header class="header-area header-sticky" th:replace="~{commons/fragments::nav}">
+
 </header>
 <!-- ***** Header Area End ***** -->
 
