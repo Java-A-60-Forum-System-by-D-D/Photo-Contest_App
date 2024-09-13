@@ -13,40 +13,6 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
-//
-//@Configuration
-//public class I18NConfig implements WebMvcConfigurer {
-//
-//    @Bean
-//    public LocaleResolver localeResolver() {
-//        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-//        cookieLocaleResolver.setCookieName("lang");
-//        cookieLocaleResolver.setDefaultLocale(Locale.US);
-//        return cookieLocaleResolver;
-//    }
-//
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-//        localeChangeInterceptor.setParamName("lang");
-//
-//        return localeChangeInterceptor;
-//    }
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(localeChangeInterceptor());
-//    }
-//
-//    @Bean
-//    public MessageSource messageSource() {
-//        ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-//        resourceBundleMessageSource.setBasenames("i18n/messages/message", "i18n/messages/message-bg");
-//        resourceBundleMessageSource.setDefaultEncoding("UTF-8");
-//
-//        return resourceBundleMessageSource;
-//    }
-//}
 @Configuration
 public class I18NConfig {
 
@@ -60,17 +26,12 @@ public class I18NConfig {
         return resolver;
     }
 
-//    @Bean
-//    public LocaleChangeInterceptor localeChangeInterceptor() {
-//        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-//        lci.setParamName("lang");
-//        return lci;
-//    }
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(localeChangeInterceptor());
-//    }
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
 
     @Bean
     public MessageSource messageSource() {
