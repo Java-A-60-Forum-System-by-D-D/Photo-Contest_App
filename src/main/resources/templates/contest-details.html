@@ -112,39 +112,8 @@
                <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the other contests!</a>
              </div>
            </div>
-            <div th:if="${phase.name().equals('PHASE_2')}">
-              <section class="contest-waiting">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <h5>Photo Submissions</h5>
-                    </div>
-                    <div class="col-lg-3 col-sm-6" th:each="submission : ${submissions}" th:object="${submission}">
-                      <div class="waiting-item">
-                        <img th:src="*{photoUrl}" alt="">
-                        <div class="down-content">
-                          <h4 th:text="*{title}">Photo Title</h4>
-                          <p th:text="*{story}">Photo Story</p>
-                          <span class="price">Creator: <em th:text="*{creator}">$0</em></span>
-<!--                          <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>-->
-                        </div>
-                        <div class="border-button">
-                          <a th:href="@{/contests/{id}(id=${contest.getId()})}">Review Photo</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-12">
-                      <ul class="pagination">
-                        <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </section>
+            <div >
+
             </div>
           </div>
         </div>
@@ -153,52 +122,22 @@
   </div>
 
   <section class="contest-waiting">
-    <div class="container">
+    <div class="container" th:if="${submissions != null}">
       <div class="row">
         <div class="col-lg-12">
-          <h5>Other Contests Waiting For You:</h5>
+          <h5>Photo Submissions</h5>
         </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="waiting-item">
-            <img src="../static/images/waiting-01.jpg" alt="">
+        <div class="col-lg-3 col-sm-6" th:each="submission : ${submissions}">
+          <div class="waiting-item" th:object="${submission}">
+            <img th:src="*{photoUrl}" alt="">
             <div class="down-content">
-              <h4>Best Mountain Picture Award</h4>
-              <p>Lorem ipsum dolor siter and ametters conseietur adipiscing elit.</p>
-              <span class="price">Price: <em>$900</em></span>
-              <span class="deadline">Deadline: <em>3 Days</em></span>
+              <h4 th:text="*{title}">Photo Title</h4>
+              <p th:text="*{story}">Photo Story</p>
+              <span class="price">Creator: <em th:text="*{creator.getEmail()}">$0</em></span>
+              <!--                          <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>-->
             </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="waiting-item">
-            <img src="../static/images/waiting-02.jpg" alt="">
-            <div class="down-content">
-              <h4>Nature Walk in the Forest</h4>
-              <p>Lorem ipsum dolor siter and ametters conseietur adipiscing elit.</p>
-              <span class="price">Price: <em>$1,400</em></span>
-              <span class="deadline">Deadline: <em>2 Days</em></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="waiting-item">
-            <img src="../static/images/waiting-03.jpg" alt="">
-            <div class="down-content">
-              <h4>The Road to Photograph</h4>
-              <p>Lorem ipsum dolor siter and ametters conseietur adipiscing elit.</p>
-              <span class="price">Price: <em>$1,250</em></span>
-              <span class="deadline">Deadline: <em>4 Days</em></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-          <div class="waiting-item">
-            <img src="../static/images/waiting-04.jpg" alt="">
-            <div class="down-content">
-              <h4>The Lake and Mountain Scenery</h4>
-              <p>Lorem ipsum dolor siter and ametters conseietur adipiscing elit.</p>
-              <span class="price">Price: <em>$1,600</em></span>
-              <span class="deadline">Deadline: <em>10 Days</em></span>
+            <div class="border-button">
+<!--              <a th:href="@{/contests/{id}(id=${contest.getId()})}">Review Photo</a>-->
             </div>
           </div>
         </div>
