@@ -30,5 +30,17 @@ public class Notification extends BaseEntity {
     @Column(name = "type")
     private NotificationType type;
 
+    public Notification() {
+    }
 
+    public Notification(String message, NotificationType type, User recipient) {
+        this.message = message;
+        this.type = type;
+        this.recipient = recipient;
+        this.createdAt = LocalDateTime.now();
+    }
+    public void markAsRead() {
+        this.isRead = true;
+    }
 }
+
