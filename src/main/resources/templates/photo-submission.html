@@ -8,7 +8,7 @@
 <div class="page-heading">
     <div class="container">
         <h2>Create Photo Submission</h2>
-        <form id="createContestForm" th:action="@{/contests/{id}/submissions}" th:method="post"
+        <form id="createContestForm" th:action="@{/contests/{id}/submissions(id=${contest.getId()})}" th:method="post"
               th:object="${submission}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title" class="fancy-label">Photo Title</label>
