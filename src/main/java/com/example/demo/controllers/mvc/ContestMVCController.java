@@ -60,14 +60,14 @@ public class ContestMVCController {
             isFound = true;
         }
 
-
+        List<PhotoSubmission> submissions = contest.getSubmissions();
         /*todo need to figure out how to handle invitational users*/
-
         model.addAttribute("phase", contest.getPhase());
         model.addAttribute("contest", contestViewDto);
         model.addAttribute("id", contest.getId());
         model.addAttribute("user", user);
         model.addAttribute("IsFound", isFound);
+        model.addAttribute("submissions", submissions);
 
         return "contest-details";
     }
@@ -95,9 +95,8 @@ public class ContestMVCController {
         return "redirect:/contests/{id}";
 
     }
-
     @GetMapping("/juryPanel")
-    public String juryPanel(Model model, Principal principal) {
+    public String juryPanel(Model model, Principal principal){
         User user = userService.getUserByEmail(principal.getName());
         model.addAttribute("contests", user.getJurorContests());
         model.addAttribute("user", user);
