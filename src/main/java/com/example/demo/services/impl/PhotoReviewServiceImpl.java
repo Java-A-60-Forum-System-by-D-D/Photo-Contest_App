@@ -38,7 +38,7 @@ public class PhotoReviewServiceImpl implements PhotoReviewService {
 
     @Override
     public PhotoReview handleUserReview(PhotoReview photoReview, PhotoSubmission photoSubmission, User user) {
-        photoReviewRepository.findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(user.getId(), photoSubmission.getId())
+        photoReviewRepository.findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(user.getId())
                 .ifPresent(review -> {
                     throw new EntityDuplicateException(USER_HAS_ALREADY_REVIEWED_THIS_PHOTO_SUBMISSION);
                 });

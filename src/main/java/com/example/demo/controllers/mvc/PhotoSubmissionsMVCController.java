@@ -1,14 +1,20 @@
 package com.example.demo.controllers.mvc;
 
+import com.example.demo.models.Contest;
+import com.example.demo.models.PhotoReview;
+import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.PhotoReviewDto;
+import com.example.demo.models.mappers.PhotoMapper;
+import com.example.demo.models.mappers.ReviewMapper;
+import com.example.demo.services.PhotoReviewService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -17,11 +23,16 @@ import java.security.Principal;
 public class PhotoSubmissionsMVCController {
     private final PhotoSubmissionService photoSubmissionService;
     private final UserService userService;
+    private final ReviewMapper reviewMapper;
+    private final PhotoReviewService photoReviewService;
 
-    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService) {
+    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService, ReviewMapper reviewMapper, PhotoReviewService photoReviewService) {
         this.photoSubmissionService = photoSubmissionService;
         this.userService = userService;
+        this.reviewMapper = reviewMapper;
+        this.photoReviewService = photoReviewService;
     }
+
     @GetMapping("/{id}")
     public String getReviewPage(@PathVariable long id, Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -30,5 +41,26 @@ public class PhotoSubmissionsMVCController {
         model.addAttribute("review", new PhotoReviewDto());
 
         return "photo-review";
+    }
+
+    @PostMapping("/{id}")
+    public String submitPhotoReview(@PathVariable long id,
+                                    Model model,
+                                    Principal principal,
+                                    @Valid @ModelAttribute("review") PhotoReviewDto photoReviewDto,
+                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "photo-review";
+        }
+        PhotoSubmission photoSubmission = photoSubmissionService.getPhotoSubmissionById(id);
+        Contest contest = photoSubmission.getContest();
+        User user = userService.getUserByEmail(principal.getName());
+        PhotoReview photoReview = reviewMapper.createPhotoReviewFromDto(photoReviewDto, user);
+        photoReviewService.handleUserReview(photoReview, photoSubmission, user);
+        model.addAttribute("id", contest.getId());
+
+        return "redirect:/contests/" + String.valueOf(contest.getId());
+
+
     }
 }

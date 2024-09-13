@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface PhotoReviewRepository  extends JpaRepository<PhotoReview,Long> {
 
-    @Query("SELECT r FROM PhotoReview r JOIN PhotoSubmission ps ON r.id = ps.id WHERE r.jury.id = :userId AND ps.id = :photoSubmissionId")
-    Optional<PhotoReview> findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(@Param("userId") long userId,@Param("photoSubmissionId") long photoSubmissionId);
+    @Query(nativeQuery = true, value = "SELECT R.ID as reviewId, PS.PHOTO_REVIEW_ID as submissionReviewId, P.ID as submissionId, R.* FROM PHOTO_REVIEWS R JOIN PHOTO_SUBMISSION_REVIEWS PS ON R.ID = PS.PHOTO_REVIEW_ID JOIN PHOTO_SUBMISSIONS P ON PS.PHOTO_SUBMISSION_ID = P.ID WHERE R.JURY_ID = :userId")
+    Optional<PhotoReview> findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(@Param("userId") long userId);
 
     @Query("SELECT sum(p.score) FROM PhotoReview p JOIN PhotoSubmission r ON r.id = p.id WHERE p.isReviewed = true AND r.id = :photoSubmissionId AND r.contest.id = :contestId")
     Integer findTotalScoreByPhotoSubmissionIdAndContestId(@Param("photoSubmissionId") long photoSubmissionId, @Param("contestId") long contestId);
