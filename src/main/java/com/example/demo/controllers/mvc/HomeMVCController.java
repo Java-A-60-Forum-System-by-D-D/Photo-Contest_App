@@ -6,19 +6,28 @@ import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import java.util.Locale;
 
 @Controller
 public class HomeMVCController {
@@ -26,6 +35,7 @@ public class HomeMVCController {
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
 
+    private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
 
@@ -33,20 +43,45 @@ public class HomeMVCController {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
+
     }
 //    @ModelAttribute
 //    public Role get
 
     @GetMapping(value = {"/home", "/"})
     public String home(Model model) {
+        Locale currentLocale = LocaleContextHolder.getLocale();
+        logger.info("Current locale in home controller: " + currentLocale);
         if (!model.containsAttribute("registerUser")) {
             model.addAttribute("registerUser", new RegisterUserMVCDTO());
         }
         if (!model.containsAttribute("loginUserDto")) {
             model.addAttribute("loginUserDto", new LoginUserDto());
         }
+        System.out.println("Current locale in home controller: " + currentLocale);
         return "index";
     }
+
+//    @GetMapping("/changeLanguage")
+//    public String changeLanguage(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response) {
+//        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+//        if (localeResolver == null) {
+//            throw new IllegalStateException("No LocaleResolver found: not in a DispatcherServlet request?");
+//        }
+//        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+//        logger.info("Language changed to: " + lang);
+//        logger.info("Current locale after setting: " + localeResolver.resolveLocale(request));
+//        logger.info("Locale from LocaleContextHolder: " + LocaleContextHolder.getLocale());
+//        return "redirect:/";
+//    }
+//    @GetMapping("/checkSession")
+//    @ResponseBody
+//    public String checkSession(HttpSession session) {
+//        logger.info("Session id: {}", session.getId());
+//        logger.info("Current locale: {}", LocaleContextHolder.getLocale());
+//        return "Session checked. Check logs for details.";
+//    }
+
 
     @GetMapping("/login")
     public String login(Model model) {

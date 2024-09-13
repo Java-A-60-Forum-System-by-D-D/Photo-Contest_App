@@ -44,7 +44,7 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a th:href="@{/home}" class="active" th:text="#{navbar_home}">Home</a></li>
+                        <li><a th:href="@{/home}" class="active" th:text="#{navbar.home}">Home</a></li>
                         <li class="has-sub" sec:authorize="isAuthenticated()">
                             <a href="javascript:void(0)">Dashboard</a>
                             <ul class="sub-menu" >
@@ -74,16 +74,14 @@
                             </th:block>
                         </th:block>
 
-                        <li> <form th:method="get" th:action="@{/}">
-                            <label class="text-grey" th:text="#{navbar_language}" for="lang">Language</label>
-                            <select
-                                    onchange="this.form.submit()"
-                                    id="lang"
-                                    name="lang">
-                                <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
-                                <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
-                            </select>
-                        </form></li>
+                        <li>
+                            <form th:action="@{/changeLanguage}" method="get">
+                                <select name="lang" onchange="this.form.submit()">
+                                    <option value="en" th:selected="${#locale.language == 'en'}">English</option>
+                                    <option value="bg" th:selected="${#locale.language == 'bg'}">Български</option>
+                                </select>
+                            </form>
+                        </li>
 
                     </ul>
                     <th:block sec:authorize="!isAuthenticated()">
