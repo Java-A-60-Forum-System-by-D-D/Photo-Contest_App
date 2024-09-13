@@ -1,0 +1,51 @@
+<!-- File: src/main/resources/templates/photo-review.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/fragments::head}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+<header th:replace="~{commons/fragments::nav}"></header>
+<div class="container">
+    <div class="col-lg-12">
+        <div class="section-heading text-center">
+            <h6 th:text="${photoSubmission.title}"></h6>
+            <h4><em th:text="${photoSubmission.story}"></em></h4>
+        </div>
+    </div>
+    <h1>Photo Review</h1>
+    <div class="card">
+        <img class="card-img-top small-image" th:src="${photoSubmission.photoUrl}" alt="Photo Submission">
+        <div class="card-body">
+        </div>
+    </div>
+    <form th:action="@{/submissions/{id}/review(id=${photoSubmission.id})}" th:object="${review}" method="post">
+        <div class="form-group">
+            <label>Score (1-10)</label>
+            <div class="radio-buttons">
+                <label th:each="i : ${#numbers.sequence(1, 10)}">
+                    <input type="radio" name="score" th:field="*{score}" th:value="${i}" required> <span th:text="${i}"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea id="comment" name="comment" class="form-control" th:field="*{comment}" required></textarea>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" id="categoryMismatch" name="categoryMismatch" class="form-check-input" th:field="*{categoryMismatch}">
+            <label class="form-check-label" for="categoryMismatch">Category Mismatch</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+</div>
+<!-- Scripts -->
+<script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="/js/isotope.min.js" th:href="@{/js/isotope.min.js}"></script>
+<script src="/js/owl-carousel.js" th:href="@{/js/owl-carousel.js}"></script>
+<script src="/js/tabs.js" th:href="@{/js/tabs.js}"></script>
+<script src="/js/popup.js" th:href="@{/js/popup.js}"></script>
+<script src="/js/custom.js" th:href="@{/js/custom.js}"></script>
+</body>
+</html>
