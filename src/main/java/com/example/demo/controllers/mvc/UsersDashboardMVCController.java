@@ -45,5 +45,11 @@ public class UsersDashboardMVCController {
 
         return "user-open-contests";
     }
+    @GetMapping("/profile")
+    public String profile(Model model, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        model.addAttribute("user", user);
+        return "user-profile";
+    }
 
 }

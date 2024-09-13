@@ -70,7 +70,7 @@
                                 <li><a href="users.html">Users</a></li>
                             </th:block>
                             <th:block sec:authorize="!hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)">
-                                <li><a href="users.html">Profile</a></li>
+                                <li><a th:href="@{/user/profile}">Profile</a></li>
                             </th:block>
                         </th:block>
 
