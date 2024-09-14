@@ -8,4 +8,5 @@ public interface PhotoReviewService {
     PhotoReview createPhotoReview(PhotoReview photoReview, PhotoSubmission photoSubmission);
 
     PhotoReview handleUserReview(PhotoReview photoReview, PhotoSubmission photoSubmission, User user);
+//    boolean CheckIfUserAlreadyReviewed(User user);
 }

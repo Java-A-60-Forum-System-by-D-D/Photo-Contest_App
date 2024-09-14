@@ -9,6 +9,7 @@ import com.example.demo.models.dto.PhotoSubmissionMVCDto;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.models.mappers.PhotoMapper;
 import com.example.demo.services.ContestService;
+import com.example.demo.services.PhotoReviewService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -28,13 +31,15 @@ public class ContestMVCController {
     private final UserService userService;
     private final PhotoSubmissionService photoSubmissionService;
     private final PhotoMapper photoMapper;
+    private final PhotoReviewService photoReviewService;
 
-    public ContestMVCController(ContestService contestService, ContestMapper contestMapper, UserService userService, PhotoSubmissionService photoSubmissionService, PhotoMapper photoMapper) {
+    public ContestMVCController(ContestService contestService, ContestMapper contestMapper, UserService userService, PhotoSubmissionService photoSubmissionService, PhotoMapper photoMapper, PhotoReviewService photoReviewService) {
         this.contestService = contestService;
         this.contestMapper = contestMapper;
         this.userService = userService;
         this.photoSubmissionService = photoSubmissionService;
         this.photoMapper = photoMapper;
+        this.photoReviewService = photoReviewService;
     }
 
     @GetMapping()
@@ -61,13 +66,26 @@ public class ContestMVCController {
         }
 
         List<PhotoSubmission> submissions = contest.getSubmissions();
+        Map<Long, Boolean> reviewStatusMap = new HashMap<>();
+        for (PhotoSubmission submission : submissions) {
+            boolean hasReviewed = submission.getReviews()
+                                            .stream()
+                                            .anyMatch(review -> review.getJury().getId() == user.getId());
+            reviewStatusMap.put(submission.getId(), hasReviewed);
+        }
+
+
         /*todo need to figure out how to handle invitational users*/
+
         model.addAttribute("phase", contest.getPhase());
         model.addAttribute("contest", contestViewDto);
         model.addAttribute("id", contest.getId());
         model.addAttribute("user", user);
         model.addAttribute("IsFound", isFound);
         model.addAttribute("submissions", submissions);
+        model.addAttribute("reviewStatusMap", reviewStatusMap);
+
+
 
         return "contest-details";
     }
@@ -84,7 +102,11 @@ public class ContestMVCController {
     }
 
     @PostMapping("/{id}/submissions")
-    public String contestSubmissions(@PathVariable long id, @ModelAttribute("submission") PhotoSubmissionMVCDto photoSubmissionMVCDto, Model model, Principal principal) throws IOException {
+    public String contestSubmissions(@PathVariable long id,
+                                     @ModelAttribute("submission") PhotoSubmissionMVCDto photoSubmissionMVCDto,
+                                     Model model,
+                                     Principal principal) throws IOException {
+
 
         User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestService.getContestById(id);
@@ -95,9 +117,13 @@ public class ContestMVCController {
         return "redirect:/contests/{id}";
 
     }
+
     @GetMapping("/juryPanel")
-    public String juryPanel(Model model, Principal principal){
+    public String juryPanel(Model model,
+                            Principal principal) {
+
         User user = userService.getUserByEmail(principal.getName());
+
         model.addAttribute("contests", user.getJurorContests());
         model.addAttribute("user", user);
         return "jury-panel";

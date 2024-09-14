@@ -136,8 +136,11 @@
               <span class="price">Creator: <em th:text="*{creator.getEmail()}">$0</em></span>
               <!--                          <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>-->
             </div>
-            <div class="border-button">
+            <div class="border-button" th:if="${!reviewStatusMap[submission.getId()]}">
               <a th:href="@{/submissions/{id}(id=${submission.getId()})}">Review Photo</a>
+            </div>
+            <div class="border-button" th:unless="${!reviewStatusMap[submission.getId()]}">
+              <a th:href="@{/contests/juryPanel}">Already Reviewed</a>
             </div>
           </div>
         </div>

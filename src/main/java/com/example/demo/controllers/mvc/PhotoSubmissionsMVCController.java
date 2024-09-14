@@ -40,6 +40,7 @@ public class PhotoSubmissionsMVCController {
         model.addAttribute("user", user);
         model.addAttribute("review", new PhotoReviewDto());
 
+
         return "photo-review";
     }
 

@@ -24,12 +24,15 @@ public class PhotoReviewServiceImpl implements PhotoReviewService {
 
     @Override
     public PhotoReview createPhotoReview(PhotoReview photoReview, PhotoSubmission photoSubmission) {
-        if(!photoSubmission.getContest().getPhase().equals(Phase.PHASE_2)){
+        if (!photoSubmission.getContest()
+                            .getPhase()
+                            .equals(Phase.PHASE_2)) {
             throw new EntityDuplicateException(CONTEST_IS_NOT_IN_PHASE_2);
         }
         PhotoReview savedPhotoReview = photoReviewRepository.save(photoReview);
 
-        photoSubmission.getReviews().add(savedPhotoReview);
+        photoSubmission.getReviews()
+                       .add(savedPhotoReview);
         photoSubmissionService.save(photoSubmission);
 
         return savedPhotoReview;
@@ -38,13 +41,22 @@ public class PhotoReviewServiceImpl implements PhotoReviewService {
 
     @Override
     public PhotoReview handleUserReview(PhotoReview photoReview, PhotoSubmission photoSubmission, User user) {
-        photoReviewRepository.findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(user.getId())
-                .ifPresent(review -> {
-                    throw new EntityDuplicateException(USER_HAS_ALREADY_REVIEWED_THIS_PHOTO_SUBMISSION);
-                });
+        if (CheckIfUserAlreadyReviewed(user,photoSubmission)) {
+            throw new EntityDuplicateException(USER_HAS_ALREADY_REVIEWED_THIS_PHOTO_SUBMISSION);
+        }
 
 
         return createPhotoReview(photoReview, photoSubmission);
+    }
+
+    public boolean CheckIfUserAlreadyReviewed(User user, PhotoSubmission photoSubmission) {
+
+        if (photoReviewRepository.findPhotoReviewByJuryHasAlreadyReviewedPhotoSubmission(user.getId(),photoSubmission.id)
+                                 .isPresent()) {
+            return true;
+        }
+
+        return false;
     }
 
 }
