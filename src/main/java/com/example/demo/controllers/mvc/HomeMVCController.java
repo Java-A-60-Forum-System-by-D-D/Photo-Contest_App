@@ -5,6 +5,7 @@ import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import java.security.Principal;
 import java.util.Locale;
 
 @Controller
@@ -34,22 +36,30 @@ public class HomeMVCController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+    private final NotificationService notificationService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
 
-    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper) {
+    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
 
+        this.notificationService = notificationService;
     }
 //    @ModelAttribute
 //    public Role get
 
     @GetMapping(value = {"/home", "/"})
-    public String home(Model model) {
+    public String home(Model model, Principal principal) {
+        if (principal != null) {
+            User user = userService.getUserByEmail(principal.getName());
+            if (user != null) {
+                model.addAttribute("notifications", notificationService.getUnreadNotifications(user));
+            }
+        }
         Locale currentLocale = LocaleContextHolder.getLocale();
         logger.info("Current locale in home controller: " + currentLocale);
         if (!model.containsAttribute("registerUser")) {

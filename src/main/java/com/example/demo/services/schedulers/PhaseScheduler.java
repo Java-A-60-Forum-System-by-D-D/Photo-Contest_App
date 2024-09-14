@@ -1,15 +1,13 @@
 package com.example.demo.services.schedulers;
 
 
-import com.example.demo.models.Contest;
-import com.example.demo.models.Phase;
-import com.example.demo.models.PhotoSubmission;
+import com.example.demo.models.*;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.example.demo.models.User;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -21,11 +19,13 @@ public class PhaseScheduler {
     private final ContestRepository contestRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final NotificationService notificationService;
 
-    public PhaseScheduler(ContestRepository contestRepository, UserRepository userRepository, UserService userService) {
+    public PhaseScheduler(ContestRepository contestRepository, UserRepository userRepository, UserService userService, NotificationService notificationService) {
         this.contestRepository = contestRepository;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
@@ -40,6 +40,7 @@ public class PhaseScheduler {
                                                 .equals(Phase.NOT_STARTED)) {
                 contest.setPhase(Phase.PHASE_1);
                 contest.setUpdatedAt(now);
+                notificationService.sendNotification("Phase 1 has started for contest " + contest.getTitle(), NotificationType.CONTEST_UPDATE, contest.getOrganizer());
                 contestRepository.save(contest);
             } else if (contest.getStartPhase2()
                               .isBefore(now) && !contest.getPhase()

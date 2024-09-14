@@ -7,6 +7,7 @@ import com.example.demo.models.*;
 import com.example.demo.models.filtering.ContestFilterOptions;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,13 @@ public class ContestServiceImpl implements ContestService {
     public static final String CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS = "Contest with such title already exists";
     private final ContestRepository contestRepository;
     private final UserService userService;
+    private final NotificationService notificationService;
 
 
-    public ContestServiceImpl(ContestRepository contestRepository, UserService userService) {
+    public ContestServiceImpl(ContestRepository contestRepository, UserService userService, NotificationService notificationService) {
         this.contestRepository = contestRepository;
         this.userService = userService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class ContestServiceImpl implements ContestService {
             u.getJurorContests()
              .add(savedContest);
             userService.save(u);
+            notificationService.sendNotification("New contest has been created", NotificationType.JURY_INVITATION, u);
         });
 
         return savedContest;
@@ -125,6 +129,7 @@ public class ContestServiceImpl implements ContestService {
 
         juryToAdd.setTotalScore(juryToAdd.getTotalScore() + 3);
         userService.calculateLevel(juryToAdd);
+        notificationService.sendNotification("You have been invited to be a jury in a contest", NotificationType.JURY_INVITATION, juryToAdd);
 
         userService.save(juryToAdd);
 
@@ -188,6 +193,7 @@ public class ContestServiceImpl implements ContestService {
         contest.getInvitedUsers()
                .add(userToInvite);
         contestRepository.save(contest);
+        notificationService.sendNotification("You have been invited to participate in a contest", NotificationType.PARTICIPATION_REMINDER, userToInvite);
         return contest;
         //todo need to add notification for invitation
     }

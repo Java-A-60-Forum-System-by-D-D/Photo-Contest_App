@@ -79,6 +79,14 @@
                                 <li><a th:href="@{/user/profile}">Profile</a></li>
                             </th:block>
                         </th:block>
+                        <li sec:authorize="isAuthenticated()">
+                            <div class="notification-bell">
+                                <a href="#" id="notification-icon">
+                                    <i class="fa fa-bell"></i>
+                                    <span class="badge" th:text="${notificationCount}">0</span>
+                                </a>
+                            </div>
+                        </li>
 
 <!--                        <li>-->
 <!--                            <form th:action="@{/changeLanguage}" method="get">-->

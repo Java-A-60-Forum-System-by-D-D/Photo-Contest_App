@@ -28,6 +28,7 @@ public class OrganizerDashboardMVCController {
     private final UserService userService;
     private final ContestMapper contestMapper;
 
+
     public OrganizerDashboardMVCController(CategoryService categoryService, ContestService contestService, UserService userService, ContestMapper contestMapper) {
         this.categoryService = categoryService;
         this.contestService = contestService;
