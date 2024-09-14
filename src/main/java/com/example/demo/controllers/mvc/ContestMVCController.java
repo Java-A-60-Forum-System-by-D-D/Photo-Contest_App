@@ -76,11 +76,12 @@ public class ContestMVCController {
 
 
         /*todo need to figure out how to handle invitational users*/
-
+        boolean contains = user.getJurorContests().contains(contest);
         model.addAttribute("phase", contest.getPhase());
         model.addAttribute("contest", contestViewDto);
         model.addAttribute("id", contest.getId());
         model.addAttribute("user", user);
+        model.addAttribute("contains", contains);
         model.addAttribute("IsFound", isFound);
         model.addAttribute("submissions", submissions);
         model.addAttribute("reviewStatusMap", reviewStatusMap);

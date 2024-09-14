@@ -54,7 +54,7 @@
           <div class="top-content">
             <div class="row">
               <div class="col-lg-4">
-                <span class="open">Open Contest</span>
+                <span class="open" th:text="${phase.toString()}"></span>
                 <span class="wish-list"><i class="fa fa-heart"></i> Add To Your Favorites</span>
               </div>
               <div class="col-lg-8">
@@ -71,12 +71,8 @@
         <div class="col-lg-12">
           <div class="main-content">
             <h4>Requirements Of The Contest</h4>
-            <h6>Picture Should Have</h6>
-            <p>SnapX Photography is a professional website template with 5 different HTML pages for maximum customizations. This is based on Bootstrap v5.1.3 CSS framework. Please visit TemplateMo website to see more CSS templates.</p>
-            <p>You are allowed to 100% freely use this SnapX Template for your commercial websites. You are not allowed to redistribute the template ZIP file on any other Free CSS Template collection websites.</p>
-            <h6 class="second-title">Picture Should Not Have</h6>
-            <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>
-            <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>
+            <h6>Description</h6>
+            <p th:text="${contest.description}">You are allowed to 100% freely use this SnapX Template for your commercial websites. You are not allowed to redistribute the template ZIP file on any other Free CSS Template collection websites.</p>
             <h4 class="second-title">Links To Inspire Your Photo</h4>
            <div th:if="${phase.name().equals('PHASE_1')}">
              <div class="row" >
@@ -112,9 +108,6 @@
                <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the other contests!</a>
              </div>
            </div>
-            <div >
-
-            </div>
           </div>
         </div>
       </div>
@@ -136,12 +129,23 @@
               <span class="price">Creator: <em th:text="*{creator.getEmail()}">$0</em></span>
               <!--                          <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>-->
             </div>
-            <div class="border-button" th:if="${!reviewStatusMap[submission.getId()]}">
-              <a th:href="@{/submissions/{id}(id=${submission.getId()})}">Review Photo</a>
+            <div th:if="${contains}">
+              <div class="border-button" th:if="${!reviewStatusMap[submission.getId()]}">
+                <a th:href="@{/submissions/{id}(id=${submission.getId()})}">Review Photo</a>
+              </div>
+              <div class="border-button" th:unless="${!reviewStatusMap[submission.getId()]}">
+                <a th:href="@{/contests/juryPanel}">Already Reviewed</a>
+              </div>
             </div>
-            <div class="border-button" th:unless="${!reviewStatusMap[submission.getId()]}">
-              <a th:href="@{/contests/juryPanel}">Already Reviewed</a>
+            <div th:unless="${contains}">
+              <div class="border-button" >
+                <a th:href="@{/submissions/{id}/reviews(id=${submission.getId()})}">View Reviews</a>
+              </div>
+<!--              <div class="border-button" th:unless="${!reviewStatusMap[submission.getId()]}">-->
+<!--                <a th:href="@{/contests/juryPanel}">Already Reviewed</a>-->
+<!--              </div>-->
             </div>
+
           </div>
         </div>
         <div class="col-lg-12">

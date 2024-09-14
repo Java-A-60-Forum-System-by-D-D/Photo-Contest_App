@@ -16,6 +16,25 @@ public enum Phase{
     NOT_STARTED,
     PHASE_1,
     PHASE_2,
-    FINISHED
+    FINISHED;
 
+    @Override
+    public String toString() {
+        String name = "";
+        switch (this){
+            case NOT_STARTED:
+                name = "Not started";
+            break;
+            case PHASE_1 :
+                name = "Open";
+            break;
+            case PHASE_2 :
+                name = "Voting";
+            break;
+            case FINISHED :
+                name = "Finished";
+            break;
+        }
+        return name;
+    }
 }
