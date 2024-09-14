@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{commons/fragments::head}">
+</head>
+
+<body>
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky" th:replace="~{commons/fragments::nav}">
+
+</header>
+<!-- ***** Header Area End ***** -->
+
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 header-text">
+                <h2>Discover what's currently going on at <em>SnapX</em></h2>
+                <p>When you need Free CSS Templates, you just remember our website TemplateMo. We provide you best quality website templates at absolutely free of charge. No hidden cost involved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="search-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form id="search-form" name="gs" method="submit" role="search" action="#">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <fieldset>
+                                <!--                    <label for="contest" class="form-label">Search Any Contest</label>-->
+                                <input type="text" name="contest" class="searchText" placeholder="Contest Name..." autocomplete="on" required>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-4">
+                            <fieldset>
+                                <label for="category" class="form-label">Pick Category</label>
+                                <select name="category" class="form-select" aria-label="Choose a category" id="category" onchange="this.form.click()">
+                                    <option selected>Choose a category</option>
+                                    <option type="checkbox" name="Nature" value="Nature">Nature Photography (220 Contests)</option>
+                                    <option value="Portrait">Portrait Photography (172 Contests)</option>
+                                    <option value="Space">Space Photography (92 Contests)</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-2">
+                            <fieldset>
+                                <!--                    <label for="chooseprice" class="form-label">Award Price</label>-->
+                                <select name="Price" class="form-select" aria-label="Default select example" id="chooseCategory" onchange="this.form.click()">
+                                    <option selected>Choose a price</option>
+                                    <option value="500">$500 to $1,000</option>
+                                    <option value="1500">$1,500 to $2,000</option>
+                                    <option value="2500">$2,500 to $3000</option>
+                                    <option value="3500+">$3,500+</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-2">
+                            <fieldset>
+                                <button class="main-button">Search Now</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="contest-waiting">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h5>Participated Contests</h5>
+            </div>
+            <div class="col-lg-3 col-sm-6" th:each="contest : ${contests}" th:object="${contest}">
+                <div class="waiting-item">
+                    <img th:src="*{photoUrl}" alt="">
+                    <div class="down-content">
+                        <h4 th:text="*{title}">Contest Title</h4>
+                        <p th:text="*{description}">Contest Description</p>
+                        <span class="price">Category <em th:text="*{category.name}">$0</em></span>
+                        <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>
+                    </div>
+                    <div class="border-button">
+                        <a th:href="@{/contests/{id}(id=${contest.getId()})}">Go To Contest</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--<section class="photos-videos">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-lg-12">-->
+<!--                <div class="section-heading text-center">-->
+<!--                    <h6>Photos &amp; Videos At SnapX</h6>-->
+<!--                    <h4>Our Featured <em>Photos &amp; Videos</em> At SnapX</h4>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <ul>-->
+<!--                <li th:each="contest : ${contests}" th:object="${contest}">-->
+<!--                    <div class="col-lg-4">-->
+<!--                        <div class="item">-->
+<!--                            <div class="thumb">-->
+<!--                                <img th:src="*{contestViewDto.photoUrl}" alt="">-->
+<!--                                <div class="top-content">-->
+<!--                                    <h4 th:text="*{contestViewDto.title}"></h4>-->
+<!--                                    <h5 th:text="*{contestViewDto.description}"></h5>-->
+<!--                                    <h6><i class="fa fa-eye"></i> 1436 | <i class="fa fa-heart"></i> 256</h6>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="down-content">-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-7">-->
+<!--                                        &lt;!&ndash;                                    <h2>Ranked: 3rd</h2>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                    <div class="col-5">-->
+<!--                                        <h6 th:text="'Category: '+ *{contestViewDto.category}"></h6>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+
+<!--            </ul>-->
+<!--            &lt;!&ndash;        <div class="col-lg-4">&ndash;&gt;-->
+<!--            &lt;!&ndash;          <div class="item">&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="thumb">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <img src="../static/images/photo-video-03.jpg" alt="">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="top-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h4>Underwater Turtle</h4>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h6><i class="fa fa-eye"></i> 1436 | <i class="fa fa-heart"></i> 256</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="down-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="row">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-7">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h2>Ranked: 3rd</h2>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-5">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h6>Category: Photos</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;        <div class="col-lg-4">&ndash;&gt;-->
+<!--            &lt;!&ndash;          <div class="item">&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="thumb">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <img src="../static/images/photo-video-04.jpg" alt="">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="play-button">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <a href="http://youtube.com" target="_blank"><i class="fa fa-play"></i></a>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="top-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h4>Greeny Place</h4>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h6><i class="fa fa-eye"></i> 1596 | <i class="fa fa-heart"></i> 512</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="down-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="row">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-7">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h2>Ranked: 4th</h2>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-5">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h6>Category: Videos</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;        <div class="col-lg-4">&ndash;&gt;-->
+<!--            &lt;!&ndash;          <div class="item">&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="thumb">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <img src="../static/images/photo-video-05.jpg" alt="">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="top-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h4>Rocky Mountain</h4>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <h6><i class="fa fa-eye"></i> 1596 | <i class="fa fa-heart"></i> 768</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <div class="down-content">&ndash;&gt;-->
+<!--            &lt;!&ndash;              <div class="row">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-7">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h2>Ranked: 5th</h2>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="col-5">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <h6>Category: Random</h6>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;          </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--  <section class="contest-win">-->
+<!--    <div class="container-fluid">-->
+<!--      <div class="row">-->
+<!--        <div class="col-lg-12">-->
+<!--          <div class="section-heading text-center">-->
+<!--            <h6>Recently Added Contests by Users</h6>-->
+<!--            <h4>Current <em>Contests</em> to Enter Now &amp; <em>Win</em></h4>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-3">-->
+<!--          <div class="contest-item">-->
+<!--            <div class="top-content">-->
+<!--              <span class="award">Award Price</span>-->
+<!--              <span class="price">$1,200</span>-->
+<!--            </div>-->
+<!--            <img src="../static/images/contest-01.jpg" alt="">-->
+<!--            <h4>Walk In The Nature Night</h4>-->
+<!--            <div class="info">-->
+<!--              <span class="participants"><img src="/images/icon-03.png" alt=""><br>80 Participants</span>-->
+<!--              <span class="submittions"><img src="/images/icon-01.png" alt=""><br>260 Submissions</span>-->
+<!--            </div>-->
+<!--            <div class="border-button">-->
+<!--              <a href="contest-details.html">Browse Nature Pic Contests</a>-->
+<!--            </div>-->
+<!--            <span class="info">* Client will pay via Online Payments</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-3">-->
+<!--          <div class="contest-item">-->
+<!--            <div class="top-content">-->
+<!--              <span class="award">Award Price</span>-->
+<!--              <span class="price">$2,400</span>-->
+<!--            </div>-->
+<!--            <img src="../static/images/contest-02.jpg" alt="">-->
+<!--            <h4>Walk In The Nature Night</h4>-->
+<!--            <div class="info">-->
+<!--              <span class="participants"><img src="/images/icon-03.png" alt=""><br>60 Participants</span>-->
+<!--              <span class="submittions"><img src="/images/icon-01.png" alt=""><br>212 Submissions</span>-->
+<!--            </div>-->
+<!--            <div class="border-button">-->
+<!--              <a href="contest-details.html">Browse Nature Pic Contests</a>-->
+<!--            </div>-->
+<!--            <span class="info">* Client will pay via Online Payments</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-3">-->
+<!--          <div class="contest-item">-->
+<!--            <div class="top-content">-->
+<!--              <span class="award">Award Price</span>-->
+<!--              <span class="price">$3,600</span>-->
+<!--            </div>-->
+<!--            <img src="../static/images/contest-03.jpg" alt="">-->
+<!--            <h4>Walk In The Nature Night</h4>-->
+<!--            <div class="info">-->
+<!--              <span class="participants"><img src="/images/icon-03.png" alt=""><br>55 Participants</span>-->
+<!--              <span class="submittions"><img src="/images/icon-01.png" alt=""><br>150 Submissions</span>-->
+<!--            </div>-->
+<!--            <div class="border-button">-->
+<!--              <a href="contest-details.html">Browse Nature Pic Contests</a>-->
+<!--            </div>-->
+<!--            <span class="info">* Client will pay via Online Payments</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-3">-->
+<!--          <div class="contest-item">-->
+<!--            <div class="top-content">-->
+<!--              <span class="award">Award Price</span>-->
+<!--              <span class="price">$4,800</span>-->
+<!--            </div>-->
+<!--            <img src="../static/images/contest-04.jpg" alt="">-->
+<!--            <h4>Walk In The Nature Night</h4>-->
+<!--            <div class="info">-->
+<!--              <span class="participants"><img src="/images/icon-03.png" alt=""><br>40 Participants</span>-->
+<!--              <span class="submittions"><img src="/images/icon-01.png" alt=""><br>120 Submissions</span>-->
+<!--            </div>-->
+<!--            <div class="border-button">-->
+<!--              <a href="contest-details.html">Browse Nature Pic Contests</a>-->
+<!--            </div>-->
+<!--            <span class="info">* Client will pay via Online Payments</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-12">-->
+<!--          <ul class="pagination">-->
+<!--            <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>-->
+<!--            <li><a href="#">1</a></li>-->
+<!--            <li class="active"><a href="#">2</a></li>-->
+<!--            <li><a href="#">3</a></li>-->
+<!--            <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright © 2048 <a href="#">SnapX</a> Photo Contest Co., Ltd. All rights reserved.
+
+                    Design: <a title="CSS Templates" rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a> Distribution: <a title="CSS Templatesss" rel="sponsored" href="https://themewagon.com" target="_blank">ThemeWagon</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+
+<script src="/js/isotope.min.js" th:href="@{/js/isotope.min.js}"></script>
+<script src="/js/owl-carousel.js" th:href="@{/js/owl-carousel.js}"></script>
+
+<script src="/js/tabs.js" th:href="@{/js/tabs.js}"></script>
+<script src="/js/popup.js" th:href="@{/js/popup.js}"></script>
+<script src="/js/custom.js" th:href="@{/js/custom.js}"></script>
+
+</body>
+</html>

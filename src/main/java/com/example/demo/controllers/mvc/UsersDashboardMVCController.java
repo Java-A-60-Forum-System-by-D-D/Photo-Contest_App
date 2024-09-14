@@ -45,6 +45,24 @@ public class UsersDashboardMVCController {
 
         return "user-open-contests";
     }
+    @GetMapping("/participatedContests")
+    public String participatedContests(Model model, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        List<Contest> participatedContests = contestService.getAllParticipatedContests(user);
+
+        model.addAttribute("contests", participatedContests);
+
+        return "user-participated-contests";
+    }
+    @GetMapping("/finishedContests")
+    public String finishedContests(Model model, Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        List<Contest> finishedContests = contestService.getFinishedContests(user);
+
+        model.addAttribute("contests", finishedContests);
+
+        return "user-finished-contests";
+    }
     @GetMapping("/profile")
     public String profile(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
