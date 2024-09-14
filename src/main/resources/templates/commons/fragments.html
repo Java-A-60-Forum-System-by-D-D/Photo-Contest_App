@@ -58,8 +58,8 @@
                                 </th:block>
                                 <th:block sec:authorize="!hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)">
                                     <li><a th:href="@{/user/openContests}">Open Contests</a></li>
-                                    <li><a th:href="@{/user/openContests}">Your Contests</a></li>
-                                    <li><a th:href="@{/user/openContests}">Finished Contests</a></li>
+                                    <li><a th:href="@{/user/participatedContests}">Your Contests</a></li>
+                                    <li><a th:href="@{/user/finishedContests}">Finished Contests</a></li>
                                     <li sec:authorize="hasAnyAuthority('MASTER', 'DICTATOR')">
                                         <a th:href="@{/contests/juryPanel}">Jury Panel</a>
                                     </li>

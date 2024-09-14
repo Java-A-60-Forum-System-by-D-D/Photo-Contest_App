@@ -57,6 +57,7 @@ public class PhotoMapper {
                     reviewView.setScore(r.getScore());
                     reviewView.setComment(r.getComment());
                     reviewView.setJuryNames(r.getJury().getFirstName() + " " + r.getJury().getLastName());
+                    reviewView.setCategoryMismatch(r.isCategoryMismatch());
                     reviews.add(reviewView);
                         });
 

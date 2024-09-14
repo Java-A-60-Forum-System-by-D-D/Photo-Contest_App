@@ -7,4 +7,5 @@ public class ReviewView {
     private int score;
     private String comment;
     private String juryNames;
+    private boolean categoryMismatch;
 }

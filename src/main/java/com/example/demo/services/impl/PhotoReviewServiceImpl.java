@@ -24,9 +24,7 @@ public class PhotoReviewServiceImpl implements PhotoReviewService {
 
     @Override
     public PhotoReview createPhotoReview(PhotoReview photoReview, PhotoSubmission photoSubmission) {
-        if (!photoSubmission.getContest()
-                            .getPhase()
-                            .equals(Phase.PHASE_2)) {
+        if(!photoSubmission.getContest().getPhase().equals(Phase.PHASE_2)){
             throw new EntityDuplicateException(CONTEST_IS_NOT_IN_PHASE_2);
         }
         PhotoReview savedPhotoReview = photoReviewRepository.save(photoReview);

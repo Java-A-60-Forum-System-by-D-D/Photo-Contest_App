@@ -5,6 +5,7 @@ import com.example.demo.models.PhotoReview;
 import com.example.demo.models.PhotoSubmission;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.PhotoReviewDto;
+import com.example.demo.models.dto.PhotoSubmissionReviewsView;
 import com.example.demo.models.mappers.PhotoMapper;
 import com.example.demo.models.mappers.ReviewMapper;
 import com.example.demo.services.PhotoReviewService;
@@ -25,12 +26,14 @@ public class PhotoSubmissionsMVCController {
     private final UserService userService;
     private final ReviewMapper reviewMapper;
     private final PhotoReviewService photoReviewService;
+    private final PhotoMapper photoMapper;
 
-    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService, ReviewMapper reviewMapper, PhotoReviewService photoReviewService) {
+    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService, ReviewMapper reviewMapper, PhotoReviewService photoReviewService, PhotoMapper photoMapper) {
         this.photoSubmissionService = photoSubmissionService;
         this.userService = userService;
         this.reviewMapper = reviewMapper;
         this.photoReviewService = photoReviewService;
+        this.photoMapper = photoMapper;
     }
 
     @GetMapping("/{id}")
@@ -63,5 +66,13 @@ public class PhotoSubmissionsMVCController {
         return "redirect:/contests/" + String.valueOf(contest.getId());
 
 
+    }
+    @GetMapping("/{id}/reviews")
+    public String getPhotoSubmissionReviews(@PathVariable Long id, Model model) {
+        PhotoSubmission photoSubmission = photoSubmissionService.getPhotoSubmissionById(id);
+        PhotoSubmissionReviewsView photoSubmissionReviewsView = photoMapper.createPhotoSubmissionReviewView(photoSubmission);
+        model.addAttribute("photoSubmissionReviewsView", photoSubmissionReviewsView);
+        model.addAttribute("totalScore", photoSubmission.getReviewScore());
+        return "photo-submission-reviews";
     }
 }

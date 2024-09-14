@@ -1,0 +1,46 @@
+<!-- File: src/main/resources/templates/photo-submission-reviews.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/fragments::head}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+</head>
+<body>
+<header th:replace="~{commons/fragments::nav}"></header>
+<div class="container" style="padding-top: 20px">
+    <div class="col-lg-12">
+        <div class="section-heading text-center">
+            <h6 th:text="${photoSubmissionReviewsView.title}"></h6>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" th:src="${photoSubmissionReviewsView.photoUrl}" alt="Photo Submission">
+        <div class="card-body">
+            <h5 class="reviews-heading">Reviews</h5>
+            <p style="text-align: center;font-weight: bold;margin-top: 10px;" ><strong>Total Score:</strong> <span th:text="${totalScore}"></span></p>
+            <table class="review-table">
+                <thead>
+                <tr>
+                    <th>Jury</th>
+                    <th>Score</th>
+                    <th>Comment</th>
+                    <th>Category Mismatch</th>
+                </tr>
+                </thead>
+                <tbody th:each="review : ${photoSubmissionReviewsView.reviews}">
+                <tr>
+                    <td th:text="${review.juryNames}"></td>
+                    <td th:text="${review.score}"></td>
+                    <td th:text="${review.comment}"></td>
+                    <td th:text="${review.categoryMismatch}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Scripts -->
+<script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="/js/custom.js" th:href="@{/js/custom.js}"></script>
+</body>
+</html>

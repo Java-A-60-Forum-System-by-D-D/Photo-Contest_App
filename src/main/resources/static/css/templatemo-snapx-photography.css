@@ -92,6 +92,32 @@ figure, header, nav, section, article, aside, footer, figcaption {
   flex: 1;
   text-align: center;
 }
+.card-img-top {
+  width: 50%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the image */
+  border-radius: 15px; /* Apply border-radius */
+}
+
+.reviews-heading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.review-table th, .review-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.review-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
 
 html[xmlns] .clearfix {
   display: block;
