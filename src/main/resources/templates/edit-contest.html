@@ -75,7 +75,7 @@
                             <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="invUserEmail">User Email:</label>
-                                <input type="email" id="invUserEmail" name="email" class="form-control" required>
+                                <input  type="email" id="invUserEmail" name="email" class="form-control" required >
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Add User</button>
@@ -95,7 +95,7 @@
                             <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="juryMemberEmail">Jury Member Email:</label>
-                                <input type="email" id="juryMemberEmail" name="email" class="form-control" required>
+                                <input  type="email" id="juryMemberEmail" name="email" class="form-control" required >
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Add Jury Member</button>
@@ -143,6 +143,54 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        console.log("Document is ready!");
+
+        $("#invUserEmail").autocomplete({
+            source: function(request, response) {
+                console.log("Autocomplete triggered with term: ", request.term);
+
+                $.ajax({
+                    url: "/admin/usernames",
+                    type: "GET",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        console.log("Autocomplete data received: ", data);
+                        response(data);
+                    },
+                    error: function(xhr) {
+                        console.error("Autocomplete error: ", xhr);
+                    }
+                });
+            },
+            minLength: 2
+        });
+        $("#juryMemberEmail").autocomplete({
+            source: function(request, response) {
+                console.log("Autocomplete triggered with term: ", request.term);
+
+                $.ajax({
+                    url: "/admin/usernames",
+                    type: "GET",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        console.log("Autocomplete data received: ", data);
+                        response(data);
+                    },
+                    error: function(xhr) {
+                        console.error("Autocomplete error: ", xhr);
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>
 <footer th:replace="~{commons/fragments::footer}"></footer>
 <div th:replace="~{commons/scripts::body}"></div>
 </body>

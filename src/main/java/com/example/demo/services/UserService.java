@@ -31,4 +31,6 @@ public interface UserService {
     List<User> getUsersByJurorContests(Contest contest);
 
     List<User> getUsersByRole();
+
+    List<String> findUsernamesByTerm(String term);
 }

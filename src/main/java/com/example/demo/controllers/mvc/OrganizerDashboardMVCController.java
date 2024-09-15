@@ -47,6 +47,13 @@ public class OrganizerDashboardMVCController {
         User user = userService.getUserByEmail(principal.getName());
         return notificationService.getUnreadNotifications(user);
     }
+    @GetMapping("/usernames")
+    @ResponseBody
+    public List<String> findUsernames(@RequestParam("term") String term) {
+        List<String> usernames = userService.findUsernamesByTerm(term);
+        System.out.println("Usernames found: " + usernames);
+        return usernames;
+    }
 
 
     @GetMapping("/createContest")
@@ -113,7 +120,7 @@ public class OrganizerDashboardMVCController {
 
 
     @PostMapping("/editContest/{id}/addJuryMember")
-    public String addJuryMember(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
+    public String addJuryMember(@PathVariable long id, @RequestParam("email") String email, Model model, Principal principal) {
         //todo catch if user hasn't got needed role - BindingResult?
         User jury = userService.getUserByEmail(email);
         User user = userService.getUserByEmail(principal.getName());
@@ -123,7 +130,7 @@ public class OrganizerDashboardMVCController {
     }
 
     @PostMapping("/editContest/{id}/addInvitationalUser")
-    public String addInvitationalUser(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {
+    public String addInvitationalUser(@PathVariable long id, @RequestParam("email") String email, Model model, Principal principal) {
         User userToInvite = userService.getUserByEmail(email);
         User user = userService.getUserByEmail(principal.getName());
         Contest contest = contestService.inviteUserToContest(id, userToInvite, user);
@@ -174,6 +181,7 @@ public class OrganizerDashboardMVCController {
     public String users(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
+        //todo
         return "users";
     }
 }

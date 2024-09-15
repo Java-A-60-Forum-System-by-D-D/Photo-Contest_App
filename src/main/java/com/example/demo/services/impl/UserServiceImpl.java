@@ -128,5 +128,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findParticipantUsers();
     }
 
+    @Override
+    public List<String> findUsernamesByTerm(String term) {
+        return userRepository.findEmailByTerm(term);
+    }
+
 
 }
