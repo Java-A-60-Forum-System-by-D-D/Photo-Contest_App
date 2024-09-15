@@ -46,5 +46,6 @@ public interface ContestService {
 
     List<Contest> getNotStartedContests();
 
+    List<String> getAllPhotos();
     void deleteContest(long id);
 }

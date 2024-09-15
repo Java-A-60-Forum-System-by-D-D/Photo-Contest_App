@@ -45,6 +45,24 @@ public class ContestMapper {
         contest.setType(Type.valueOf(contestDto.getType().toUpperCase(Locale.ROOT)));
         return contest;
     }
+    public Contest createContestFromDto(ContestDto contestDto, User user, String coverPhoto) {
+        Contest contest = new Contest();
+        contest.setTitle(contestDto.getTitle());
+        contest.setDescription(contestDto.getDescription());
+        contest.setCategory(categoryService.getCategoryByName(contestDto.getCategory()));
+        contest.setPhotoUrl(coverPhoto);
+        contest.setCreatedAt(LocalDateTime.now());
+        contest.setUpdatedAt(LocalDateTime.now());
+        contest.setOrganizer(user);
+        LocalDateTime startPhase1 = LocalDateTime.now().with(LocalTime.of(22, 0));
+        contest.setStartPhase1(startPhase1);
+        LocalDateTime startPhase2 = startPhase1.plusDays(2);
+        contest.setStartPhase2(startPhase2);
+        LocalDateTime startPhase3 = startPhase2.plusHours(12);
+        contest.setStartPhase3(startPhase3);
+        contest.setType(Type.valueOf(contestDto.getType().toUpperCase(Locale.ROOT)));
+        return contest;
+    }
 
     public ContestViewDto createContestViewDto(Contest contest) {
         ContestViewDto contestViewDto = new ContestViewDto();

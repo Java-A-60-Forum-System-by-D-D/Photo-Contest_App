@@ -63,7 +63,7 @@ public class ContestServiceImpl implements ContestService {
         });
         List<User> participants = userService.getUsersByRole();
         participants.forEach(u -> {
-            emailService.sendEmail(u.getEmail());
+            emailService.sendEmail( u.getEmail(), "New contest has been created", String.format("New contest %s has been created", savedContest.getTitle()));
         });
 
         return savedContest;
@@ -137,7 +137,7 @@ public class ContestServiceImpl implements ContestService {
         juryToAdd.setTotalScore(juryToAdd.getTotalScore() + 3);
         userService.calculateLevel(juryToAdd);
         notificationService.sendNotification("You have been invited to be a jury in a contest", NotificationType.JURY_INVITATION, juryToAdd);
-        emailService.sendEmail(juryToAdd.getEmail(), "Invitation to be a jury in a contest", String.format("You have been invited to be a jury in the contest %s", contest.getTitle()));
+        emailService.sendEmail( juryToAdd.getEmail(), "Invitation to be a jury in a contest", String.format("You have been invited to be a jury in the contest %s", contest.getTitle()));
         userService.save(juryToAdd);
 
 
@@ -213,6 +213,11 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public List<Contest> getNotStartedContests() {
         return contestRepository.findContestByPhase_NotStarted();
+    }
+
+    @Override
+    public List<String> getAllPhotos() {
+        return contestRepository.getAllByPhotos();
     }
 
     @Override
