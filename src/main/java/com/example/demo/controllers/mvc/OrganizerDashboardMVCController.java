@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -50,9 +51,11 @@ public class OrganizerDashboardMVCController {
     @GetMapping("/usernames")
     @ResponseBody
     public List<String> findUsernames(@RequestParam("term") String term) {
-        List<String> usernames = userService.findUsernamesByTerm(term);
-        System.out.println("Usernames found: " + usernames);
-        return usernames;
+//        List<String> usernames = userService.findUsernamesByTerm(term);
+////        return usernames.stream()
+//                .map(username -> username.toLowerCase(Locale.ROOT))
+//                .collect(Collectors.toList());
+        return List.of("test1@example.com", "test2@example.com", "test3@example.com");
     }
 
 

@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{commons/fragments::head}">
-
+<!--    <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">-->
+<!--    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>-->
+<!--    <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>-->
 </head>
 <body>
 <header th:replace="~{commons/fragments::header}"></header>
@@ -168,6 +170,7 @@
             },
             minLength: 2
         });
+
         $("#juryMemberEmail").autocomplete({
             source: function(request, response) {
                 console.log("Autocomplete triggered with term: ", request.term);

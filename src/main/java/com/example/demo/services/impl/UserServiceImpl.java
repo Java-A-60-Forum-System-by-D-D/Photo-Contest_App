@@ -133,5 +133,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findEmailByTerm(term);
     }
 
+    @Override
+    public User updateFirstName(long userId, String firstName) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setFirstName(firstName);
+        return userRepository.save(user);
+    }
 
+    @Override
+    public User updateLastName(long userId, String lastName) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setLastName(lastName);
+        return userRepository.save(user);
+    }
 }
+
+

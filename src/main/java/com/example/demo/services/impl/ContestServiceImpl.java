@@ -7,7 +7,6 @@ import com.example.demo.models.*;
 import com.example.demo.models.filtering.ContestFilterOptions;
 import com.example.demo.repositories.ContestRepository;
 import com.example.demo.services.ContestService;
-import com.example.demo.services.EmailService;
 import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import org.springframework.stereotype.Service;
