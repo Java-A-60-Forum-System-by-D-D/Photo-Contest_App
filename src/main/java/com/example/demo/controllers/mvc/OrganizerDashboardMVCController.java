@@ -1,6 +1,7 @@
 package com.example.demo.controllers.mvc;
 
 import com.example.demo.models.Contest;
+import com.example.demo.models.Notification;
 import com.example.demo.models.Type;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;
@@ -8,6 +9,7 @@ import com.example.demo.models.dto.JuryDTO;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -27,13 +29,20 @@ public class OrganizerDashboardMVCController {
     private final ContestService contestService;
     private final UserService userService;
     private final ContestMapper contestMapper;
+    private final NotificationService notificationService;
 
 
-    public OrganizerDashboardMVCController(CategoryService categoryService, ContestService contestService, UserService userService, ContestMapper contestMapper) {
+    public OrganizerDashboardMVCController(CategoryService categoryService, ContestService contestService, UserService userService, ContestMapper contestMapper, NotificationService notificationService) {
         this.categoryService = categoryService;
         this.contestService = contestService;
         this.userService = userService;
         this.contestMapper = contestMapper;
+        this.notificationService = notificationService;
+    }
+    @ModelAttribute("notifications")
+    public List<Notification> getNotifications(Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        return notificationService.getUnreadNotifications(user);
     }
 
 
@@ -79,6 +88,7 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("type", type);
         return "edit-contest";
     }
+
 
     @PostMapping("/editContest/{id}/addJuryMember")
     public String addJuryMember(@PathVariable long id, @RequestParam String email, Model model, Principal principal) {

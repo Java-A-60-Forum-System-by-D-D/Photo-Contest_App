@@ -2,11 +2,13 @@ package com.example.demo.controllers.mvc;
 
 import com.example.demo.models.Category;
 import com.example.demo.models.Contest;
+import com.example.demo.models.Notification;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestSummaryDTO;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,16 +26,23 @@ public class UsersDashboardMVCController {
     private final ContestService contestService;
     private final ContestMapper contestMapper;
     private final CategoryService categoryService;
+    private final NotificationService notificationService;
 
-    public UsersDashboardMVCController(UserService userService, ContestService contestService, ContestMapper contestMapper, CategoryService categoryService) {
+    public UsersDashboardMVCController(UserService userService, ContestService contestService, ContestMapper contestMapper, CategoryService categoryService, NotificationService notificationService) {
         this.userService = userService;
         this.contestService = contestService;
         this.contestMapper = contestMapper;
         this.categoryService = categoryService;
+        this.notificationService = notificationService;
     }
     @ModelAttribute("categories")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+    @ModelAttribute("notifications")
+    public List<Notification> getNotifications(Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        return notificationService.getUnreadNotifications(user);
     }
 
     @GetMapping("/openContests")
@@ -64,9 +73,10 @@ public class UsersDashboardMVCController {
         return "user-finished-contests";
     }
     @GetMapping("/profile")
-    public String profile(Model model, Principal principal) {
+    public String profile(Model model, Principal principal, @ModelAttribute("notifications") List<Notification> notifications) {
         User user = userService.getUserByEmail(principal.getName());
         model.addAttribute("user", user);
+        model.addAttribute("notifications", notifications);
         return "user-profile";
     }
 

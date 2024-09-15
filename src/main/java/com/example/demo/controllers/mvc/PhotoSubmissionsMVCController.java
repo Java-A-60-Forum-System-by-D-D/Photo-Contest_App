@@ -1,13 +1,11 @@
 package com.example.demo.controllers.mvc;
 
-import com.example.demo.models.Contest;
-import com.example.demo.models.PhotoReview;
-import com.example.demo.models.PhotoSubmission;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.PhotoReviewDto;
 import com.example.demo.models.dto.PhotoSubmissionReviewsView;
 import com.example.demo.models.mappers.PhotoMapper;
 import com.example.demo.models.mappers.ReviewMapper;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.PhotoReviewService;
 import com.example.demo.services.PhotoSubmissionService;
 import com.example.demo.services.UserService;
@@ -18,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/submissions")
@@ -27,13 +26,20 @@ public class PhotoSubmissionsMVCController {
     private final ReviewMapper reviewMapper;
     private final PhotoReviewService photoReviewService;
     private final PhotoMapper photoMapper;
+    private final NotificationService notificationService;
 
-    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService, ReviewMapper reviewMapper, PhotoReviewService photoReviewService, PhotoMapper photoMapper) {
+    public PhotoSubmissionsMVCController(PhotoSubmissionService photoSubmissionService, UserService userService, ReviewMapper reviewMapper, PhotoReviewService photoReviewService, PhotoMapper photoMapper, NotificationService notificationService) {
         this.photoSubmissionService = photoSubmissionService;
         this.userService = userService;
         this.reviewMapper = reviewMapper;
         this.photoReviewService = photoReviewService;
         this.photoMapper = photoMapper;
+        this.notificationService = notificationService;
+    }
+    @ModelAttribute("notifications")
+    public List<Notification> getNotifications(Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        return notificationService.getUnreadNotifications(user);
     }
 
     @GetMapping("/{id}")
