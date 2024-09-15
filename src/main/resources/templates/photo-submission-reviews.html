@@ -23,7 +23,7 @@
                     <th>Jury</th>
                     <th>Score</th>
                     <th>Comment</th>
-                    <th>Category Mismatch</th>
+                    <th>Valid Category</th>
                 </tr>
                 </thead>
                 <tbody th:each="review : ${photoSubmissionReviewsView.reviews}">
@@ -31,7 +31,9 @@
                     <td th:text="${review.juryNames}"></td>
                     <td th:text="${review.score}"></td>
                     <td th:text="${review.comment}"></td>
-                    <td th:text="${review.categoryMismatch}"></td>
+                    <td>
+                        <i th:classappend="${review.categoryMismatch} ? 'fa fa-times text-danger' : 'fa fa-check text-success'"></i>
+                    </td>
                 </tr>
                 </tbody>
             </table>

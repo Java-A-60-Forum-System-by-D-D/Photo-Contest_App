@@ -5,12 +5,10 @@ import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserDto;
 import com.example.demo.models.dto.UserViewDto;
 import com.example.demo.models.mappers.UserMapper;
-import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
 import com.example.demo.services.impl.RestAuthenticationServiceImpl;
-import com.example.demo.services.schedulers.RestAuthenticationService;
+import com.example.demo.services.RestAuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
