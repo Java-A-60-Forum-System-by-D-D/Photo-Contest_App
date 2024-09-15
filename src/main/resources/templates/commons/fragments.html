@@ -38,7 +38,7 @@
                 <!--              Navigation-->
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
+                    <a th:href="@{/home}" class="logo">
                         <img src="/images/logo.png" alt="SnapX Photography Template">
                     </a>
                     <!-- ***** Logo End ***** -->
@@ -73,7 +73,7 @@
                         <li><a th:href="@{/categories}">Categories</a></li>
                         <th:block sec:authorize="isAuthenticated()">
                             <th:block sec:authorize="hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)" >
-                                <li><a href="users.html">Users</a></li>
+                                <li><a th:href="@{/admin/users}">Users</a></li>
                             </th:block>
                             <th:block sec:authorize="!hasAuthority(T(com.example.demo.models.UserRole).ORGANIZER)">
                                 <li><a th:href="@{/user/profile}">Profile</a></li>

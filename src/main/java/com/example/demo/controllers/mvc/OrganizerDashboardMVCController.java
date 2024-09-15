@@ -184,7 +184,7 @@ public class OrganizerDashboardMVCController {
     public String users(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        //todo
+
         return "users";
     }
 }
