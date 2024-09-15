@@ -79,14 +79,32 @@
                                 <li><a th:href="@{/user/profile}">Profile</a></li>
                             </th:block>
                         </th:block>
+                        <!-- Актуализация в `src/main/resources/templates/commons/fragments.html` -->
                         <li sec:authorize="isAuthenticated()">
                             <div class="notification-bell">
-                                <a href="#" id="notification-icon">
+                                <a href="javascript:void(0)" id="notification-icon" class="notification-icon" th:classappend="${notifications.size() > 0} ? 'has-notifications'">
                                     <i class="fa fa-bell"></i>
-                                    <span class="badge" th:text="${notificationCount}">0</span>
                                 </a>
+                                <div id="notification-dropdown" class="notification-dropdown">
+                                    <p th:text="'You have ' + ${notifications.size()} + ' new notifications'"></p>
+                                    <ul>
+                                        <li th:each="notification : ${notifications}">
+                                            <span th:text="${notification.message}">Notification message</span>
+                                            <form class="mark-as-read-form" th:action="@{/notifications/markAsRead}" th:method="post">
+                                                <input type="hidden" name="notificationId" th:value="${notification.id}">
+                                                <button type="submit">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                    <button id="mark-all-as-read" th:if="${notifications.size() > 1}">
+                                        <i class="fa fa-times"></i> Mark All as Read
+                                    </button>
+                                </div>
                             </div>
                         </li>
+
 
 <!--                        <li>-->
 <!--                            <form th:action="@{/changeLanguage}" method="get">-->

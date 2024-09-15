@@ -1,5 +1,6 @@
 package com.example.demo.controllers.mvc;
 
+import com.example.demo.models.Notification;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.LoginUserDto;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -54,10 +56,13 @@ public class HomeMVCController {
 
     @GetMapping(value = {"/home", "/"})
     public String home(Model model, Principal principal) {
+        List<Notification > notifications = null;
         if (principal != null) {
             User user = userService.getUserByEmail(principal.getName());
+
             if (user != null) {
-                model.addAttribute("notifications", notificationService.getUnreadNotifications(user));
+                notifications = notificationService.getUnreadNotifications(user);
+                model.addAttribute("notifications", notifications);
             }
         }
         Locale currentLocale = LocaleContextHolder.getLocale();

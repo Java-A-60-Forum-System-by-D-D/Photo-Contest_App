@@ -1,5 +1,6 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Notification;
 import com.example.demo.models.NotificationType;
 import com.example.demo.models.User;
@@ -12,6 +13,7 @@ import java.util.List;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
+    public static final String NOTIFICATION_NOT_FOUND = "Notification not found";
     private final NotificationRepository notificationRepository;
 
     public NotificationServiceImpl(NotificationRepository notificationRepository) {
@@ -20,6 +22,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     public List<Notification> getUnreadNotifications(User user) {
         return notificationRepository.findAllByRecipientAndReadIsFalse(user);
+    }
+
+    @Override
+    public Notification getNotificationById(long id) {
+        return notificationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOTIFICATION_NOT_FOUND));
     }
 
     @Override

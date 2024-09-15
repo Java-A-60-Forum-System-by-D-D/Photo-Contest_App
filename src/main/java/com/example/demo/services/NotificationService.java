@@ -11,4 +11,6 @@ public interface NotificationService {
     void markNotificationAsRead(Notification notification);
     void sendNotification(String message, NotificationType type, User recipient);
     List<Notification> getUnreadNotifications(User user);
+
+    Notification getNotificationById(long id);
 }
