@@ -99,14 +99,21 @@
 		}
 	};
 
+	// Accordion initialization
 	(function() {
-		// Initiate all instances on the page
-		const accordions = document.getElementsByClassName("accordions");
-		for (let i = 0; i < accordions.length; i++) {
-			Accordion.init(accordions[i]);
+		// Ensure Accordion is defined
+		if (typeof Accordion !== 'undefined') {
+			// Initiate all instances on the page
+			const accordions = document.getElementsByClassName("accordions");
+			for (let i = 0; i < accordions.length; i++) {
+				Accordion.init(accordions[i]);
+			}
+		} else {
+			console.warn('Accordion is not defined. Make sure the Accordion script is loaded.');
 		}
 	})();
 
+// Countdown Timer
 	(function() {
 		function getTimeRemaining(endtime) {
 			var t = Date.parse(endtime) - Date.parse(new Date());
@@ -114,7 +121,6 @@
 			var minutes = Math.floor((t / 1000 / 60) % 60);
 			var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
 			var days = Math.floor(t / (1000 * 60 * 60 * 24));
-
 			return {
 				'total': t,
 				'days': days,
@@ -127,29 +133,164 @@
 		function initializeClock(endtime) {
 			var timeinterval = setInterval(function() {
 				var t = getTimeRemaining(endtime);
+				var daysElement = document.querySelector(".days > .value");
+				var hoursElement = document.querySelector(".hours > .value");
+				var minutesElement = document.querySelector(".minutes > .value");
+				var secondsElement = document.querySelector(".seconds > .value");
 
-				document.querySelector(".days > .value").innerText = t.days;
-				document.querySelector(".hours > .value").innerText = t.hours;
-				document.querySelector(".minutes > .value").innerText = t.minutes;
-				document.querySelector(".seconds > .value").innerText = t.seconds;
+				if (daysElement) daysElement.innerText = t.days;
+				if (hoursElement) hoursElement.innerText = t.hours;
+				if (minutesElement) minutesElement.innerText = t.minutes;
+				if (secondsElement) secondsElement.innerText = t.seconds;
+
 				if (t.total <= 0) {
 					clearInterval(timeinterval);
 				}
 			}, 1000);
 		}
 
-		function init() {
-			var customEndDate = document.querySelector(".page-heading").getAttribute("data-enddate");
-			initializeClock(customEndDate);
+		window.initCountdown = function() {
+			var pageHeading = document.querySelector(".page-heading");
+			if (pageHeading) {
+				var customEndDate = pageHeading.getAttribute("data-enddate");
+				if (customEndDate) {
+					initializeClock(customEndDate);
+				} else {
+					console.warn('No end date found in .page-heading[data-enddate]');
+				}
+			} else {
+				console.warn('.page-heading element not found');
+			}
+		};
+	})();
+
+// Notifications
+	(function() {
+		function updateNotificationIcon() {
+			const notificationIcon = document.getElementById('notification-icon');
+			const notifications = document.querySelectorAll('.notification-dropdown ul li');
+
+			if (notificationIcon) {
+				if (notifications.length === 0) {
+					notificationIcon.classList.remove('has-notifications');
+				} else {
+					notificationIcon.classList.add('has-notifications');
+				}
+			}
 		}
 
-		// Call init when the DOM is fully loaded
-		if (document.readyState === "loading") {
-			document.addEventListener("DOMContentLoaded", init);
-		} else {
-			init();
+		window.initNotifications = function() {
+			const notificationIcon = document.getElementById('notification-icon');
+			const notificationDropdown = document.getElementById('notification-dropdown');
+
+			if (notificationIcon && notificationDropdown) {
+				notificationIcon.addEventListener('click', function(event) {
+					event.preventDefault();
+					notificationDropdown.classList.toggle('show');
+				});
+
+				updateNotificationIcon();
+			} else {
+				console.warn('Notification elements not found');
+			}
+		};
+	})();
+
+// Main initialization
+	document.addEventListener('DOMContentLoaded', function() {
+		// Initialize countdown timer
+		if (typeof window.initCountdown === 'function') {
+			window.initCountdown();
 		}
-	})()
+
+		// Initialize notifications
+		if (typeof window.initNotifications === 'function') {
+			window.initNotifications();
+		}
+	});
+
+// 	(function() {
+// 		// Initiate all instances on the page
+// 		const accordions = document.getElementsByClassName("accordions");
+// 		for (let i = 0; i < accordions.length; i++) {
+// 			Accordion.init(accordions[i]);
+// 		}
+// 	})();
+//
+// 	(function() {
+// 		function getTimeRemaining(endtime) {
+// 			var t = Date.parse(endtime) - Date.parse(new Date());
+// 			var seconds = Math.floor((t / 1000) % 60);
+// 			var minutes = Math.floor((t / 1000 / 60) % 60);
+// 			var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+// 			var days = Math.floor(t / (1000 * 60 * 60 * 24));
+// 			return {
+// 				'total': t,
+// 				'days': days,
+// 				'hours': hours,
+// 				'minutes': minutes,
+// 				'seconds': seconds
+// 			};
+// 		}
+//
+// 		function initializeClock(endtime) {
+// 			var timeinterval = setInterval(function() {
+// 				var t = getTimeRemaining(endtime);
+// 				document.querySelector(".days > .value").innerText = t.days;
+// 				document.querySelector(".hours > .value").innerText = t.hours;
+// 				document.querySelector(".minutes > .value").innerText = t.minutes;
+// 				document.querySelector(".seconds > .value").innerText = t.seconds;
+// 				if (t.total <= 0) {
+// 					clearInterval(timeinterval);
+// 				}
+// 			}, 1000);
+// 		}
+//
+// 		function initCountdown() {
+// 			var customEndDate = document.querySelector(".page-heading").getAttribute("data-enddate");
+// 			initializeClock(customEndDate);
+// 		}
+//
+// 		// Expose initCountdown to global scope
+// 		window.initCountdown = initCountdown;
+// 	})()
+//
+// 	function initNotifications() {
+// 		const notificationIcon = document.getElementById('notification-icon');
+// 		const notificationDropdown = document.getElementById('notification-dropdown');
+//
+// 		notificationIcon.addEventListener('click', function(event) {
+// 			event.preventDefault();
+// 			notificationDropdown.classList.toggle('show');
+// 		});
+//
+// 		updateNotificationIcon();
+// 	}
+//
+// 	function updateNotificationIcon() {
+// 		const notificationIcon = document.getElementById('notification-icon');
+// 		const notifications = document.querySelectorAll('.notification-dropdown ul li');
+//
+// 		if (notifications.length === 0) {
+// 			notificationIcon.classList.remove('has-notifications');
+// 		}
+// 	}
+//
+// // Expose initNotifications to global scope
+// 	window.initNotifications = initNotifications;
+//
+//
+// 	document.addEventListener('DOMContentLoaded', function() {
+// 		// Initialize countdown timer
+// 		if (typeof window.initCountdown === 'function') {
+// 			window.initCountdown();
+// 		}
+//
+// 		// Initialize notifications
+// 		if (typeof window.initNotifications === 'function') {
+// 			window.initNotifications();
+// 		}
+// 	})
 
 
 

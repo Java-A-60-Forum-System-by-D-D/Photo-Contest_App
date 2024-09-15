@@ -5,6 +5,7 @@ import com.example.demo.models.Notification;
 import com.example.demo.models.Type;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.ContestDto;
+import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.models.dto.JuryDTO;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.CategoryService;
@@ -39,6 +40,7 @@ public class OrganizerDashboardMVCController {
         this.contestMapper = contestMapper;
         this.notificationService = notificationService;
     }
+
     @ModelAttribute("notifications")
     public List<Notification> getNotifications(Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -74,6 +76,7 @@ public class OrganizerDashboardMVCController {
     @GetMapping("/editContest/{id}")
     public String editContest(@PathVariable long id, Model model) {
         Contest contest = contestService.getContestById(id);
+        ContestViewDto contestViewDto = contestMapper.createContestViewDto(contest);
         String type = contest.getType()
                              .toString()
                              .toUpperCase();
@@ -83,6 +86,7 @@ public class OrganizerDashboardMVCController {
         model.addAttribute("invitedUsers", invitedUsers);
         model.addAttribute("jury", jury);
         model.addAttribute("contestDto", contest);
+        model.addAttribute("contestViewDto", contestViewDto);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("types", Type.values());
         model.addAttribute("type", type);

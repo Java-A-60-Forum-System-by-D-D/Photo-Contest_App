@@ -71,6 +71,7 @@ public class ContestMVCController {
         }
 
         List<PhotoSubmission> submissions = contest.getSubmissions();
+
         Map<Long, Boolean> reviewStatusMap = new HashMap<>();
         for (PhotoSubmission submission : submissions) {
             boolean hasReviewed = submission.getReviews()
