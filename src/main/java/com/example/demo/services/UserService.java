@@ -31,4 +31,9 @@ public interface UserService {
     List<User> getUsersByJurorContests(Contest contest);
 
     List<User> getUsersByRole();
+
+    List<String> findUsernamesByTerm(String term);
+
+    User updateFirstName(long userId, String firstName);
+    User updateLastName(long userId, String lastName);
 }

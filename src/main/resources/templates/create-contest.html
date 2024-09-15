@@ -7,7 +7,7 @@
 <div class="page-heading">
     <div class="container">
         <h2>Create Contest</h2>
-        <form id="createContestForm" th:action="@{/admin/createContest}" th:method="post" th:object="${contestDto}">
+        <form id="createContestForm" th:action="@{/admin/createContest}" th:method="post" th:object="${contestDto}"enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title" class="fancy-label">Contest Title</label>
                 <input type="text" id="title" name="title" th:field="*{title}" class="centered-input" required>
@@ -30,7 +30,28 @@
                             th:text="${t}">Open</option>
                 </select>
             </div>
+
             <br/>
+            <div class="form-group">
+                <label for="coverPhotoOption" class="fancy-label">Cover Photo Option</label>
+                <select id="coverPhotoOption" name="coverPhotoOption" class="centered-input" onchange="toggleCoverPhotoOptions()">
+                    <option value="">Select an option</option>
+                    <option value="upload">Upload a cover photo</option>
+                    <option value="url">Paste the URL of an existing photo</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="uploadCoverPhoto" style="display: none;">
+                <label for="coverPhotoUpload" class="fancy-label">Upload Cover Photo</label>
+                <input type="file" id="coverPhotoUpload" name="coverPhotoUpload" class="form-control" th:field="*{coverPhotoUpload}">
+            </div>
+
+            <div class="form-group" id="urlCoverPhoto" style="display: none;">
+                <label for="coverPhotoUrl" class="fancy-label">Cover Photo URL</label>
+                <input type="text" id="coverPhotoUrl" name="coverPhotoUrl" class="form-control" th:field="*{coverPhotoUrl}">
+            </div>
+
+
 <!--            <div class="form-group" id="invitedUsersField" style="display: none;">-->
 <!--                <label for="invitedUsers">Invited Users</label>-->
 <!--                <input type="text" id="invitedUsers" name="invitedUsers" th:field="*{invitedUsers}" class="form-control">-->
@@ -57,6 +78,13 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleCoverPhotoOptions() {
+        var option = document.getElementById("coverPhotoOption").value;
+        document.getElementById("uploadCoverPhoto").style.display = option === "upload" ? "block" : "none";
+        document.getElementById("urlCoverPhoto").style.display = option === "url" ? "block" : "none";
+    }
+</script>
 
 <script>
     function toggleInvitedUsers() {

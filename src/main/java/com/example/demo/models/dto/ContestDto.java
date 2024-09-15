@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,5 +27,8 @@ public class ContestDto {
     private String type;
 
     private List<User> invitedUsers;
+    private String coverPhotoOption;
+    private MultipartFile coverPhotoUpload;
+    private String coverPhotoUrl;
 
 }

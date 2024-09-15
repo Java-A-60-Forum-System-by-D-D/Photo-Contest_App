@@ -53,4 +53,6 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
 
     @Query("Select c from Contest c where c.phase = 'NOT_STARTED'")
     List<Contest> findContestByPhase_NotStarted();
+    @Query("Select c.photoUrl from Contest c")
+    List<String> getAllByPhotos();
 }

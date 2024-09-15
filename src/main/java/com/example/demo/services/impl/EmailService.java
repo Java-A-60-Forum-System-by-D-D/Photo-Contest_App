@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.services.impl;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;

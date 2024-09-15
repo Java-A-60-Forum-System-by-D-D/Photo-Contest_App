@@ -32,4 +32,8 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     @Query("Select u From users u where u.role != 'ORGANIZER'")
     List<User> findParticipantUsers();
+    @Query("SELECT u.email FROM AuthUser u WHERE LOWER(u.email) LIKE LOWER(CONCAT('%', :term, '%'))")
+    List<String> findEmailByTerm(@Param("term") String term);
+
+
 }
