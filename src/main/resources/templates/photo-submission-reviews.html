@@ -38,9 +38,8 @@
         </div>
     </div>
 </div>
+<footer th:replace="~{commons/fragments::footer}"></footer>
 <!-- Scripts -->
-<script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
-<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="/js/custom.js" th:href="@{/js/custom.js}"></script>
+<div th:replace="~{commons/scripts::body}"></div>
 </body>
 </html>

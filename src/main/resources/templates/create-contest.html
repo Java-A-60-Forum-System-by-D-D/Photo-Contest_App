@@ -100,13 +100,7 @@
         $('#successModal').fadeOut(200);
     }
 </script>
-
-<script src="/vendor/jquery/jquery.min.js" th:href="@{/vendor/jquery/jquery.min.js}"></script>
-<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="/js/isotope.min.js" th:href="@{/js/isotope.min.js}"></script>
-<script src="/js/owl-carousel.js" th:href="@{/js/owl-carousel.js}"></script>
-<script src="/js/tabs.js" th:href="@{/js/tabs.js}"></script>
-<script src="/js/popup.js" th:href="@{/js/popup.js}"></script>
-<script src="/js/custom.js" th:href="@{/js/custom.js}"></script>
+<footer th:replace="~{commons/fragments::footer}"></footer>
+<div th:replace="~{commons/scripts::body}"></div>
 </body>
 </html>

@@ -18,18 +18,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-@Controller
-public class AuthenticationMVCController {
-    private final UserService userService;
-    private final UserMapper userMapper;
-    private final AuthenticationManager authenticationManager;
-
-    public AuthenticationMVCController(UserService userService, UserMapper userMapper,@Qualifier("mvcAuthenticationManager") AuthenticationManager authenticationManager) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-        this.authenticationManager = authenticationManager;
-    }
+//
+//@Controller
+//public class AuthenticationMVCController {
+//    private final UserService userService;
+//    private final UserMapper userMapper;
+//    private final AuthenticationManager authenticationManager;
+//
+//    public AuthenticationMVCController(UserService userService, UserMapper userMapper,@Qualifier("mvcAuthenticationManager") AuthenticationManager authenticationManager) {
+//        this.userService = userService;
+//        this.userMapper = userMapper;
+//        this.authenticationManager = authenticationManager;
+//    }
 
 //    @GetMapping("/login")
 //    public String login(Model model) {
@@ -54,4 +54,4 @@ public class AuthenticationMVCController {
 //    }
 //    @PostMapping("/register")
 //    public String registerUser(@Valid )
-}
+//}
