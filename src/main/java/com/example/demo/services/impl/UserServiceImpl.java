@@ -123,5 +123,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findUsersByJurorContests(contest.getId());
     }
 
+    @Override
+    public List<User> getUsersByRole() {
+        return userRepository.findParticipantUsers();
+    }
+
 
 }

@@ -29,4 +29,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     List<User> getUsersByJurorContests(Contest contest);
+
+    List<User> getUsersByRole();
 }

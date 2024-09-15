@@ -25,9 +25,11 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     List<User> findUsersByRole(UserRole role);
 
 
-
     Optional<User> findUserByUsername(String username);
 
     @Query("Select u from users u join u.jurorContests c where c.id = :id")
     List<User> findUsersByJurorContests(@Param("id") long id);
+
+    @Query("Select u From users u where u.role != 'ORGANIZER'")
+    List<User> findParticipantUsers();
 }
