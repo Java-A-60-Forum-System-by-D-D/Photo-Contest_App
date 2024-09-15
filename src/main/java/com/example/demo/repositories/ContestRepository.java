@@ -55,4 +55,7 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
     List<Contest> findContestByPhase_NotStarted();
     @Query("Select c.photoUrl from Contest c")
     List<String> getAllByPhotos();
+
+    @Query("Select c from Contest c join c.invitedUsers i on i.id = :id")
+    List<Contest> findContestsByInvitedUsersEqualsUserId(@Param("id") long id);
 }

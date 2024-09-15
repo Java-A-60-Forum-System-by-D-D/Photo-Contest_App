@@ -53,8 +53,8 @@ public class UsersDashboardMVCController {
     public String openContests(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
         List<Contest> openContests = contestService.getPhaseOneContestsAndTypeOpen();
-
         model.addAttribute("contests", openContests);
+
 
         return "user-open-contests";
     }
@@ -62,7 +62,8 @@ public class UsersDashboardMVCController {
     public String participatedContests(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
         List<Contest> participatedContests = contestService.getAllParticipatedContests(user);
-
+        List<Contest> invitedContests = contestService.getInvitedContests(user);
+        model.addAttribute("invitedContests", invitedContests);
         model.addAttribute("contests", participatedContests);
 
         return "user-participated-contests";

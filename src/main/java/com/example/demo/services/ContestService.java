@@ -48,4 +48,6 @@ public interface ContestService {
 
     List<String> getAllPhotos();
     void deleteContest(long id);
+
+    List<Contest> getInvitedContests(User user);
 }

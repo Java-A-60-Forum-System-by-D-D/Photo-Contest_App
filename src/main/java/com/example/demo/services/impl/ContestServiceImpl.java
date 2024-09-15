@@ -199,7 +199,7 @@ public class ContestServiceImpl implements ContestService {
                .add(userToInvite);
 //        emailService.sendEmail(userToInvite.getEmail(), "Invitation to contest", String.format("You have been invited to participate in the contest %s", contest.getTitle()));
         contestRepository.save(contest);
-        notificationService.sendNotification("You have been invited to participate in a contest", NotificationType.PARTICIPATION_REMINDER, userToInvite);
+        notificationService.sendNotification("You have been invited to participate in a contest. You can see details in Your Contest Menu", NotificationType.PARTICIPATION_REMINDER, userToInvite);
         return contest;
 
     }
@@ -258,6 +258,11 @@ public class ContestServiceImpl implements ContestService {
         contestRepository.delete(contest);
 
 
+    }
+
+    @Override
+    public List<Contest> getInvitedContests(User user) {
+        return contestRepository.findContestsByInvitedUsersEqualsUserId(user.getId());
     }
 
 
