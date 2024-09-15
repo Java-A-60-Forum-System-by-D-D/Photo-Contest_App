@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/fragments::head}">
+    <title>FAQ</title>
+</head>
+<body>
+<header th:replace="~{commons/fragments::nav}"></header>
+
+<div class="container">
+    <div class="page-heading">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 header-text">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="faq-item">
+                    <h4>1. What is the purpose of this application?</h4>
+                    <p>This application is designed to allow aspiring photographers and organizers to participate in and manage online photo contests. It includes features for organizing contests, submitting photos, and participating as jury members.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>2. Who can use this application?</h4>
+                    <p>The app serves two main user groups:</p>
+                    <ul>
+                        <li><strong>Organizers:</strong> Users who create and manage photo contests.</li>
+                        <li><strong>Photo Junkies:</strong> Photographers who can register, participate in contests, and, with a certain ranking, be invited to serve as jurors.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>3. Do I need to register to use the app?</h4>
+                    <p><strong>Public Area:</strong> No registration is needed to view public content such as the landing page with the latest winning photos.</p>
+                    <p><strong>Private Area:</strong> Yes, registration is required to participate in contests and access the dashboard.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>4. How do I register as a Photo Junkie?</h4>
+                    <p>You can register by filling out the registration form, which requires a username, first name, last name, and password.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>5. What features are available for Photo Junkies?</h4>
+                    <p>Photo Junkies can:</p>
+                    <ul>
+                        <li>View and participate in open contests.</li>
+                        <li>Upload photos for contests.</li>
+                        <li>Track participation in ongoing and finished contests.</li>
+                        <li>View scores, feedback, and rankings once a contest ends.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>6. What features are available for Organizers?</h4>
+                    <p>Organizers can:</p>
+                    <ul>
+                        <li>Set up and manage new contests.</li>
+                        <li>View contests in various phases (Phase I, Phase II, Finished).</li>
+                        <li>Invite specific users to participate in invitational contests.</li>
+                        <li>Select jury members for contests.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>7. How are contests structured?</h4>
+                    <p>Contests are divided into three phases:</p>
+                    <ul>
+                        <li><strong>Phase I:</strong> Contest is open, participants can upload photos, and the jury can view submissions.</li>
+                        <li><strong>Phase II:</strong> Photo submission is closed, and the jury can score the photos.</li>
+                        <li><strong>Finished:</strong> Jury reviews are complete, and participants can view their scores, feedback, and other participants' photos.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>8. Can I edit my photo submission?</h4>
+                    <p>No, once you submit your photo along with its title and story, these cannot be edited. Make sure you are satisfied with your submission before finalizing it.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>9. How is the jury process conducted?</h4>
+                    <p>Jurors score photos from 1-10 and leave comments. If a photo does not match the contest category, jurors can flag it, automatically assigning a score of 0. A default score of 3 is awarded if a photo is not reviewed by a juror.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>10. How are participants ranked?</h4>
+                    <p>Participants accumulate points through contest participation:</p>
+                    <ul>
+                        <li>Joining a contest, being invited by an organizer, and placing in the top three earn points.</li>
+                        <li>Rankings are determined based on total points, and higher rankings open up new roles, such as becoming a jury member.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>11. How does the point system work?</h4>
+                    <p>Points are awarded as follows:</p>
+                    <ul>
+                        <li>Joining an open contest: 1 point.</li>
+                        <li>Being invited to a contest: 3 points.</li>
+                        <li>Placing in a contest: 3rd place = 20 points, 2nd place = 35 points, 1st place = 50 points.</li>
+                        <li>Additional points are awarded for a significant lead in scores.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>12. What are the different ranking levels?</h4>
+                    <ul>
+                        <li><strong>Junkie:</strong> 0-50 points</li>
+                        <li><strong>Enthusiast:</strong> 51-150 points</li>
+                        <li><strong>Master:</strong> 151-1000 points (can be invited as jury)</li>
+                        <li><strong>Wise and Benevolent Photo Dictator:</strong> 1001+ points</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>13. How can I create a new contest as an organizer?</h4>
+                    <p>To create a contest, you will need to provide:</p>
+                    <ul>
+                        <li>Contest title.</li>
+                        <li>Category.</li>
+                        <li>Time limits for Phase I and Phase II.</li>
+                        <li>Select jury members (users with the role of organizer or ranking "Master").</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>14. Can I choose a cover photo for my contest?</h4>
+                    <p>Yes, organizers can upload a cover photo, use an existing URL, or select a photo from previously uploaded images.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>15. What happens when a contest ends?</h4>
+                    <p>Once a contest is finished, participants can:</p>
+                    <ul>
+                        <li>View their own scores and comments.</li>
+                        <li>See the photos submitted by other participants, along with the jury's feedback and scores.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>16. How are ties handled in contest results?</h4>
+                    <p>If multiple participants tie for the top spots, the positions and points are shared. For example, two participants tied for 1st place would each receive 40 points, while other positions adjust accordingly.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>17. Can I be a jury member?</h4>
+                    <p>Only users with the ranking of "Master" or higher can be invited to serve as a jury member. Organizers automatically have the ability to serve as jurors.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>18. How are the contests categorized?</h4>
+                    <p>Each contest belongs to a specific category (e.g., landscape, portrait, abstract), which is visible throughout the contest and must be adhered to by participants.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>19. Is there a way to view past contests I participated in?</h4>
+                    <p>Yes, Photo Junkies can view both ongoing contests and finished contests they participated in. They will be able to see their scores and reviews once the contest has ended.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>20. How long does each phase of a contest last?</h4>
+                    <p>Organizers can set the duration for each phase:</p>
+                    <ul>
+                        <li><strong>Phase I:</strong> Can last from one day to one month.</li>
+                        <li><strong>Phase II:</strong> Can last from one hour to one day.</li>
+                    </ul>
+                </div>
+                <div class="faq-item">
+                    <h4>21. How can I contact support for issues or feedback?</h4>
+                    <p>For any issues or feedback, please reach out to our support team through the contact form available on the website.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{commons/fragments::footer}"></footer>
+<div th:replace="~{commons/scripts::body}"></div>
+</body>
+</html>

@@ -43,7 +43,6 @@ public class HomeMVCController {
     private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
-
     public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
@@ -56,7 +55,7 @@ public class HomeMVCController {
 
     @GetMapping(value = {"/home", "/"})
     public String home(Model model, Principal principal) {
-        List<Notification > notifications = null;
+        List<Notification> notifications = null;
         if (principal != null) {
             User user = userService.getUserByEmail(principal.getName());
 
@@ -97,6 +96,20 @@ public class HomeMVCController {
 //        return "Session checked. Check logs for details.";
 //    }
 
+    @ModelAttribute("notifications")
+    public List<Notification> getNotifications(Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        return notificationService.getUnreadNotifications(user);
+    }
+
+
+    @GetMapping("/FAQ")
+    public String getFAQ() {
+
+
+        return "FAQ";
+    }
+
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -115,7 +128,8 @@ public class HomeMVCController {
             return "index";
         }
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        SecurityContextHolder.getContext()
+                             .setAuthentication(auth);
         model.addAttribute("user", loginUserDto);
         User user = userService.getUserByEmail(loginUserDto.getEmail());
         UserRole role = user.getRole();
