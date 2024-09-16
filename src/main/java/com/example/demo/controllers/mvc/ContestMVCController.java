@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/contests")
@@ -85,9 +86,14 @@ public class ContestMVCController {
                 .anyMatch(c -> c.getId() == contest.getId())) {
             contains = true;
         }
-
+        TreeMap<Integer, List<User>> top3Map = contestService.calculateFinalContestPoints(submissions, userService.getAllUsers());
+        List<PhotoSubmission> top3 = submissions.stream()
+                .filter(submission -> top3Map.keySet().contains(submission.getReviewScore()))
+                .limit(3)
+                .collect(Collectors.toList());
 
         model.addAttribute("phase", contest.getPhase());
+        model.addAttribute("top3", top3);
         model.addAttribute("contest", contestViewDto);
         model.addAttribute("id", contest.getId());
         model.addAttribute("user", user);
