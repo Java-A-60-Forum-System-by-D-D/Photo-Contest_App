@@ -13,10 +13,10 @@ public class UserFilterOptions {
     private String lastName;
     private String sortBy;
     private String sortDirection;
-    private UserRole role;
+    private String role;
 
 
-    public UserFilterOptions(String email, String firstName, String lastName, String sortBy, String sortDirection, UserRole role) {
+    public UserFilterOptions(String email, String firstName, String lastName, String sortBy, String sortDirection, String role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

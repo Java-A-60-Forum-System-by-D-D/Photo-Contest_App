@@ -181,17 +181,24 @@ public class OrganizerDashboardMVCController {
     }
     @GetMapping("/users")
     public String users(@ModelAttribute("userFilter") UserFilterOptions userFilterOptions, Model model) {
-//        OptionalUserFilteringOptions optionalUserFilteringOptions = new OptionalUserFilteringOptions(
-//                userFilterOptions.getUsername(),
-//                userFilterOptions.getFirstName(),
-//                userFilterOptions.getLastName(),
-//                userFilterOptions.getSortBy(),
-//                userFilterOptions.getSortDirection(),
-//                userFilterOptions.getRole());
+        UserRole role = null;
+        if (userFilterOptions.getRole() != null && !userFilterOptions.getRole()
+                                                                   .isEmpty()) {
+            role = UserRole.valueOf(userFilterOptions.getRole().toUpperCase());
+        }
+        OptionalUserFilteringOptions optionalUserFilteringOptions = new OptionalUserFilteringOptions(
+                userFilterOptions.getEmail() != null ? userFilterOptions.getEmail() : null,
+                userFilterOptions.getFirstName() != null ? userFilterOptions.getFirstName() : null,
+                userFilterOptions.getLastName() != null ? userFilterOptions.getLastName() : null,
+                userFilterOptions.getSortBy() != null ? userFilterOptions.getSortBy() : null,
+                userFilterOptions.getSortDirection() != null ? userFilterOptions.getSortDirection() : null,
+                userFilterOptions.getRole() != null ? role : null);
 
-        List<User> users = userService.getUsers(userFilterOptions);
+//        List<User> users = userService.getUsers(userFilterOptions);
+        List<User> users = userService.getUsersByOptions(optionalUserFilteringOptions);
         List<UserRole> roles = List.of(UserRole.values());
         model.addAttribute("roles", roles);
+
         model.addAttribute("users", users);
 
         return "users";

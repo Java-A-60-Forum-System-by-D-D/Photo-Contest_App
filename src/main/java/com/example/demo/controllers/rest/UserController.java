@@ -48,11 +48,8 @@ public class UserController {
                                       @Parameter(description = "Field to sort users by", required = false) @RequestParam(required = false) String sortBy,
                                       @Parameter(description = "Direction to sort users by", required = false) @RequestParam(required = false) String sortDirection,
                                       @Parameter(description = "Role to filter users by", required = false) @RequestParam(required = false) String role) {
-        UserRole userRole = null;
-        if (userRole != null) {
-            userRole = UserRole.valueOf(role.toUpperCase());
-        }
-        UserFilterOptions userFilterOptions = new UserFilterOptions(email, firstName, lastName, sortBy, sortDirection, userRole);
+
+        UserFilterOptions userFilterOptions = new UserFilterOptions(email, firstName, lastName, sortBy, sortDirection, role);
         List<UserViewDto> users = userService.getUsers(userFilterOptions)
                                              .stream()
                                              .map(userMapper::mapUserToUserViewDto)

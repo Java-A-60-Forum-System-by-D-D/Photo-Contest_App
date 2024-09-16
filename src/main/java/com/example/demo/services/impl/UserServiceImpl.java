@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -148,6 +149,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
         user.setLastName(lastName);
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getUsersByOptions(OptionalUserFilteringOptions userFilterOptions) {
+        return userRepository.findAllByOptions( userFilterOptions.getEmail(),userFilterOptions.getFirstName(),userFilterOptions.getLastName(), userFilterOptions.getRole());
     }
 }
 

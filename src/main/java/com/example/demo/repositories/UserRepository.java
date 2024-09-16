@@ -35,5 +35,13 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Query("SELECT u.email FROM AuthUser u WHERE LOWER(u.email) LIKE LOWER(CONCAT('%', :term, '%'))")
     List<String> findEmailByTerm(@Param("term") String term);
 
-
+    @Query("SELECT u FROM users u WHERE " +
+            "(:email IS NULL OR u.email like CONCAT('%', :email, '%')) AND " +
+            "(:firstName IS NULL OR u.firstName like CONCAT('%', :firstName, '%')) AND " +
+            "(:lastName IS NULL OR u.lastName like CONCAT('%', :lastName, '%')) AND " +
+            "(:role IS NULL OR u.role = :role)")
+    List<User> findAllByOptions(@Param("email") Optional<String> email,
+                                @Param("firstName") Optional<String> firstName,
+                                @Param("lastName") Optional<String> lastName,
+                                @Param("role") Optional<UserRole> role);
 }

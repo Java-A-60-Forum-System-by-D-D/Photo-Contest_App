@@ -37,4 +37,6 @@ public interface UserService {
 
     User updateFirstName(long userId, String firstName);
     User updateLastName(long userId, String lastName);
+
+    List<User> getUsersByOptions(OptionalUserFilteringOptions userFilterOptions);
 }
