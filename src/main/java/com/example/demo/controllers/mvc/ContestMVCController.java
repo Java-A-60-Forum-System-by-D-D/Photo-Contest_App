@@ -85,7 +85,8 @@ public class ContestMVCController {
 
         /*todo need to figure out how to handle invitational users*/
         boolean contains = user.getJurorContests()
-                               .contains(contest);
+                               .stream()
+                               .anyMatch(c -> c.getId() == contest.getId());
 
 
         model.addAttribute("phase", contest.getPhase());
