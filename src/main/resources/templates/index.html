@@ -162,6 +162,7 @@ https://templatemo.com/tm-576-snapx-photography
   </section>
 
 
+
   <section class="popular-categories">
     <div class="container-fluid">
       <div class="row">
@@ -173,27 +174,27 @@ https://templatemo.com/tm-576-snapx-photography
         </div>
         <div class="col-lg-6">
           <div class="main-button">
-            <a href="categories.html">Discover All Categories</a>
+            <a th:href="@{/categories}">Discover All Categories</a>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6">
           <div class="popular-item">
             <div class="top-content">
               <div class="icon">
-                <img src="../static/images/icon-01.png" alt="">
+                <img th:src="${categories['Nature'].photoUrl}" alt="" >
               </div>
               <div class="right">
-                <h4>Nature Pic Contest</h4>
-                <span><em>126</em> Available Contests</span>
+                <h4>Nature Contest</h4>
+<!--                <span><em>126</em> Available Contests</span>-->
               </div>
             </div>
             <div class="thumb">
               <img src="../static/images/popular-01.png" alt="">
               <span class="category">Top Contest</span>
-              <span class="likes"><i class="fa fa-heart"></i> 256</span>
+<!--              <span class="likes"><i class="fa fa-heart"></i> 256</span>-->
             </div>
             <div class="border-button">
-              <a href="contest-details.html">Browse Nature Pic Contests</a>
+              <a th:href="@{/categories/{name}(name=${categories['Nature'].name})}">Browse Nature Contests</a>
             </div>
           </div>
         </div>
@@ -201,20 +202,20 @@ https://templatemo.com/tm-576-snapx-photography
           <div class="popular-item">
             <div class="top-content">
               <div class="icon">
-                <img src="../static/images/icon-02.png" alt="">
+                <img th:src="${categories['Abstract'].photoUrl}" alt="">
               </div>
               <div class="right">
-                <h4>Random Pic Contest</h4>
-                <span><em>116</em> Available Contests</span>
+                <h4>Abstract Contest</h4>
+<!--                <span><em>116</em> Available Contests</span>-->
               </div>
             </div>
             <div class="thumb">
               <img src="../static/images/popular-02.png" alt="">
               <span class="category">Top Contest</span>
-              <span class="likes"><i class="fa fa-heart"></i> 256</span>
+<!--              <span class="likes"><i class="fa fa-heart"></i> 256</span>-->
             </div>
             <div class="border-button">
-              <a href="contest-details.html">Browse Random Pic Contests</a>
+              <a th:href="@{/categories/{name}(name=${categories['Abstract'].name})}">Browse Abstract Contests</a>
             </div>
           </div>
         </div>
@@ -222,11 +223,11 @@ https://templatemo.com/tm-576-snapx-photography
           <div class="popular-item">
             <div class="top-content">
               <div class="icon">
-                <img src="../static/images/icon-03.png" alt="">
+                <img th:src="${categories['Portrait'].photoUrl}" alt="">
               </div>
               <div class="right">
-                <h4>Portrait Pic Contest</h4>
-                <span><em>164</em> Available Contests</span>
+                <h4>Portrait Contest</h4>
+<!--                <span><em>164</em> Available Contests</span>-->
               </div>
             </div>
             <div class="thumb">
@@ -235,7 +236,7 @@ https://templatemo.com/tm-576-snapx-photography
               <span class="likes"><i class="fa fa-heart"></i> 256</span>
             </div>
             <div class="border-button">
-              <a href="contest-details.html">Browse Portrait Pic Contests</a>
+              <a th:href="@{/categories/{name}(name=${categories['Portrait'].name})}">Browse Portrait Contests</a>
             </div>
           </div>
         </div>
@@ -243,26 +244,31 @@ https://templatemo.com/tm-576-snapx-photography
           <div class="popular-item">
             <div class="top-content">
               <div class="icon">
-                <img src="../static/images/icon-04.png" alt="">
+                <img th:src="${categories['Street Photography'].photoUrl}" alt="">
               </div>
               <div class="right">
-                <h4>Space Pic Contest</h4>
-                <span><em>135</em> Available Contests</span>
+                <h4>Street Photography Contest</h4>
+<!--                <span><em>135</em> Available Contests</span>-->
               </div>
             </div>
             <div class="thumb">
               <img src="../static/images/popular-04.png" alt="">
               <span class="category">Top Contest</span>
-              <span class="likes"><i class="fa fa-heart"></i> 256</span>
+<!--              <span class="likes"><i class="fa fa-heart"></i> 256</span>-->
             </div>
             <div class="border-button">
-              <a href="contest-details.html">Browse Space Pic Contests</a>
+              <a th:href="@{/categories/{name}(name=${categories['Street Photography'].name})}">Browse Street Photography Contests</a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+
+
+
+
 
   <section class="closed-contests">
     <div class="container">

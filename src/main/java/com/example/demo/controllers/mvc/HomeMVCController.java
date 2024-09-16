@@ -4,6 +4,7 @@ import com.example.demo.models.*;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
+import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
@@ -29,10 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -42,17 +40,19 @@ public class HomeMVCController {
     private final UserMapper userMapper;
     private final NotificationService notificationService;
     private final ContestService contestService;
+    private final CategoryService categoryService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
-    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService, ContestService contestService) {
+    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService, ContestService contestService, CategoryService categoryService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
 
         this.notificationService = notificationService;
         this.contestService = contestService;
+        this.categoryService = categoryService;
     }
 //    @ModelAttribute
 //    public Role get
@@ -82,14 +82,23 @@ public class HomeMVCController {
             List<PhotoSubmission> submissions = contest.getSubmissions();
             TreeMap<Integer, List<User>> top3Map = contestService.calculateFinalContestPoints(submissions, userService.getAllUsers());
             List<PhotoSubmission> top3 = submissions.stream()
-                    .filter(submission -> top3Map.keySet().contains(submission.getReviewScore()))
-                    .limit(3)
-                    .collect(Collectors.toList());
+                                                    .filter(submission -> top3Map.keySet()
+                                                                                 .contains(submission.getReviewScore()))
+                                                    .limit(3)
+                                                    .collect(Collectors.toList());
             for (PhotoSubmission photoSubmission : top3) {
                 photosToPopulate.add(photoSubmission);
             }
         }
 
+        List<Category> categories = categoryService.getAllCategories();
+        Map<String, Category> categoryMap = new HashMap<>();
+        for (Category category : categories) {
+            categoryMap.put(category.getName(), category);
+        }
+
+
+        model.addAttribute("categories", categoryMap);
         model.addAttribute("photos", photosToPopulate);
 
 
@@ -127,7 +136,8 @@ public class HomeMVCController {
                 notifications = notificationService.getUnreadNotifications(user);
                 model.addAttribute("notifications", notifications);
             }
-        }return notifications;
+        }
+        return notifications;
     }
 
 
