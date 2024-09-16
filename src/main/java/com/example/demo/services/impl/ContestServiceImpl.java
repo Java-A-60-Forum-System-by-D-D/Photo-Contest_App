@@ -59,11 +59,11 @@ public class ContestServiceImpl implements ContestService {
             u.getJurorContests()
                     .add(savedContest);
             userService.save(u);
-            notificationService.sendNotification("New contest has been created", NotificationType.JURY_INVITATION, u);
+            notificationService.sendNotification("Contest with name %s has been created".formatted(contest.getTitle()), NotificationType.JURY_INVITATION, u);
         });
         List<User> participants = userService.getUsersByRole();
         participants.forEach(u -> {
-            emailService.sendEmail(u.getEmail(), "New contest has been created", String.format("New contest %s has been created", savedContest.getTitle()));
+            emailService.sendEmail(u.getEmail(), "New contest to JOIN", String.format("New contest %s in %s has been created.  It opens tonight in 22:00. Enjoy.", savedContest.getTitle(), savedContest.getCategory().getName()));
         });
 
         return savedContest;

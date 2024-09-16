@@ -16,7 +16,8 @@
 <!-- ***** Header Area End ***** -->
 
 
-<div class="page-heading" th:object="${contest}" th:data-enddate="*{startPhase3}">
+<div class="page-heading" th:object="${contest}" th:data-enddate="*{startPhase3}"
+     th:style="'background-image: url(' + ${contest.getPhotoUrl()} + '); background-repeat: no-repeat; background-position: center center; background-size: cover; padding-top: 200px; padding-bottom: 130px; text-align: center; background-color: #2a2a2a;'">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 header-text">
