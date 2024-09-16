@@ -1,9 +1,6 @@
 package com.example.demo.controllers.mvc;
 
-import com.example.demo.models.Category;
-import com.example.demo.models.Contest;
-import com.example.demo.models.Notification;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.ContestSummaryDTO;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.CategoryService;
@@ -21,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Controller
@@ -41,10 +39,12 @@ public class UsersDashboardMVCController {
         this.categoryService = categoryService;
         this.notificationService = notificationService;
     }
+
     @ModelAttribute("categories")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
     }
+
     @ModelAttribute("notifications")
     public List<Notification> getNotifications(Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -56,7 +56,10 @@ public class UsersDashboardMVCController {
         User user = userService.getUserByEmail(principal.getName());
         List<Contest> openContests = contestService.getPhaseOneContestsAndTypeOpen();
         model.addAttribute("contests", openContests);
-        List<User> participants = openContests.stream().map(Contest::getParticipants).flatMap(List::stream).toList();
+        List<User> participants = openContests.stream()
+                                              .map(Contest::getParticipants)
+                                              .flatMap(List::stream)
+                                              .toList();
 
         model.addAttribute("user", user);
         model.addAttribute("participants", participants);
@@ -64,6 +67,7 @@ public class UsersDashboardMVCController {
 
         return "user-open-contests";
     }
+
     @GetMapping("/participatedContests")
     public String participatedContests(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -74,15 +78,28 @@ public class UsersDashboardMVCController {
 
         return "user-participated-contests";
     }
+
     @GetMapping("/finishedContests")
     public String finishedContests(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
         List<Contest> finishedContests = contestService.getFinishedContests(user);
+//        List<PhotoSubmission> sortedSubmissions = finishedContests.stream()
+//                                                                  .map(Contest::getSubmissions)
+//                                                                  .flatMap(List::stream)
+//                                                                  .sorted(Comparator.comparing(PhotoSubmission::getReviewScore))
+//                                                                  .collect(Collectors.toList());
+
+//        Map<Contest, TreeMap<Integer, List<User>>> top3 = new HashMap<>();
+//        for(Contest contest: finishedContests){
+//            top3.put(contest,c)
+//        }
+
 
         model.addAttribute("contests", finishedContests);
 
         return "user-finished-contests";
     }
+
     @GetMapping("/profile")
     public String profile(Model model, Principal principal, @ModelAttribute("notifications") List<Notification> notifications) {
         User user = userService.getUserByEmail(principal.getName());
@@ -90,6 +107,7 @@ public class UsersDashboardMVCController {
         model.addAttribute("notifications", notifications);
         return "user-profile";
     }
+
     @PostMapping("/profile/update/firstName")
     public String updateFirstName(@ModelAttribute("firstName") String firstName,
                                   BindingResult bindingResult,

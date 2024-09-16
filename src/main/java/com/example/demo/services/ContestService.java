@@ -9,6 +9,7 @@ import com.example.demo.models.filtering.ContestFilterOptions;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public interface ContestService {
     Contest getContestById(long id);
@@ -50,4 +51,6 @@ public interface ContestService {
     void deleteContest(long id);
 
     List<Contest> getInvitedContests(User user);
+    TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users);
+    void ranking(TreeMap<Integer, List<User>> top3);
 }

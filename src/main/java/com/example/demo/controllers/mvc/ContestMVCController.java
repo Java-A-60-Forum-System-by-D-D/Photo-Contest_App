@@ -41,6 +41,7 @@ public class ContestMVCController {
         this.photoReviewService = photoReviewService;
         this.notificationService = notificationService;
     }
+
     @ModelAttribute("notifications")
     public List<Notification> getNotifications(Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -76,13 +77,16 @@ public class ContestMVCController {
         for (PhotoSubmission submission : submissions) {
             boolean hasReviewed = submission.getReviews()
                                             .stream()
-                                            .anyMatch(review -> review.getJury().getId() == user.getId());
+                                            .anyMatch(review -> review.getJury()
+                                                                      .getId() == user.getId());
             reviewStatusMap.put(submission.getId(), hasReviewed);
         }
 
 
         /*todo need to figure out how to handle invitational users*/
-        boolean contains = user.getJurorContests().contains(contest);
+        boolean contains = user.getJurorContests()
+                               .contains(contest);
+
 
         model.addAttribute("phase", contest.getPhase());
         model.addAttribute("contest", contestViewDto);
@@ -92,7 +96,6 @@ public class ContestMVCController {
         model.addAttribute("IsFound", isFound);
         model.addAttribute("submissions", submissions);
         model.addAttribute("reviewStatusMap", reviewStatusMap);
-
 
 
         return "contest-details";

@@ -267,6 +267,7 @@ public class ContestServiceImpl implements ContestService {
     }
 
 
+    @Override
     public TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users) {
 
         TreeSet<Integer> top3Scores = submissions.stream()
@@ -292,7 +293,7 @@ public class ContestServiceImpl implements ContestService {
 
     }
 
-
+    @Override
     public void ranking(TreeMap<Integer, List<User>> top3) {
 
         List<Integer> scores = new ArrayList<>(top3.keySet());
