@@ -58,7 +58,7 @@ public class ContestServiceImpl implements ContestService {
         organizers.forEach(u -> {
             u.getJurorContests()
                     .add(savedContest);
-            userService.save(u);
+            userService.saveUser(u);
             notificationService.sendNotification("Contest with name %s has been created".formatted(contest.getTitle()), NotificationType.JURY_INVITATION, u);
         });
         List<User> participants = userService.getUsersByRole();
@@ -138,7 +138,7 @@ public class ContestServiceImpl implements ContestService {
         userService.calculateLevel(juryToAdd);
         notificationService.sendNotification("You have been invited to be a jury in a contest", NotificationType.JURY_INVITATION, juryToAdd);
         emailService.sendEmail(juryToAdd.getEmail(), "Invitation to be a jury in a contest.", String.format("You have been invited to be a jury in the contest %s", contest.getTitle()));
-        userService.save(juryToAdd);
+        userService.saveUser(juryToAdd);
 
 
         return contest;
@@ -227,7 +227,7 @@ public class ContestServiceImpl implements ContestService {
                 .forEach(jury -> {
                     jury.getJurorContests()
                             .remove(contest);
-                    userService.save(jury);
+                    userService.saveUser(jury);
                 });
 
 
@@ -238,7 +238,7 @@ public class ContestServiceImpl implements ContestService {
                     .forEach(invitedUser -> {
                         invitedUser.getParticipatedContests()
                                 .remove(contest);
-                        userService.save(invitedUser);
+                        userService.saveUser(invitedUser);
                     });
         }
 
@@ -249,7 +249,7 @@ public class ContestServiceImpl implements ContestService {
                     .forEach(participant -> {
                         participant.getParticipatedContests()
                                 .remove(contest);
-                        userService.save(participant);
+                        userService.saveUser(participant);
                     });
         }
 

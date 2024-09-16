@@ -2,9 +2,11 @@ package com.example.demo.models.filtering;
 
 import com.example.demo.models.UserRole;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Optional;
 @Data
+@NoArgsConstructor
 public class OptionalUserFilteringOptions {
     private Optional<String> email;
     private Optional<String> firstName;

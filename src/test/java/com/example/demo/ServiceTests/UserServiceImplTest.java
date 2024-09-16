@@ -1,8 +1,11 @@
 package com.example.demo.ServiceTests;
 
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
+import com.example.demo.models.filtering.OptionalUserFilteringOptions;
+import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +32,171 @@ class UserServiceImplTest {
 
     @InjectMocks
     private UserServiceImpl userService;
+
+
+
+    @Test
+    void loadUserByUsernameReturnsUserDetailsWhenUserExists() {
+        User user = new User();
+        when(userRepository.findUsersByEmail("test@example.com")).thenReturn(Optional.of(user));
+
+        UserDetails result = userService.loadUserByUsername("test@example.com");
+
+        assertNotNull(result);
+        assertEquals(user, result);
+    }
+
+    @Test
+    void loadUserByUsernameThrowsExceptionWhenUserDoesNotExist() {
+        when(userRepository.findUsersByEmail("test@example.com")).thenReturn(Optional.empty());
+
+        assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("test@example.com"));
+    }
+
+    @Test
+    void getAllUsersReturnsAllUsers() {
+        User user = new User();
+        when(userRepository.findAll()).thenReturn(List.of(user));
+
+        List<User> result = userService.getAllUsers();
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+    @Test
+    void getUsersByJurorContestsReturnsUsers() {
+        Contest contest = new Contest();
+        User user = new User();
+        when(userRepository.findUsersByJurorContests(contest.getId())).thenReturn(List.of(user));
+
+        List<User> result = userService.getUsersByJurorContests(contest);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+    @Test
+    void getUsersByRoleReturnsParticipantUsers() {
+        User user = new User();
+        when(userRepository.findParticipantUsers()).thenReturn(List.of(user));
+
+        List<User> result = userService.getUsersByRole();
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+    @Test
+    void findUsernamesByTermReturnsUsernames() {
+        String term = "test";
+        String email = "test@example.com";
+        when(userRepository.findEmailByTerm(term)).thenReturn(List.of(email));
+
+        List<String> result = userService.findUsernamesByTerm(term);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(email, result.get(0));
+    }
+
+    @Test
+    void getUsersByOptionsReturnsFilteredUsers() {
+        OptionalUserFilteringOptions options = new OptionalUserFilteringOptions();
+        User user = new User();
+        when(userRepository.findAllByOptions(any(), any(), any(), any())).thenReturn(List.of(user));
+
+        List<User> result = userService.getUsersByOptions(options);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+
+    @Test
+    void findUsersByRoleOrganizerReturnsUsers() {
+        User user = new User();
+        when(userRepository.findUsersByRole(UserRole.ORGANIZER)).thenReturn(List.of(user));
+
+        List<User> result = userService.findUsersByRoleOrganizer("ORGANIZER");
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+    @Test
+    void getUsersReturnsFilteredUsers() {
+        UserFilterOptions options = new UserFilterOptions();
+        User user = new User();
+        when(userRepository.findAll(any(Specification.class))).thenReturn(List.of(user));
+
+        List<User> result = userService.getUsers(options);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+        assertEquals(user, result.get(0));
+    }
+
+    @Test
+    void updateUserUpdatesAndPersistsUser() {
+        User user = new User();
+        when(userRepository.save(user)).thenReturn(user);
+
+        User result = userService.updateUser(user);
+
+        assertNotNull(result);
+        assertEquals(user, result);
+    }
+
+    @Test
+    void calculateLevelAssignsCorrectRoleBasedOnScore() {
+        User user = new User();
+        user.setTotalScore(120);
+
+        User result = userService.calculateLevel(user);
+
+        assertEquals(UserRole.MASTER, result.getRole());
+    }
+
+    @Test
+    void calculateLevelAssignsJunkieRoleForLowScore() {
+        User user = new User();
+        user.setTotalScore(50);
+
+        User result = userService.calculateLevel(user);
+
+        assertEquals(UserRole.JUNKIE, result.getRole());
+    }
+
+    @Test
+    void calculateLevelAssignsEnthusiastRoleForMediumScore() {
+        User user = new User();
+        user.setTotalScore(75);
+
+        User result = userService.calculateLevel(user);
+
+        assertEquals(UserRole.ENTHUSIAST, result.getRole());
+    }
+
+    @Test
+    void calculateLevelAssignsDictatorRoleForHighScore() {
+        User user = new User();
+        user.setTotalScore(200);
+
+        User result = userService.calculateLevel(user);
+
+        assertEquals(UserRole.DICTATOR, result.getRole());
+    }
+
+
+
+    /////////////////////////////
+
 
     @Test
     void getUserByIdReturnsUserWhenUserExists() {
@@ -75,27 +246,7 @@ void getUserByEmailReturnsUserWhenUserExists() {
 
         assertThrows(EntityNotFoundException.class, () -> userService.getUserByEmail("test@example.com"));
     }
-//
-    @Test
-    void updateUserUpdatesAndPersistsUser() {
-        User user = new User();
-        when(userRepository.save(user)).thenReturn(user);
 
-        User result = userService.updateUser(user);
-
-        assertNotNull(result);
-        assertEquals(user, result);
-    }
-
-    @Test
-    void calculateLevelAssignsCorrectRoleBasedOnScore() {
-        User user = new User();
-        user.setTotalScore(120);
-
-        User result = userService.calculateLevel(user);
-
-        assertEquals(UserRole.MASTER, result.getRole());
-    }
 
     @Test
     void getUserByUsernameReturnsUserWhenUserExists() {

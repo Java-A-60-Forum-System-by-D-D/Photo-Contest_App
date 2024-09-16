@@ -64,11 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                              .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND + email));
     }
 
-    @Override
-    public User save(User user) {
 
-        return(userRepository.save(user));
-    }
 
     @Override
     public List<User> findUsersByRoleOrganizer(String role) {

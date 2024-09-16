@@ -188,8 +188,8 @@ void rankingAssignsCorrectScoresToTopThreeUsers() {
 
         contestService.deleteContest(1L);
 
-        verify(userService, times(1)).save(jury);
-        verify(userService, times(2)).save(invitedUser);
+        verify(userService, times(1)).saveUser(jury);
+        verify(userService, times(2)).saveUser(invitedUser);
         verify(contestRepository).delete(contest);
     }
 
@@ -484,12 +484,12 @@ void rankingAssignsCorrectScoresToTopThreeUsers() {
         jury.setRole(UserRole.MASTER);
 
         when(contestRepository.findById(1L)).thenReturn(Optional.of(contest));
-        when(userService.save(jury)).thenReturn(jury);
+        when(userService.saveUser(jury)).thenReturn(jury);
 
         Contest result = contestService.addJury(1L, jury, user);
 
         assertNotNull(result);
-        verify(userService).save(jury);
+        verify(userService).saveUser(jury);
     }
 
     @Test

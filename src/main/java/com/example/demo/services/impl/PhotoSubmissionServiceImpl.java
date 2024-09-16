@@ -72,7 +72,7 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
                     ? user.getTotalScore() + 3
                     : user.getTotalScore() + 1);
             userService.calculateLevel(user);
-            userService.save(user);
+            userService.saveUser(user);
 
             Contest contest = photoSubmission.getContest();
             contest.getParticipants()

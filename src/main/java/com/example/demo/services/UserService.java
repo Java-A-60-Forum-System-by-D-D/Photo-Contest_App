@@ -15,7 +15,6 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    User save(User user);
     List<User> findUsersByRoleOrganizer(String role);
 
     List<User> getUsers(UserFilterOptions userFilterOptions);
