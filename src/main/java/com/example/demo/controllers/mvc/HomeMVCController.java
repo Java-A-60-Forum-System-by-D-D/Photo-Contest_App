@@ -1,11 +1,10 @@
 package com.example.demo.controllers.mvc;
 
-import com.example.demo.models.Notification;
-import com.example.demo.models.User;
-import com.example.demo.models.UserRole;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
+import com.example.demo.services.ContestService;
 import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,8 +29,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeMVCController {
@@ -39,16 +41,18 @@ public class HomeMVCController {
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
     private final NotificationService notificationService;
+    private final ContestService contestService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
-    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService) {
+    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService, ContestService contestService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
 
         this.notificationService = notificationService;
+        this.contestService = contestService;
     }
 //    @ModelAttribute
 //    public Role get
@@ -72,7 +76,22 @@ public class HomeMVCController {
         if (!model.containsAttribute("loginUserDto")) {
             model.addAttribute("loginUserDto", new LoginUserDto());
         }
-        System.out.println("Current locale in home controller: " + currentLocale);
+        List<PhotoSubmission> photosToPopulate = new ArrayList<>();
+        List<Contest> contestsToPopulate = contestService.getLast3FinishedContests();
+        for (Contest contest : contestsToPopulate) {
+            List<PhotoSubmission> submissions = contest.getSubmissions();
+            TreeMap<Integer, List<User>> top3Map = contestService.calculateFinalContestPoints(submissions, userService.getAllUsers());
+            List<PhotoSubmission> top3 = submissions.stream()
+                    .filter(submission -> top3Map.keySet().contains(submission.getReviewScore()))
+                    .limit(3)
+                    .collect(Collectors.toList());
+            for (PhotoSubmission photoSubmission : top3) {
+                photosToPopulate.add(photoSubmission);
+            }
+        }
+        model.addAttribute("photos", photosToPopulate);
+
+
         return "index";
     }
 

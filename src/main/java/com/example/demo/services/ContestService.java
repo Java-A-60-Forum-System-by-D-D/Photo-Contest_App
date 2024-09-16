@@ -55,4 +55,6 @@ public interface ContestService {
     void ranking(TreeMap<Integer, List<User>> top3);
 
     List<Contest> getPreviousContests(Category category);
+
+    List<Contest> getLast3FinishedContests();
 }

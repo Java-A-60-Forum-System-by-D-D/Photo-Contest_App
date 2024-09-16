@@ -79,7 +79,6 @@ public class ContestMVCController {
         }
 
 
-        /*todo need to figure out how to handle invitational users*/
         boolean contains = false;
         if (user.getRole().equals(UserRole.ORGANIZER) || user.getJurorContests()
                 .stream()

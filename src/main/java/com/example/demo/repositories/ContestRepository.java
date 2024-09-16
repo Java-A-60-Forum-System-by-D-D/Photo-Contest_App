@@ -60,4 +60,7 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
     List<Contest> findContestsByInvitedUsersEqualsUserId(@Param("id") long id);
     @Query("Select c from Contest c where c.category.id = :id order by size (c.submissions) desc limit 4")
     List<Contest> findContestsByCategoryId(long id);
+
+    @Query("Select c from Contest  c  where c.phase = 'FINISHED' order by c.startPhase3 desc limit 3")
+    List<Contest> findTop3ByPhase_Finished();
 }

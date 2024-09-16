@@ -338,5 +338,10 @@ public class ContestServiceImpl implements ContestService {
         return contestRepository.findContestsByCategoryId(category.getId());
     }
 
+    @Override
+    public List<Contest> getLast3FinishedContests() {
+        return contestRepository.findTop3ByPhase_Finished();
+    }
+
 
 }
