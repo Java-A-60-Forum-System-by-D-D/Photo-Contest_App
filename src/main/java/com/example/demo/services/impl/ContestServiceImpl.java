@@ -72,7 +72,7 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public List<Contest> getAllContests() {
-        return List.of();
+        return contestRepository.findAll();
     }
 
     @Override
@@ -193,12 +193,9 @@ public class ContestServiceImpl implements ContestService {
                 .contains(contest)) {
             throw new EntityDuplicateException("The user is already invited to this contest");
         }
-//        userToInvite.getInvitedContests()
-//                    .add(contest);
-//        userService.saveUser(userToInvite);
+
         contest.getInvitedUsers()
                 .add(userToInvite);
-//        emailService.sendEmail(userToInvite.getEmail(), "Invitation to contest", String.format("You have been invited to participate in the contest %s", contest.getTitle()));
         contestRepository.save(contest);
         notificationService.sendNotification(INVITATIONAL_MESSAGE, NotificationType.PARTICIPATION_REMINDER, userToInvite);
         return contest;

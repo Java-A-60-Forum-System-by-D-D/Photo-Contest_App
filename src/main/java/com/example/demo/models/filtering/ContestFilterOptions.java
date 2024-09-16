@@ -4,8 +4,10 @@ import com.example.demo.models.Category;
 import com.example.demo.models.Phase;
 import com.example.demo.models.Type;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ContestFilterOptions {
     private String title;
     private String category;
