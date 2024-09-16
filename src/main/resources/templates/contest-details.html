@@ -56,12 +56,17 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <span class="open" th:text="${phase.toString()}"></span>
-                            <span class="wish-list" th:text="${contest.category}"><i class="fa fa-heart"></i></span>
+                            <span class="wish-list" >
+                                <i class="fa fa-scroll" th:text="' ' + ${contest.category}"></i>
+                            </span>
                         </div>
                         <div class="col-lg-8">
                             <ul>
 
-                                <li> Time left: <span th:text="'Days: ' + ${contest.getDaysRemaining()}"></span></li>
+                                <li>
+                                    <i class="fa fa-hourglass"></i> Time left:
+                                    <span th:text="'Days: ' + ${contest.getDaysRemaining()}"></span>
+                                </li>
 
                                 <li>Submissions: <span th:text="${submissions.size()}"></span></li>
                             </ul>

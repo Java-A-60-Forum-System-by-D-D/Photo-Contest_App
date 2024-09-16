@@ -89,6 +89,7 @@ public class HomeMVCController {
                 photosToPopulate.add(photoSubmission);
             }
         }
+
         model.addAttribute("photos", photosToPopulate);
 
 

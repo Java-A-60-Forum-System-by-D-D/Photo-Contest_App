@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{commons/fragments::head}">
-<!--    <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">-->
-<!--    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>-->
-<!--    <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>-->
+    <!--    <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">-->
+    <!--    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>-->
+    <!--    <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.min.js}"></script>-->
 </head>
 <body>
 <header th:replace="~{commons/fragments::header}"></header>
-<div class="page-heading" th:object="${contestViewDto}"  th:data-enddate="*{startPhase3}"
-    th:style="'background-image: url(' + ${contestViewDto.getPhotoUrl()} + '); background-repeat: no-repeat; background-position: center center; background-size: cover; padding-top: 200px; padding-bottom: 130px; text-align: center; background-color: #2a2a2a;'">
-    <div class="container" >
+<div class="page-heading" th:object="${contestViewDto}" th:data-enddate="*{startPhase3}"
+     th:style="'background-image: url(' + ${contestViewDto.getPhotoUrl()} + '); background-repeat: no-repeat; background-position: center center; background-size: cover; padding-top: 200px; padding-bottom: 130px; text-align: center; background-color: #2a2a2a;'">
+    <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 header-text">
                 <h2 class="space-need" th:text="*{title}">A Walk In The Nature <em>Contest</em></h2>
@@ -45,17 +45,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="top-content">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <span class="open" th:text="${contestDto.getPhase().name()}">Open Contest</span>
-                            <span class="wish-list"><i class="fa fa-heart"></i> Add To Your Favorites</span>
+                    <div class="row" >
+                        <div class="col-lg-4" style="text-align: center;">
+                            <span class="open" th:text="${contestDto.getPhase().name()}" >Open Contest</span>
+                            <span class="wish-list" >
+            <i class="fa fa-scroll" th:text="' ' + ${contestDto.category.name}"></i></span>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8" >
                             <ul>
-                                <li><i class="fa fa-medal"></i> <span>Award:</span> $2,400</li>
-                                <li><span>Time left:</span> 7 Days</li>
-                                <li><span>Participants:</span> 118</li>
-                                <li><span>Submittions:</span> 280</li>
+                                <li>
+                                    <i class="fa fa-hourglass"></i> Time left:
+                                    <span th:text="'Days: ' + ${contestViewDto.getDaysRemaining()}"></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -66,19 +67,21 @@
                     <h4>Requirements Of The Contest</h4>
                     <h6>Picture Should Have</h6>
                     <p th:text="${contestDto.description}"></p>
-<!--                    <p>You are allowed to 100% freely use this SnapX Template for your commercial websites. You are not allowed to redistribute the template ZIP file on any other Free CSS Template collection websites.</p>-->
-                    <h6 class="second-title" th:text="'Picture photo must match the category - ' + ${contestDto.category.name}"></h6>
-<!--                    <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>-->
-<!--                    <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>-->
+                    <!--                    <p>You are allowed to 100% freely use this SnapX Template for your commercial websites. You are not allowed to redistribute the template ZIP file on any other Free CSS Template collection websites.</p>-->
+                    <h6 class="second-title"
+                        th:text="'Picture photo must match the category - ' + ${contestDto.category.name}"></h6>
+                    <!--                    <p>We hope this template is very useful for your website development. If you wish to <a rel="nofollow" href="https://templatemo.com/contact" target="_blank">support TemplateMo</a>, you may make a small amount of donation via PayPal.</p>-->
+                    <!--                    <p>If you need the PSD source files of this template, please feel free to contact TemplateMo. Our supporters are welcome.</p>-->
 
                     <!-- Form for adding invitational users -->
                     <div class="main-content" th:if="${type.equals('INVITATIONAL')}">
                         <h4>Add Invitational Users</h4>
-                        <form th:action="@{/admin/editContest/{id}/addInvitationalUser(id=${contestDto.getId()})}" method="post">
+                        <form th:action="@{/admin/editContest/{id}/addInvitationalUser(id=${contestDto.getId()})}"
+                              method="post">
                             <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="invUserEmail">User Email:</label>
-                                <input  type="email" id="invUserEmail" name="email" class="form-control" required >
+                                <input type="email" id="invUserEmail" name="email" class="form-control" required>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Add User</button>
@@ -94,11 +97,12 @@
                     <!-- Form for adding jury members -->
                     <div class="main-content">
                         <h4>Add Jury Members</h4>
-                        <form th:action="@{/admin/editContest/{id}/addJuryMember(id=${contestDto.getId()})}" method="post">
+                        <form th:action="@{/admin/editContest/{id}/addJuryMember(id=${contestDto.getId()})}"
+                              method="post">
                             <input type="hidden" name="_method" value="post"/>
                             <div class="form-group">
                                 <label for="juryMemberEmail">Jury Member Email:</label>
-                                <input  type="email" id="juryMemberEmail" name="email" class="form-control" required >
+                                <input type="email" id="juryMemberEmail" name="email" class="form-control" required>
                             </div>
                             <br>
                             <button type="submit" class="btn btn-primary">Add Jury Member</button>
@@ -147,11 +151,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         console.log("Document is ready!");
 
         $("#invUserEmail").autocomplete({
-            source: function(request, response) {
+            source: function (request, response) {
                 console.log("Autocomplete triggered with term: ", request.term);
 
                 $.ajax({
@@ -160,11 +164,11 @@
                     data: {
                         term: request.term
                     },
-                    success: function(data) {
+                    success: function (data) {
                         console.log("Autocomplete data received: ", data);
                         response(data);
                     },
-                    error: function(xhr) {
+                    error: function (xhr) {
                         console.error("Autocomplete error: ", xhr);
                     }
                 });
@@ -173,7 +177,7 @@
         });
 
         $("#juryMemberEmail").autocomplete({
-            source: function(request, response) {
+            source: function (request, response) {
                 console.log("Autocomplete triggered with term: ", request.term);
 
                 $.ajax({
@@ -182,11 +186,11 @@
                     data: {
                         term: request.term
                     },
-                    success: function(data) {
+                    success: function (data) {
                         console.log("Autocomplete data received: ", data);
                         response(data);
                     },
-                    error: function(xhr) {
+                    error: function (xhr) {
                         console.error("Autocomplete error: ", xhr);
                     }
                 });
