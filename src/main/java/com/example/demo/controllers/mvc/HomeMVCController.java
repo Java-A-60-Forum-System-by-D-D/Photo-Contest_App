@@ -1,5 +1,6 @@
 package com.example.demo.controllers.mvc;
 
+import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.*;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Controller
@@ -60,6 +62,7 @@ public class HomeMVCController {
     @GetMapping(value = {"/home", "/"})
     public String home(Model model, Principal principal) {
         List<Notification> notifications = null;
+
         if (principal != null) {
             User user = userService.getUserByEmail(principal.getName());
 
@@ -68,16 +71,21 @@ public class HomeMVCController {
                 model.addAttribute("notifications", notifications);
             }
         }
+
         Locale currentLocale = LocaleContextHolder.getLocale();
         logger.info("Current locale in home controller: " + currentLocale);
+
         if (!model.containsAttribute("registerUser")) {
             model.addAttribute("registerUser", new RegisterUserMVCDTO());
         }
+
         if (!model.containsAttribute("loginUserDto")) {
             model.addAttribute("loginUserDto", new LoginUserDto());
         }
+
         List<PhotoSubmission> photosToPopulate = new ArrayList<>();
         List<Contest> contestsToPopulate = contestService.getLast3FinishedContests();
+
         for (Contest contest : contestsToPopulate) {
             List<PhotoSubmission> submissions = contest.getSubmissions();
             TreeMap<Integer, List<User>> top3Map = contestService.calculateFinalContestPoints(submissions, userService.getAllUsers());
@@ -93,17 +101,27 @@ public class HomeMVCController {
 
         List<Category> categories = categoryService.getAllCategories();
         Map<String, Category> categoryMap = new HashMap<>();
+        Map<String, Integer> contestCategoryMap = new HashMap<>();
         for (Category category : categories) {
             categoryMap.put(category.getName(), category);
+            try {
+                contestCategoryMap.put(category.getName(), contestService.getContestByCategoryName(category)
+                                                                         .size());
+            } catch (EntityNotFoundException e) {
+                contestCategoryMap.put(category.getName(), 0);
+            }
+
         }
 
 
         model.addAttribute("categories", categoryMap);
+        model.addAttribute("contestCategories", contestCategoryMap);
         model.addAttribute("photos", photosToPopulate);
 
 
         return "index";
     }
+
 
 //    @GetMapping("/changeLanguage")
 //    public String changeLanguage(@RequestParam String lang, HttpServletRequest request, HttpServletResponse response) {
