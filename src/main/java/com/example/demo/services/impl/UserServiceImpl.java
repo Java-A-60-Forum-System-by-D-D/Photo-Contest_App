@@ -5,6 +5,7 @@ import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.UpdateUserDTO;
+import com.example.demo.models.filtering.OptionalUserFilteringOptions;
 import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.filtering.UserSpecification;
 import com.example.demo.models.mappers.UserMapper;
@@ -117,6 +118,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+
 
     @Override
     public List<User> getUsersByJurorContests(Contest contest) {

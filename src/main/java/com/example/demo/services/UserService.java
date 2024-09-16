@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.UpdateUserDTO;
+import com.example.demo.models.filtering.OptionalUserFilteringOptions;
 import com.example.demo.models.filtering.UserFilterOptions;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-
     List<User> getAllUsers();
+
 
     List<User> getUsersByJurorContests(Contest contest);
 

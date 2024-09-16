@@ -1,6 +1,8 @@
 package com.example.demo.controllers.rest;
 
+import com.example.demo.models.Phase;
 import com.example.demo.models.User;
+import com.example.demo.models.UserRole;
 import com.example.demo.models.dto.RegisterUserDto;
 import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.dto.UserViewDto;
@@ -40,13 +42,17 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping
-    public List<UserViewDto> getUsers(@Parameter(description = "Username to filter users by", required = false) @RequestParam(required = false) String username,
+    public List<UserViewDto> getUsers(@Parameter(description = "Email to filter users by", required = false) @RequestParam(required = false) String email,
                                       @Parameter(description = "First name to filter users by", required = false) @RequestParam(required = false) String firstName,
                                       @Parameter(description = "Last name to filter users by", required = false) @RequestParam(required = false) String lastName,
                                       @Parameter(description = "Field to sort users by", required = false) @RequestParam(required = false) String sortBy,
-                                      @Parameter(description = "Direction to sort users by", required = false) @RequestParam(required = false) String sortDirection) {
-
-        UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName, sortBy, sortDirection);
+                                      @Parameter(description = "Direction to sort users by", required = false) @RequestParam(required = false) String sortDirection,
+                                      @Parameter(description = "Role to filter users by", required = false) @RequestParam(required = false) String role) {
+        UserRole userRole = null;
+        if (userRole != null) {
+            userRole = UserRole.valueOf(role.toUpperCase());
+        }
+        UserFilterOptions userFilterOptions = new UserFilterOptions(email, firstName, lastName, sortBy, sortDirection, userRole);
         List<UserViewDto> users = userService.getUsers(userFilterOptions)
                                              .stream()
                                              .map(userMapper::mapUserToUserViewDto)

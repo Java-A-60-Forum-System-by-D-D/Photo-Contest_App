@@ -1,12 +1,11 @@
 package com.example.demo.controllers.mvc;
 
-import com.example.demo.models.Contest;
-import com.example.demo.models.Notification;
-import com.example.demo.models.Type;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.ContestDto;
 import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.models.dto.JuryDTO;
+import com.example.demo.models.filtering.OptionalUserFilteringOptions;
+import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.mappers.ContestMapper;
 import com.example.demo.services.*;
 import jakarta.validation.Valid;
@@ -181,8 +180,18 @@ public class OrganizerDashboardMVCController {
         return "finished";
     }
     @GetMapping("/users")
-    public String users(Model model) {
-        List<User> users = userService.getAllUsers();
+    public String users(@ModelAttribute("userFilter") UserFilterOptions userFilterOptions, Model model) {
+//        OptionalUserFilteringOptions optionalUserFilteringOptions = new OptionalUserFilteringOptions(
+//                userFilterOptions.getUsername(),
+//                userFilterOptions.getFirstName(),
+//                userFilterOptions.getLastName(),
+//                userFilterOptions.getSortBy(),
+//                userFilterOptions.getSortDirection(),
+//                userFilterOptions.getRole());
+
+        List<User> users = userService.getUsers(userFilterOptions);
+        List<UserRole> roles = List.of(UserRole.values());
+        model.addAttribute("roles", roles);
         model.addAttribute("users", users);
 
         return "users";
