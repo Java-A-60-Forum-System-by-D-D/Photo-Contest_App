@@ -332,4 +332,11 @@ public class ContestServiceImpl implements ContestService {
     }
 
 
+
+    @Override
+    public List<Contest> getPreviousContests(Category category) {
+        return contestRepository.findContestsByCategoryId(category.getId());
+    }
+
+
 }

@@ -91,6 +91,8 @@ public class ContestMVCController {
                 .filter(submission -> top3Map.keySet().contains(submission.getReviewScore()))
                 .limit(3)
                 .collect(Collectors.toList());
+        Category category = contest.getCategory();
+        List<Contest> previousContests = contestService.getPreviousContests(category);
 
         model.addAttribute("phase", contest.getPhase());
         model.addAttribute("top3", top3);
@@ -101,6 +103,7 @@ public class ContestMVCController {
         model.addAttribute("IsFound", isFound);
         model.addAttribute("submissions", submissions);
         model.addAttribute("reviewStatusMap", reviewStatusMap);
+        model.addAttribute("previousContests", previousContests);
 
 
         return "contest-details";

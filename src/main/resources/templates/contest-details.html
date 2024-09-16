@@ -55,14 +55,14 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <span class="open" th:text="${phase.toString()}"></span>
-                            <span class="wish-list"><i class="fa fa-heart"></i> Add To Your Favorites</span>
+                            <span class="wish-list" th:text="${contest.category}"><i class="fa fa-heart"></i></span>
                         </div>
                         <div class="col-lg-8">
                             <ul>
-                                <li><i class="fa fa-medal"></i> <span>Award:</span> $2,400</li>
-                                <li><span>Time left:</span> 7 Days</li>
-                                <li><span>Participants:</span> 118</li>
-                                <li><span>Submittions:</span> 280</li>
+
+                                <li> Time left: <span th:text="'Days: ' + ${contest.getDaysRemaining()}"></span></li>
+
+                                <li>Submissions: <span th:text="${submissions.size()}"></span></li>
                             </ul>
                         </div>
                     </div>
@@ -75,8 +75,9 @@
                     <p th:text="${contest.description}">You are allowed to 100% freely use this SnapX Template for your
                         commercial websites. You are not allowed to redistribute the template ZIP file on any other Free
                         CSS Template collection websites.</p>
-                    <h4 class="second-title">Links To Inspire Your Photo</h4>
+
                     <div th:if="${phase.name().equals('FINISHED')}">
+                        <h4 class="second-title">Winners</h4>
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
@@ -85,11 +86,18 @@
                                             <img th:src="*{photoUrl}" alt="">
                                             <div class="hover-effect">
                                                 <div class="content">
-                                                    <h4 th:text="*{title}"> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <span>(4.5)</span></h4>
+                                                    <h4 th:text="*{title}"><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i> <span>(4.5)</span></h4>
                                                     <ul>
-                                                        <li th:text="*{creator.username}"><span>Contest Winner:</span> Vincent Adam</li>
-                                                        <li th:text="${iter.index + 1}"><span>PLACE:</span> Anthony Soft</li>
-                                                        <li th:text="*{getReviewScore()}"><span>Score</span> $1.000 + Camera Nikon</li>
+                                                        <li th:text="*{creator.username}"><span>Contest Winner:</span>
+                                                            Vincent Adam
+                                                        </li>
+                                                        <li th:text="${iter.index + 1}"><span>PLACE:</span> Anthony Soft
+                                                        </li>
+                                                        <li th:text="*{getReviewScore()}"><span>Score</span> $1.000 +
+                                                            Camera Nikon
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -101,77 +109,44 @@
                         </div>
                         <div th:if="${!contains} ">
                             <div class="main-button" th:if="${!IsFound}">
-                                <a th:href="@{/contests/{id}/submissions(id=${id})}" >Submit Your Photo</a>
+                                <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
                             </div>
                             <div class="main-button" th:unless="${!IsFound}">
-                                <a th:href="@{/user/openContests}" th:if="${!phase.name().equals('FINISHED')}">Already submitted photo for this contest, check out the
+                                <a th:href="@{/user/openContests}" th:if="${!phase.name().equals('FINISHED')}">Already
+                                    submitted photo for this contest, check out the
                                     other contests!</a>
                             </div>
                         </div>
 
                     </div>
                     <div th:if="${phase.name().equals('PHASE_1')}">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
+                        <h4 class="second-title">Previous Contests from This Category</h4>
+                        <div class="row" >
+                            <div class="col-lg-3 col-6" th:each="prev : ${previousContests}" th:object="${prev}">
                                 <div class="item">
-                                    <span>JPG</span>
-                                    <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>PNG</span>
-                                    <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>PDF</span>
-                                    <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>AI</span>
-                                    <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
+                                    <span><img th:src="*{photoUrl}"></span>
+                                    <h5 th:text="*{title}">A Trip In The Rain<br></h5>
                                 </div>
                             </div>
                         </div>
                         <div th:if="${!contains} ">
                             <div class="main-button" th:if="${!IsFound}">
-                                <a th:href="@{/contests/{id}/submissions(id=${id})}" >Submit Your Photo</a>
+                                <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
                             </div>
                             <div class="main-button" th:unless="${!IsFound}">
-                                <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the
+                                <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out
+                                    the
                                     other contests!</a>
                             </div>
                         </div>
 
                     </div>
                     <div th:if="${phase.name().equals('NOT_STARTED')}">
-                        <div class="row">
-                            <div class="col-lg-3 col-6">
+                        <div class="row" >
+                            <div class="col-lg-3 col-6" th:each="prev : ${previousContests}" th:object="${prev}">
                                 <div class="item">
-                                    <span>JPG</span>
-                                    <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>PNG</span>
-                                    <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>PDF</span>
-                                    <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-6">
-                                <div class="item">
-                                    <span>AI</span>
-                                    <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
+                                    <span><img th:src="*{photoUrl}"></span>
+                                    <h5 th:text="*{title}">A Trip In The Rain<br></h5>
                                 </div>
                             </div>
                         </div>

@@ -53,4 +53,6 @@ public interface ContestService {
     List<Contest> getInvitedContests(User user);
     TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users);
     void ranking(TreeMap<Integer, List<User>> top3);
+
+    List<Contest> getPreviousContests(Category category);
 }

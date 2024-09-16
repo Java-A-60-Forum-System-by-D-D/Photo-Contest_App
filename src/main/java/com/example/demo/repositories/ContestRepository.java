@@ -58,4 +58,6 @@ List<Contest> findAllByPhase_Phase1_AndType_Open();
 
     @Query("Select c from Contest c join c.invitedUsers i on i.id = :id")
     List<Contest> findContestsByInvitedUsersEqualsUserId(@Param("id") long id);
+    @Query("Select c from Contest c where c.category.id = :id order by size (c.submissions) desc limit 4")
+    List<Contest> findContestsByCategoryId(long id);
 }
