@@ -28,7 +28,8 @@ public class PhaseScheduler {
         this.notificationService = notificationService;
     }
 
-    @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
+//    @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
+    @Scheduled(cron = "0 0/30 * * * ?") // Run every 30 minutes
     public void startPhase2() {
         LocalDateTime now = LocalDateTime.now();
 

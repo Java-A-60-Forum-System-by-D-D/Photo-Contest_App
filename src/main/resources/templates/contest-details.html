@@ -103,14 +103,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:if="${!user.getRole().name().equals('ORGANIZER')} || ${contains} ">
+                            <div class="main-button" th:if="${!IsFound}">
+                                <a th:href="@{/contests/{id}/submissions(id=${id})}" >Submit Your Photo</a>
+                            </div>
+                            <div class="main-button" th:unless="${!IsFound}">
+                                <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the
+                                    other contests!</a>
+                            </div>
+                        </div>
 
-                        <div class="main-button" th:if="${!IsFound}">
-                            <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
-                        </div>
-                        <div class="main-button" th:unless="${!IsFound}">
-                            <a th:href="@{/user/openContests}">Already submitted photo for this contest, check out the
-                                other contests!</a>
-                        </div>
                     </div>
                     <div th:if="${phase.name().equals('NOT_STARTED')}">
                         <div class="row">
