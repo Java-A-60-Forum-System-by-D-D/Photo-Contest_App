@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div th:if="${!user.getRole().name().equals('ORGANIZER')} || ${contains} ">
+                        <div th:if="${!contains} ">
                             <div class="main-button" th:if="${!IsFound}">
                                 <a th:href="@{/contests/{id}/submissions(id=${id})}" >Submit Your Photo</a>
                             </div>

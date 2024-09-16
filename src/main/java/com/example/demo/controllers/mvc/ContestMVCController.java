@@ -1,9 +1,6 @@
 package com.example.demo.controllers.mvc;
 
-import com.example.demo.models.Contest;
-import com.example.demo.models.Notification;
-import com.example.demo.models.PhotoSubmission;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.models.dto.ContestViewDto;
 import com.example.demo.models.dto.PhotoSubmissionDto;
 import com.example.demo.models.dto.PhotoSubmissionMVCDto;
@@ -16,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/contests")
@@ -61,32 +55,36 @@ public class ContestMVCController {
         Boolean isFound = false;
 
         Optional<PhotoSubmission> photoSubmission = contest.getSubmissions()
-                                                           .stream()
-                                                           .filter(s ->
-                                                                   s.getCreator()
-                                                                    .getId() == user.getId()
-                                                           )
-                                                           .findFirst();
+                .stream()
+                .filter(s ->
+                        s.getCreator()
+                                .getId() == user.getId()
+                )
+                .findFirst();
         if (photoSubmission.isPresent()) {
             isFound = true;
         }
 
-        List<PhotoSubmission> submissions = contest.getSubmissions();
 
+        List<PhotoSubmission> submissions = contest.getSubmissions();
+        submissions = submissions.stream().sorted(Comparator.comparing(PhotoSubmission::getReviewScore).reversed()).toList();
         Map<Long, Boolean> reviewStatusMap = new HashMap<>();
         for (PhotoSubmission submission : submissions) {
             boolean hasReviewed = submission.getReviews()
-                                            .stream()
-                                            .anyMatch(review -> review.getJury()
-                                                                      .getId() == user.getId());
+                    .stream()
+                    .anyMatch(review -> review.getJury()
+                            .getId() == user.getId());
             reviewStatusMap.put(submission.getId(), hasReviewed);
         }
 
 
         /*todo need to figure out how to handle invitational users*/
-        boolean contains = user.getJurorContests()
-                               .stream()
-                               .anyMatch(c -> c.getId() == contest.getId());
+        boolean contains = false;
+        if (user.getRole().equals(UserRole.ORGANIZER) || user.getJurorContests()
+                .stream()
+                .anyMatch(c -> c.getId() == contest.getId())) {
+            contains = true;
+        }
 
 
         model.addAttribute("phase", contest.getPhase());
