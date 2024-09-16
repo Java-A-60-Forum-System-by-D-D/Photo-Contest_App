@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/user")
@@ -54,6 +56,10 @@ public class UsersDashboardMVCController {
         User user = userService.getUserByEmail(principal.getName());
         List<Contest> openContests = contestService.getPhaseOneContestsAndTypeOpen();
         model.addAttribute("contests", openContests);
+        List<User> participants = openContests.stream().map(Contest::getParticipants).flatMap(List::stream).toList();
+
+        model.addAttribute("user", user);
+        model.addAttribute("participants", participants);
 
 
         return "user-open-contests";

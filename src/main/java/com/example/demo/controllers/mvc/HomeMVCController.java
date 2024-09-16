@@ -97,16 +97,22 @@ public class HomeMVCController {
 //    }
 
     @ModelAttribute("notifications")
-    public List<Notification> getNotifications(Principal principal) {
-        User user = userService.getUserByEmail(principal.getName());
-        return notificationService.getUnreadNotifications(user);
+    public List<Notification> getNotifications(Principal principal, Model model) {
+
+        List<Notification> notifications = null;
+        if (principal != null) {
+            User user = userService.getUserByEmail(principal.getName());
+
+            if (user != null) {
+                notifications = notificationService.getUnreadNotifications(user);
+                model.addAttribute("notifications", notifications);
+            }
+        }return notifications;
     }
 
 
     @GetMapping("/FAQ")
     public String getFAQ() {
-
-
         return "FAQ";
     }
 

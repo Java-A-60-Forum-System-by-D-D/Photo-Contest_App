@@ -20,6 +20,7 @@ public class ContestServiceImpl implements ContestService {
     public static final String CONTEST_NOT_FOUND = "Contest %d not found";
     public static final String USER_IS_NOT_AUTHORIZED_TO_CREATE_CONTEST = "User is not authorized to create contest";
     public static final String CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS = "Contest with such title already exists";
+    public static final String INVITATIONAL_MESSAGE = "You have been invited to participate in a contest. You can see details in Your Contest Menu";
     private final ContestRepository contestRepository;
     private final UserService userService;
     private final NotificationService notificationService;
@@ -36,18 +37,18 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public Contest getContestById(long id) {
         return contestRepository.findById(id)
-                                .orElseThrow(() -> new EntityNotFoundException(String.format(CONTEST_NOT_FOUND, id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(CONTEST_NOT_FOUND, id)));
     }
 
     @Override
     @Transactional
     public Contest createContest(Contest contest, User user) {
         if (!user.getRole()
-                 .equals(UserRole.ORGANIZER)) {
+                .equals(UserRole.ORGANIZER)) {
             throw new AuthorizationUserException(USER_IS_NOT_AUTHORIZED_TO_CREATE_CONTEST);
         }
         if (contestRepository.findByTitle(contest.getTitle())
-                             .isPresent()) {
+                .isPresent()) {
             throw new EntityDuplicateException(CONTEST_WITH_SUCH_TITLE_ALREADY_EXISTS);
         }
 
@@ -56,13 +57,13 @@ public class ContestServiceImpl implements ContestService {
         List<User> organizers = userService.findUsersByRoleOrganizer("ORGANIZER");
         organizers.forEach(u -> {
             u.getJurorContests()
-             .add(savedContest);
+                    .add(savedContest);
             userService.save(u);
             notificationService.sendNotification("New contest has been created", NotificationType.JURY_INVITATION, u);
         });
         List<User> participants = userService.getUsersByRole();
         participants.forEach(u -> {
-            emailService.sendEmail( u.getEmail(), "New contest has been created", String.format("New contest %s has been created", savedContest.getTitle()));
+            emailService.sendEmail(u.getEmail(), "New contest has been created", String.format("New contest %s has been created", savedContest.getTitle()));
         });
 
         return savedContest;
@@ -97,7 +98,7 @@ public class ContestServiceImpl implements ContestService {
     @Override
     public boolean checkIfUserHasAlreadySubmittedPhoto(User user, Contest contest) {
         return contestRepository.findAllParticipated(user.getId())
-                                .contains(contest);
+                .contains(contest);
     }
 
 
@@ -125,18 +126,18 @@ public class ContestServiceImpl implements ContestService {
                 .equals(UserRole.DICTATOR)) {
             throw new AuthorizationUserException("The user you want to add as a jury does not have the desired level");
         } else if (juryToAdd.getJurorContests()
-                            .contains(contest)) {
+                .contains(contest)) {
             throw new EntityDuplicateException("The user is already invited as a jury to this contest");
         }
 
 
         juryToAdd.getJurorContests()
-                 .add(contest);
+                .add(contest);
 
         juryToAdd.setTotalScore(juryToAdd.getTotalScore() + 3);
         userService.calculateLevel(juryToAdd);
         notificationService.sendNotification("You have been invited to be a jury in a contest", NotificationType.JURY_INVITATION, juryToAdd);
-        emailService.sendEmail( juryToAdd.getEmail(), "Invitation to be a jury in a contest", String.format("You have been invited to be a jury in the contest %s", contest.getTitle()));
+        emailService.sendEmail(juryToAdd.getEmail(), "Invitation to be a jury in a contest.", String.format("You have been invited to be a jury in the contest %s", contest.getTitle()));
         userService.save(juryToAdd);
 
 
@@ -189,17 +190,17 @@ public class ContestServiceImpl implements ContestService {
                 .equals(UserRole.ORGANIZER)) {
             throw new AuthorizationUserException("The user you want to invite is not a photographer");
         } else if (userToInvite.getParticipatedContests()
-                               .contains(contest)) {
+                .contains(contest)) {
             throw new EntityDuplicateException("The user is already invited to this contest");
         }
 //        userToInvite.getInvitedContests()
 //                    .add(contest);
 //        userService.saveUser(userToInvite);
         contest.getInvitedUsers()
-               .add(userToInvite);
+                .add(userToInvite);
 //        emailService.sendEmail(userToInvite.getEmail(), "Invitation to contest", String.format("You have been invited to participate in the contest %s", contest.getTitle()));
         contestRepository.save(contest);
-        notificationService.sendNotification("You have been invited to participate in a contest. You can see details in Your Contest Menu", NotificationType.PARTICIPATION_REMINDER, userToInvite);
+        notificationService.sendNotification(INVITATIONAL_MESSAGE, NotificationType.PARTICIPATION_REMINDER, userToInvite);
         return contest;
 
     }
@@ -228,7 +229,7 @@ public class ContestServiceImpl implements ContestService {
         juryList.stream()
                 .forEach(jury -> {
                     jury.getJurorContests()
-                        .remove(contest);
+                            .remove(contest);
                     userService.save(jury);
                 });
 
@@ -237,22 +238,22 @@ public class ContestServiceImpl implements ContestService {
 
         if (invitedUsers != null) {
             invitedUsers.stream()
-                        .forEach(invitedUser -> {
-                            invitedUser.getParticipatedContests()
-                                       .remove(contest);
-                            userService.save(invitedUser);
-                        });
+                    .forEach(invitedUser -> {
+                        invitedUser.getParticipatedContests()
+                                .remove(contest);
+                        userService.save(invitedUser);
+                    });
         }
 
         List<User> participants = contest.getParticipants();
 
         if (participants != null) {
             participants.stream()
-                        .forEach(participant -> {
-                            participant.getParticipatedContests()
-                                       .remove(contest);
-                            userService.save(participant);
-                        });
+                    .forEach(participant -> {
+                        participant.getParticipatedContests()
+                                .remove(contest);
+                        userService.save(participant);
+                    });
         }
 
         contestRepository.delete(contest);
@@ -269,20 +270,20 @@ public class ContestServiceImpl implements ContestService {
     public TreeMap<Integer, List<User>> calculateFinalContestPoints(List<PhotoSubmission> submissions, List<User> users) {
 
         TreeSet<Integer> top3Scores = submissions.stream()
-                                                 .map(PhotoSubmission::getReviewScore)
-                                                 .collect(Collectors.toCollection(() -> new TreeSet<Integer>(Comparator.reverseOrder())));
+                .map(PhotoSubmission::getReviewScore)
+                .collect(Collectors.toCollection(() -> new TreeSet<Integer>(Comparator.reverseOrder())));
 
         TreeSet<Integer> finalTop3Scores = top3Scores.stream()
-                                                     .limit(3)
-                                                     .collect(Collectors.toCollection(TreeSet::new));
+                .limit(3)
+                .collect(Collectors.toCollection(TreeSet::new));
 
         TreeMap<Integer, List<User>> top3 = submissions.stream()
-                                                       .filter(submission -> finalTop3Scores.contains(submission.getReviewScore()))
-                                                       .collect(Collectors.groupingBy(
-                                                               PhotoSubmission::getReviewScore,
-                                                               () -> new TreeMap<>(Comparator.reverseOrder()),
-                                                               Collectors.mapping(PhotoSubmission::getCreator, Collectors.toList())
-                                                       ));
+                .filter(submission -> finalTop3Scores.contains(submission.getReviewScore()))
+                .collect(Collectors.groupingBy(
+                        PhotoSubmission::getReviewScore,
+                        () -> new TreeMap<>(Comparator.reverseOrder()),
+                        Collectors.mapping(PhotoSubmission::getCreator, Collectors.toList())
+                ));
 
         ranking(top3);
 
@@ -299,8 +300,8 @@ public class ContestServiceImpl implements ContestService {
             List<User> highestUsers = top3.get(scores.get(0));
             if (highestUsers.size() == 1) {
                 highestUsers.get(0)
-                            .setTotalScore(highestUsers.get(0)
-                                                       .getTotalScore() + 50);
+                        .setTotalScore(highestUsers.get(0)
+                                .getTotalScore() + 50);
             } else {
                 highestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 40));
             }
@@ -310,8 +311,8 @@ public class ContestServiceImpl implements ContestService {
             List<User> secondHighestUsers = top3.get(scores.get(1));
             if (secondHighestUsers.size() == 1) {
                 secondHighestUsers.get(0)
-                                  .setTotalScore(secondHighestUsers.get(0)
-                                                                   .getTotalScore() + 35);
+                        .setTotalScore(secondHighestUsers.get(0)
+                                .getTotalScore() + 35);
             } else {
                 secondHighestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 25));
             }
@@ -321,8 +322,8 @@ public class ContestServiceImpl implements ContestService {
             List<User> thirdHighestUsers = top3.get(scores.get(2));
             if (thirdHighestUsers.size() == 1) {
                 thirdHighestUsers.get(0)
-                                 .setTotalScore(thirdHighestUsers.get(0)
-                                                                 .getTotalScore() + 20);
+                        .setTotalScore(thirdHighestUsers.get(0)
+                                .getTotalScore() + 20);
             } else {
                 thirdHighestUsers.forEach(user -> user.setTotalScore(user.getTotalScore() + 10));
             }

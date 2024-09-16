@@ -87,7 +87,7 @@
                         <span class="price">Price: <em >$0</em></span>
                         <span class="deadline" th:if="*{startPhase3 != null}">Deadline: <em th:text="${#temporals.format(startPhase3, 'yyyy-MM-dd')}">0 Days</em></span>
                     </div>
-                    <div class="border-button">
+                    <div class="border-button" th:if="${!contest.getParticipants().contains(user)}">
                         <a th:href="@{/contests/{id}(id=${contest.getId()})}">Go To Contest</a>
                     </div>
                 </div>
