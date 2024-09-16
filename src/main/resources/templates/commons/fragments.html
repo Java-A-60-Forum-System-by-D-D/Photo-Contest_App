@@ -98,9 +98,11 @@
                                             </form>
                                         </li>
                                     </ul>
-                                    <button id="mark-all-as-read" th:if="${notifications.size() > 1}">
-                                        <i class="fa fa-times"></i> Mark All as Read
-                                    </button>
+                                    <form th:action="@{/notifications/markAllAsRead}" th:method="post">
+                                        <button id="mark-all-as-read" th:if="${notifications.size() > 1}">
+                                            <i class="fa fa-times"></i> Mark All as Read
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </li>
