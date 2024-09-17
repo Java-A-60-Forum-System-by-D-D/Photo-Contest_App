@@ -4,29 +4,27 @@ import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.Contest;
 import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
-import com.example.demo.models.dto.UpdateUserDTO;
 import com.example.demo.models.filtering.OptionalUserFilteringOptions;
 import com.example.demo.models.filtering.UserFilterOptions;
 import com.example.demo.models.filtering.UserSpecification;
-import com.example.demo.models.mappers.UserMapper;
 import com.example.demo.repositories.UserRepository;
-import com.example.demo.services.AuthenticationService;
 import com.example.demo.services.UserService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     public static final String USER_NOT_FOUND = "User not found: ";
+    public static final int MAX_POINTS_FOR_JUNKIE = 51;
+    public static final int MAX_POINTS_FOR_ENTHUSIAST = 100;
+    public static final int MAX_POINTS_FOR_MASTER = 151;
     private final UserRepository userRepository;
 
 
@@ -87,11 +85,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User calculateLevel(User user) {
         int score = user.getTotalScore();
 
-        if (score < 51) {
+        if (score < MAX_POINTS_FOR_JUNKIE) {
             user.setRole(UserRole.JUNKIE);
-        } else if (score < 100) {
+        } else if (score < MAX_POINTS_FOR_ENTHUSIAST) {
             user.setRole(UserRole.ENTHUSIAST);
-        } else if (score < 151) {
+        } else if (score < MAX_POINTS_FOR_MASTER) {
             user.setRole(UserRole.MASTER);
         } else {
             user.setRole(UserRole.DICTATOR);

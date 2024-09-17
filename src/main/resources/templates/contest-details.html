@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <span class="open" th:text="${phase.toString()}"></span>
-                            <span class="wish-list" >
+                            <span class="wish-list">
                                 <i class="fa fa-scroll" th:text="' ' + ${contest.category}"></i>
                             </span>
                         </div>
@@ -83,36 +83,36 @@
                         CSS Template collection websites.</p>
 
                     <div th:if="${phase.name().equals('FINISHED')}">
-                        <h4 class="second-title">Winners</h4>
+                        <h4 class="second-title" style="font-size: 2.5rem; text-align: center; margin-bottom: 2rem; color: #333; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Winners</h4>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
-                                    <div class="item" th:each="top, iter : ${top3}" th:object="${top}">
-                                        <div class="thumb">
-                                            <img th:src="*{photoUrl}" alt="">
-                                            <div class="hover-effect">
-                                                <div class="content">
-                                                    <h4 th:text="*{title}"><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
-                                                            class="fa fa-star"></i> <span>(4.5)</span></h4>
-                                                    <ul>
-                                                        <li th:text="*{creator.username}"><span>Contest Winner:</span>
-                                                            Vincent Adam
-                                                        </li>
-                                                        <li th:text="${iter.index + 1}"><span>PLACE:</span> Anthony Soft
-                                                        </li>
-                                                        <li th:text="*{getReviewScore()}"><span>Score</span> $1.000 +
-                                                            Camera Nikon
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                <div class="owl-features owl-carousel" style="position: relative; z-index: 5; padding: 20px 0;">
+                                    <div class="item" th:each="top, iter : ${top3}" th:object="${top}" style="position: relative; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: all 0.3s ease; margin: 10px; background-color: #fff;">
+                                        <div class="thumb" style="position: relative;">
+                                            <img th:src="*{photoUrl}" alt="" class="img-fluid" style="width: 100%; height: 300px; object-fit: cover; border-radius: 15px 15px 0 0;">
+                                            <div class="place-badge" style="position: absolute; top: 10px; right: 10px; background-color: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 20px; font-weight: bold;">
+                                                <i class="fa fa-trophy" th:style="${iter.index == 0 ? 'color: gold;' : (iter.index == 1 ? 'color: silver;' : 'color: #cd7f32;')}" style="margin-right: 5px;"></i>
+                                                <span th:text="${iter.index == 0 ? '1st' : (iter.index == 1 ? '2nd' : '3rd')}" style="color: #333;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="content" style="padding: 20px; text-align: center;">
+                                            <h4 th:text="*{title}" style="font-size: 1.3rem; margin-bottom: 10px; color: #333; font-weight: 600;"></h4>
+                                            <div style="margin-bottom: 15px;">
+                                                <i class="fa fa-star" style="color: #ffd700; margin-right: 2px;"></i>
+                                                <i class="fa fa-star" style="color: #ffd700; margin-right: 2px;"></i>
+                                                <i class="fa fa-star" style="color: #ffd700; margin-right: 2px;"></i>
+
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; color: #666;">
+                                                <span><span th:text="*{creator?.username}" style="font-weight: 600; color: #333;"></span></span>
+                                                <span><span th:text="*{reviewScore}" style="font-weight: 600; color: #333;"></span></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                         <div th:if="${!contains} ">
                             <div class="main-button" th:if="${!IsFound}">
                                 <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
@@ -127,7 +127,7 @@
                     </div>
                     <div th:if="${phase.name().equals('PHASE_1')}">
                         <h4 class="second-title">Previous Contests from This Category</h4>
-                        <div class="row" >
+                        <div class="row">
                             <div class="col-lg-3 col-6" th:each="prev : ${previousContests}" th:object="${prev}">
                                 <div class="item">
                                     <span><img th:src="*{photoUrl}"></span>
@@ -148,7 +148,7 @@
 
                     </div>
                     <div th:if="${phase.name().equals('NOT_STARTED')}">
-                        <div class="row" >
+                        <div class="row">
                             <div class="col-lg-3 col-6" th:each="prev : ${previousContests}" th:object="${prev}">
                                 <div class="item">
                                     <span><img th:src="*{photoUrl}"></span>
@@ -213,7 +213,21 @@
         </div>
     </div>
 </section>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const items = document.querySelectorAll('.item');
+        items.forEach(item => {
+            item.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.2)';
+            });
+            item.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            });
+        });
+    });
+</script>
 <footer th:replace="~{commons/fragments::footer}"></footer>
 
 <!-- Scripts -->
