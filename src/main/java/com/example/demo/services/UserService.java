@@ -38,4 +38,6 @@ public interface UserService {
     User updateLastName(long userId, String lastName);
 
     List<User> getUsersByOptions(OptionalUserFilteringOptions userFilterOptions);
+
+
 }

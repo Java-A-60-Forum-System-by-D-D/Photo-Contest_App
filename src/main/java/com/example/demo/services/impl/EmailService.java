@@ -52,6 +52,11 @@ public class EmailService {
             throw new RuntimeException(e);
         }
     }
+    public void sendContactEmail(String to, String subject, String text, String email, String name, String phone) {
+        text = "From  Name: " + name + "\n" + "Email: " + email + "\n" + "Phone: " + phone + "\n" + text;
+
+        sendEmail(to, subject, text);
+    }
 
     public void sendRegistrationEmail(String to) {
         String subject = "Welcome to the Forum!";

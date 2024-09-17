@@ -146,6 +146,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsersByOptions(OptionalUserFilteringOptions userFilterOptions) {
         return userRepository.findAllByOptions( userFilterOptions.getEmail(),userFilterOptions.getFirstName(),userFilterOptions.getLastName(), userFilterOptions.getRole());
     }
+
+
+
+
 }
 
 

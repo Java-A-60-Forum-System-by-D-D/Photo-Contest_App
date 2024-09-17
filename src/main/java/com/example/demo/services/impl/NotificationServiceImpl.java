@@ -6,6 +6,7 @@ import com.example.demo.models.NotificationType;
 import com.example.demo.models.User;
 import com.example.demo.repositories.NotificationRepository;
 import com.example.demo.services.NotificationService;
+import com.example.demo.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     public static final String NOTIFICATION_NOT_FOUND = "Notification not found";
     private final NotificationRepository notificationRepository;
+    private final UserService userService;
 
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository, UserService userService) {
         this.notificationRepository = notificationRepository;
+        this.userService = userService;
     }
 
     public List<Notification> getUnreadNotifications(User user) {
@@ -33,6 +36,17 @@ public class NotificationServiceImpl implements NotificationService {
     public void sendNotification(String message, NotificationType type, User recipient) {
         Notification notification = new Notification(message, type, recipient);
         notificationRepository.save(notification);
+    }
+
+    @Override
+    public void senNotificationForContactForm(String message) {
+        userService.findUsersByRoleOrganizer("ORGANIZER").stream()
+                .forEach(u -> {
+                            Notification notification = new Notification(message, NotificationType.OTHER, u);
+                            notificationRepository.save(notification);
+                        }
+                );
+
     }
 
     @Override

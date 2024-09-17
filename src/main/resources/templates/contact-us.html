@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{commons/fragments::head}">
+
+</head>
+<body>
+<header class="header-area header-sticky" th:replace="~{commons/fragments::nav}">
+</header>
+<section class="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h6>Contact Us</h6>
+                    <h4>Don't Be Shy <em></em> to contact US <em>Now</em></h4>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="info-item">
+                    <i class="fa fa-phone"></i>
+                    <h4>Phone Numbers</h4>
+                    <span><a href="#">010-020-0340</a><br><a href="#">090-080-0760</a></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="info-item">
+                    <i class="fa fa-envelope"></i>
+                    <h4>Email Addresses</h4>
+                    <span><a href="#">info@company.com</a><br><a href="#">SnapX@company.com</a></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="info-item">
+                    <i class="fa fa-map-marked"></i>
+                    <h4>Office Location</h4>
+                    <span><a href="#">155 Michigan Ave, Chicago,<br>IL 60601, United States</a></span>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <form id="contact" th:action="@{/contact}" method="post" th:object="${contact}">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <input type="text" name="name" id="name" placeholder="Your Name..." autocomplete="on"
+                                       required th:field="*{name}">
+                                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <input th:field="*{phone}" type="text" name="telephone" id="telephone" placeholder="Your Telephone..."
+                                       autocomplete="on" required>
+                                <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone Error</label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <input th:field="*{email}"  type="email" name="email" id="email" placeholder="Your E-mail..." required="">
+                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                            <fieldset>
+                                <input th:field="*{subject}"  type="text" name="subject" id="subject" placeholder="Subject..."
+                                       autocomplete="on">
+                            <label th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}">Subject Error</label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-12">
+                            <fieldset>
+                                <textarea th:field="*{message}"  name="message" id="message" placeholder="Your Message"></textarea>
+                                <label th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message Error</label>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-12">
+                            <fieldset>
+                                <button type="submit" id="form-submit" class="orange-button">Send Message Now</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+                <div th:if="${message}" class="alert alert-success" role="alert">
+                    <p th:text="${message}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{commons/fragments::footer}"></footer>
+
+<!-- Scripts -->
+
+<div th:replace="~{commons/scripts::body}"></div>
+</body>
+</html>

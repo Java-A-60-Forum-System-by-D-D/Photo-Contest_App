@@ -2,6 +2,7 @@ package com.example.demo.controllers.mvc;
 
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.*;
+import com.example.demo.models.dto.ContactDto;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.models.dto.RegisterUserMVCDTO;
 import com.example.demo.models.mappers.UserMapper;
@@ -9,6 +10,7 @@ import com.example.demo.services.CategoryService;
 import com.example.demo.services.ContestService;
 import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
+import com.example.demo.services.impl.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -43,11 +45,12 @@ public class HomeMVCController {
     private final NotificationService notificationService;
     private final ContestService contestService;
     private final CategoryService categoryService;
+    private final EmailService emailService;
 
     private static final Logger logger = LoggerFactory.getLogger(HomeMVCController.class);
 
 
-    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService, ContestService contestService, CategoryService categoryService) {
+    public HomeMVCController(UserService userService, AuthenticationManager authenticationManager, UserMapper userMapper, NotificationService notificationService, ContestService contestService, CategoryService categoryService, EmailService emailService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.userMapper = userMapper;
@@ -55,6 +58,7 @@ public class HomeMVCController {
         this.notificationService = notificationService;
         this.contestService = contestService;
         this.categoryService = categoryService;
+        this.emailService = emailService;
     }
 //    @ModelAttribute
 //    public Role get
@@ -167,6 +171,25 @@ public class HomeMVCController {
     @GetMapping("/about")
     public String getAbout() {
         return "about-project";
+    }
+    @GetMapping("/contact")
+    public String getContact(Model model) {
+        if(!model.containsAttribute("contact")) {
+            model.addAttribute("contact", new ContactDto());
+        }
+        return "contact-us";
+    }
+    @PostMapping("/contact")
+    public String postContact(@Valid @ModelAttribute("contact") ContactDto contactDto, Model model, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "contact-us";
+        }
+        notificationService.senNotificationForContactForm("New contact message from " + contactDto.getName() +
+                ", with email: " + contactDto.getEmail() + ", with phone: " + contactDto.getPhone() +
+                ", subject:" + contactDto.getSubject() + " and message: " + contactDto.getMessage());
+        emailService.sendContactEmail("forumdd01@gmail.com", contactDto.getSubject(), contactDto.getMessage(), contactDto.getEmail(), contactDto.getName(), contactDto.getPhone());
+        model.addAttribute("message", "Message sent successfully!");
+        return "redirect:/contact";
     }
 
 

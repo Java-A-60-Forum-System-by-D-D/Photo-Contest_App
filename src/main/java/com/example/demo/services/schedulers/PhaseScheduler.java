@@ -6,6 +6,7 @@ import com.example.demo.repositories.ContestRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.NotificationService;
 import com.example.demo.services.UserService;
+import com.example.demo.services.impl.EmailService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,14 @@ public class PhaseScheduler {
     private final UserRepository userRepository;
     private final UserService userService;
     private final NotificationService notificationService;
+    private final EmailService emailService;
 
-    public PhaseScheduler(ContestRepository contestRepository, UserRepository userRepository, UserService userService, NotificationService notificationService) {
+    public PhaseScheduler(ContestRepository contestRepository, UserRepository userRepository, UserService userService, NotificationService notificationService, EmailService emailService) {
         this.contestRepository = contestRepository;
         this.userRepository = userRepository;
         this.userService = userService;
         this.notificationService = notificationService;
+        this.emailService = emailService;
     }
 
 //    @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
@@ -41,6 +44,7 @@ public class PhaseScheduler {
                                                 .equals(Phase.NOT_STARTED)) {
                 contest.setPhase(Phase.PHASE_1);
                 contest.setUpdatedAt(now);
+                
                 notificationService.sendNotification("Phase 1 has started for contest " + contest.getTitle(), NotificationType.CONTEST_UPDATE, contest.getOrganizer());
                 contestRepository.save(contest);
             } else if (contest.getStartPhase2()
@@ -48,6 +52,9 @@ public class PhaseScheduler {
                                                         .equals(Phase.PHASE_2)) {
                 contest.setPhase(Phase.PHASE_2);
                 contest.setUpdatedAt(now);
+                contest.getJurorContests()
+                       .stream()
+                       .forEach(user -> emailService.sendEmail(user.getEmail(), "Phase 2 has started for contest " + contest.getTitle(), "You can view all submissions into your Jury Panel"));
                 contestRepository.save(contest);
             } else if (contest.getStartPhase3()
                               .isBefore(now) && !contest.getPhase()
@@ -66,6 +73,7 @@ public class PhaseScheduler {
                                     .forEach(user -> {
                                         if (user.equals(submission.getCreator())) {
                                             user.setTotalScore(user.getTotalScore() + reviewScore);
+                                            notificationService.sendNotification("You have received " + reviewScore + " points for your submission in contest " + contest.getTitle(), NotificationType.CONTEST_UPDATE, user);
                                             userService.calculateLevel(user);
                                         }
                                     });

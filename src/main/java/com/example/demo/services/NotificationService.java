@@ -10,6 +10,8 @@ public interface NotificationService {
     void markAllNotificationsAsRead(User user);
     void markNotificationAsRead(Notification notification);
     void sendNotification(String message, NotificationType type, User recipient);
+    void senNotificationForContactForm(String message);
+
     List<Notification> getUnreadNotifications(User user);
 
     Notification getNotificationById(long id);

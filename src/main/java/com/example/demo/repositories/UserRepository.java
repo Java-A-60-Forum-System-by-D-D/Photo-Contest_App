@@ -44,4 +44,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
                                 @Param("firstName") Optional<String> firstName,
                                 @Param("lastName") Optional<String> lastName,
                                 @Param("role") Optional<UserRole> role);
+
 }
