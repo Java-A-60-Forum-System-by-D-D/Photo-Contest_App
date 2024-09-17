@@ -596,19 +596,6 @@ void rankingAssignsCorrectScoresToTopThreeUsers() {
         assertThrows(EntityDuplicateException.class, () -> contestService.inviteUserToContest(1L, userToInvite, organizer));
     }
 
-//    @Test
-//    void calculateFinalContestPointsReturnsTop3UsersWithScores() {
-//        List<PhotoSubmission> submissions = List.of(
-//                new PhotoSubmission(),
-//                new PhotoSubmission(),
-//                new PhotoSubmission()
-//        );
-//        List<User> users = List.of(new User(), new User(), new User());
-//
-//        TreeMap<Integer, List<User>> result = contestService.calculateFinalContestPoints(submissions, users);
-//
-//        assertEquals(3, result.size());
-//    }
 
     @Test
     void calculateFinalContestPointsReturnsEmptyWhenNoSubmissions() {
@@ -619,4 +606,48 @@ void rankingAssignsCorrectScoresToTopThreeUsers() {
 
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    void getPreviousContestsReturnsListOfContestsWhenCategoryExists() {
+        Category category = new Category();
+        category.setId(1L);
+        List<Contest> contests = List.of(new Contest(), new Contest());
+        when(contestRepository.findContestsByCategoryId(1L)).thenReturn(contests);
+
+        List<Contest> result = contestService.getPreviousContests(category);
+
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void getPreviousContestsReturnsEmptyListWhenCategoryHasNoContests() {
+        Category category = new Category();
+        category.setId(1L);
+        when(contestRepository.findContestsByCategoryId(1L)).thenReturn(Collections.emptyList());
+
+        List<Contest> result = contestService.getPreviousContests(category);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getLast3FinishedContestsReturnsListOfContestsWhenContestsExist() {
+        List<Contest> contests = List.of(new Contest(), new Contest(), new Contest());
+        when(contestRepository.findTop3ByPhase_Finished()).thenReturn(contests);
+
+        List<Contest> result = contestService.getLast3FinishedContests();
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    void getLast3FinishedContestsReturnsEmptyListWhenNoContestsExist() {
+        when(contestRepository.findTop3ByPhase_Finished()).thenReturn(Collections.emptyList());
+
+        List<Contest> result = contestService.getLast3FinishedContests();
+
+        assertTrue(result.isEmpty());
+    }
+
+
 }

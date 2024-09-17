@@ -53,7 +53,7 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
         if (!photoSubmission.getContest()
                 .getPhase()
                 .equals(Phase.PHASE_1)) {
-            throw new EntityDuplicateException("Contest is not in phase 1");
+            throw new AuthorizationUserException("Contest is not in phase 1");
         }
         Contest currentContest = photoSubmission.getContest();
         if (user.getJurorContests().contains(currentContest)) {
@@ -109,17 +109,13 @@ public class PhotoSubmissionServiceImpl implements PhotoSubmissionService {
 
         @Override
         public List<PhotoSubmission> getAScoreAndComments (User user){
-//        if(!contest.getPhase().equals(Phase.FINISHED)){
-//            throw new EntityNotFoundException("Contest is not finished");
-//        }
+
             return photoSubmissionRepository.findPhotoSubmissionsByCreator_IdAndContest_Phase_Finished(user.getId(), Phase.FINISHED);
         }
 
         @Override
         public List<PhotoSubmission> findAllContestSubmissionsByOthers (User user){
-//        if(!contest.getPhase().equals(Phase.FINISHED)){
-//            throw new EntityNotFoundException("Contest is not finished");
-//        }
+
             return photoSubmissionRepository.findPhotoSubmissionsCreatedByOtherUsers(user.getId(), Phase.FINISHED);
         }
     }

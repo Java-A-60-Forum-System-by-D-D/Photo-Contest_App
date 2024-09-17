@@ -2,6 +2,7 @@ package com.example.demo.ServiceTests;
 
 import com.example.demo.exceptions.AuthorizationUserException;
 import com.example.demo.exceptions.EntityNotFoundException;
+import com.example.demo.models.AuthUser;
 import com.example.demo.models.User;
 import com.example.demo.models.dto.LoginUserDto;
 import com.example.demo.repositories.UserRepository;
@@ -109,6 +110,26 @@ public class MVCAuthenticationImplTests {
 
         verify(response).addCookie(any(Cookie.class));
         assertNull(SecurityContextHolder.getContext().getAuthentication());
+    }
+
+
+    @Test
+    void findByEmailReturnsEmptyOptionalWhenEmailNotFound() {
+        Optional<AuthUser> result = mvcAuthenticationService.findByEmail("nonexistent@example.com");
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void findByUsernameReturnsEmptyOptionalWhenUsernameNotFound() {
+        Optional<AuthUser> result = mvcAuthenticationService.findByUsername("nonexistentUser");
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void saveAuthUserReturnsNull() {
+        AuthUser authUser = new AuthUser();
+        AuthUser result = mvcAuthenticationService.saveAuthUser(authUser);
+        assertNull(result);
     }
 
 }

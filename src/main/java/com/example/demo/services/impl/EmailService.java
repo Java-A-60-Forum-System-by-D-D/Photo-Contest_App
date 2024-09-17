@@ -22,51 +22,41 @@ public class EmailService {
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
-//    public void sendEmail(String to, String subject, String text) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-////        message.setFrom("Forum");
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-//        javaMailSender.send(message);
-//        // implementation
-//    }
-public void sendEmail(String to, String subject, String text) {
-    Email email = new SimpleEmail();
-    email.setHostName("smtp.gmail.com");
-    email.setSmtpPort(587);
-    email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
-    email.setSSLOnConnect(true);
 
-    try {
-        email.setFrom("info@doubledcontest.com");
-    } catch (EmailException e) {
-        throw new RuntimeException(e);
+    public void sendEmail(String to, String subject, String text) {
+        Email email = new SimpleEmail();
+        email.setHostName("smtp.gmail.com");
+        email.setSmtpPort(587);
+        email.setAuthenticator(new DefaultAuthenticator(emailUsername, emailPassword));
+        email.setSSLOnConnect(true);
+
+        try {
+            email.setFrom("info@doubledcontest.com");
+        } catch (EmailException e) {
+            throw new RuntimeException(e);
+        }
+        email.setSubject(subject);
+        try {
+            email.setMsg(text);
+        } catch (EmailException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            email.addTo(to);
+        } catch (EmailException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            email.send();
+        } catch (EmailException e) {
+            throw new RuntimeException(e);
+        }
     }
-    email.setSubject(subject);
-    try {
-        email.setMsg(text);
-    } catch (EmailException e) {
-        throw new RuntimeException(e);
-    }
-    try {
-        email.addTo(to);
-    } catch (EmailException e) {
-        throw new RuntimeException(e);
-    }
-    try {
-        email.send();
-    } catch (EmailException e) {
-        throw new RuntimeException(e);
-    }
-}
 
     public void sendRegistrationEmail(String to) {
         String subject = "Welcome to the Forum!";
         String text = "Thank you for registering at our forum. We are excited to have you!";
         sendEmail(to, subject, text);
     }
-    public String sendEmail(String to) {
-        return "Email sent to " + to;
-    }
 }
+

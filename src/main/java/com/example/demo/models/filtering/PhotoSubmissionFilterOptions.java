@@ -2,8 +2,10 @@ package com.example.demo.models.filtering;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PhotoSubmissionFilterOptions {
     private String title;
     private String sortBy;
