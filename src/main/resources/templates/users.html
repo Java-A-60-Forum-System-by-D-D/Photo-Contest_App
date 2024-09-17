@@ -34,7 +34,9 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <fieldset>
-                                <input type="text" name="email" class="searchText" placeholder="User Email..." autocomplete="on" th:field="*{email}">
+                                <label for="email" class="form-label">Enter User Email</label>
+
+                                <input type="text"  name="email" class="searchText" placeholder="User Email..." autocomplete="on" th:field="*{email}">
                             </fieldset>
                         </div>
                         <div class="col-lg-4">
@@ -71,10 +73,10 @@
                     <th>Last Name</th>
                     <th>Rank</th>
                     <th>Score</th>
-                    <th>Top Rated</th>
-                    <th>Profile Views</th>
-                    <th>Contests Won</th>
-                    <th>Total Earned</th>
+<!--                    <th>Top Rated</th>-->
+<!--                    <th>Profile Views</th>-->
+<!--                    <th>Contests Won</th>-->
+                    <th>Badge</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,12 +85,12 @@
                     <td th:text="${user.username}">Username</td>
                     <td th:text="${user.firstName}">First Name</td>
                     <td th:text="${user.lastName}">Last Name</td>
-<!--                    <td th:text="${user.rank}">Rank</td>-->
-<!--                    <td th:text="${user.score}">Score</td>-->
+                    <td th:text="${user.getRole().name()}">Rank</td>
+                    <td th:text="${user.getTotalScore()}">Score</td>
 <!--                    <td th:text="${user.topRatedCategory}">Top Rated</td>-->
 <!--                    <td th:text="${user.profileViews}">Profile Views</td>-->
 <!--                    <td th:text="${user.contestsWon}">Contests Won</td>-->
-<!--                    <td th:text="${user.totalEarned}">Total Earned</td>-->
+                    <td><img th:src="${user.getBadgeUrl()}" alt="Badge" style="width: 30px; height: 30px;" /></td>
                 </tr>
                 </tbody>
             </table>

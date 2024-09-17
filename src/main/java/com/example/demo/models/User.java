@@ -88,4 +88,21 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getBadgeUrl() {
+        switch (this.role) {
+            case ORGANIZER:
+                return "/images/badges/organizer.png";
+            case JUNKIE:
+                return "/images/badges/junkie.png";
+            case ENTHUSIAST:
+                return "/images/badges/enthusiast.png";
+            case MASTER:
+                return "/images/badges/master.png";
+            case DICTATOR:
+                return "/images/badges/dictator.png";
+            default:
+                return "";
+        }
+    }
 }
