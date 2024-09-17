@@ -6,42 +6,59 @@
 <body>
 <header th:replace="~{commons/fragments::nav}"></header>
 
-<div class="container">
-    <div class="page-heading">
+<div class="page-heading">
+    <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 header-text">
-                <h2>Frequently Asked Questions</h2>
+                <h2 style="color: #fff;">Frequently Asked Questions</h2>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="faq-section">
+<section class="faq-section">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="faq-item">
-                    <h4>1. What is the purpose of this application?</h4>
-                    <p>This application is designed to allow aspiring photographers and organizers to participate in and manage online photo contests. It includes features for organizing contests, submitting photos, and participating as jury members.</p>
+                <div class="section-heading text-center">
+                    <h5 style="color: #fff;">FAQ</h5>
                 </div>
-                <div class="faq-item">
-                    <h4>2. Who can use this application?</h4>
-                    <p>The app serves two main user groups:</p>
+            </div>
+            <!-- Row 1 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">1. What is the purpose of this application?</h4>
+                    <p style="color: #fff;">This application is designed to allow aspiring photographers and organizers to participate in and manage online photo contests. It includes features for organizing contests, submitting photos, and participating as jury members.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">2. Who can use this application?</h4>
+                    <p style="color: #fff;">The app serves two main user groups:</p>
                     <ul>
                         <li><strong>Organizers:</strong> Users who create and manage photo contests.</li>
                         <li><strong>Photo Junkies:</strong> Photographers who can register, participate in contests, and, with a certain ranking, be invited to serve as jurors.</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>3. Do I need to register to use the app?</h4>
-                    <p><strong>Public Area:</strong> No registration is needed to view public content such as the landing page with the latest winning photos.</p>
-                    <p><strong>Private Area:</strong> Yes, registration is required to participate in contests and access the dashboard.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">3. Do I need to register to use the app?</h4>
+                    <p style="color: #fff;"><strong>Public Area:</strong> No registration is needed to view public content such as the landing page with the latest winning photos.</p>
+                    <p style="color: #fff;"><strong>Private Area:</strong> Yes, registration is required to participate in contests and access the dashboard.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>4. How do I register as a Photo Junkie?</h4>
-                    <p>You can register by filling out the registration form, which requires a username, first name, last name, and password.</p>
+            </div>
+            <!-- Row 2 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">4. How do I register as a Photo Junkie?</h4>
+                    <p style="color: #fff;">You can register by filling out the registration form, which requires a username, first name, last name, and password.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>5. What features are available for Photo Junkies?</h4>
-                    <p>Photo Junkies can:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">5. What features are available for Photo Junkies?</h4>
+                    <p style="color: #fff;">Photo Junkies can:</p>
                     <ul>
                         <li>View and participate in open contests.</li>
                         <li>Upload photos for contests.</li>
@@ -49,114 +66,156 @@
                         <li>View scores, feedback, and rankings once a contest ends.</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>6. What features are available for Organizers?</h4>
-                    <p>Organizers can:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">6. What features are available for Organizers?</h4>
+                    <p style="color: #fff;">Organizers can:</p>
                     <ul>
-                        <li>Set up and manage new contests.</li>
-                        <li>View contests in various phases (Phase I, Phase II, Finished).</li>
-                        <li>Invite specific users to participate in invitational contests.</li>
-                        <li>Select jury members for contests.</li>
+                        <li>Create and manage contests.</li>
+                        <li>Invite jurors to judge contests.</li>
+                        <li>Review and score photo submissions.</li>
+                        <li>Announce winners and distribute awards.</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>7. How are contests structured?</h4>
-                    <p>Contests are divided into three phases:</p>
+            </div>
+            <!-- Row 3 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">7. How are contests structured?</h4>
+                    <p style="color: #fff;">Contests are divided into three phases:</p>
                     <ul>
-                        <li><strong>Phase I:</strong> Contest is open, participants can upload photos, and the jury can view submissions.</li>
-                        <li><strong>Phase II:</strong> Photo submission is closed, and the jury can score the photos.</li>
-                        <li><strong>Finished:</strong> Jury reviews are complete, and participants can view their scores, feedback, and other participants' photos.</li>
+                        <li>Submission Phase: Participants submit their photos.</li>
+                        <li>Judging Phase: Jurors review and score the submissions.</li>
+                        <li>Results Phase: Winners are announced and awards are distributed.</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>8. Can I edit my photo submission?</h4>
-                    <p>No, once you submit your photo along with its title and story, these cannot be edited. Make sure you are satisfied with your submission before finalizing it.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">8. Can I edit my photo submission?</h4>
+                    <p style="color: #fff;">No, once you submit your photo along with its title and story, these cannot be edited. Make sure you are satisfied with your submission before finalizing it.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>9. How is the jury process conducted?</h4>
-                    <p>Jurors score photos from 1-10 and leave comments. If a photo does not match the contest category, jurors can flag it, automatically assigning a score of 0. A default score of 3 is awarded if a photo is not reviewed by a juror.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">9. How is the jury process conducted?</h4>
+                    <p style="color: #fff;">Jurors score photos from 1-10 and leave comments. If a photo does not match the contest category, jurors can flag it, automatically assigning a score of 0. A default score of 3 is awarded if a photo is not reviewed by a juror.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>10. How are participants ranked?</h4>
-                    <p>Participants accumulate points through contest participation:</p>
+            </div>
+            <!-- Row 4 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">10. How are participants ranked?</h4>
+                    <p style="color: #fff;">Participants accumulate points through contest participation:</p>
                     <ul>
-                        <li>Joining a contest, being invited by an organizer, and placing in the top three earn points.</li>
-                        <li>Rankings are determined based on total points, and higher rankings open up new roles, such as becoming a jury member.</li>
+                        <li>Winning a contest: 50 points</li>
+                        <li>Second place: 30 points</li>
+                        <li>Third place: 20 points</li>
+                        <li>Participation: 10 points</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>11. How does the point system work?</h4>
-                    <p>Points are awarded as follows:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">11. How does the point system work?</h4>
+                    <p style="color: #fff;">Points are awarded as follows:</p>
                     <ul>
-                        <li>Joining an open contest: 1 point.</li>
-                        <li>Being invited to a contest: 3 points.</li>
-                        <li>Placing in a contest: 3rd place = 20 points, 2nd place = 35 points, 1st place = 50 points.</li>
-                        <li>Additional points are awarded for a significant lead in scores.</li>
+                        <li>Winning a contest: 50 points</li>
+                        <li>Second place: 30 points</li>
+                        <li>Third place: 20 points</li>
+                        <li>Participation: 10 points</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>12. What are the different ranking levels?</h4>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">12. What are the different ranking levels?</h4>
                     <ul>
-                        <li><strong>Junkie:</strong> 0-50 points</li>
-                        <li><strong>Enthusiast:</strong> 51-150 points</li>
-                        <li><strong>Master:</strong> 151-1000 points (can be invited as jury)</li>
-                        <li><strong>Wise and Benevolent Photo Dictator:</strong> 1001+ points</li>
+                        <li>Beginner: 0-100 points</li>
+                        <li>Intermediate: 101-500 points</li>
+                        <li>Advanced: 501-1000 points</li>
+                        <li>Expert: 1001-5000 points</li>
+                        <li>Master: 5001+ points</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>13. How can I create a new contest as an organizer?</h4>
-                    <p>To create a contest, you will need to provide:</p>
+            </div>
+            <!-- Row 5 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">13. How can I create a new contest as an organizer?</h4>
+                    <p style="color: #fff;">To create a contest, you will need to provide:</p>
                     <ul>
-                        <li>Contest title.</li>
-                        <li>Category.</li>
-                        <li>Time limits for Phase I and Phase II.</li>
-                        <li>Select jury members (users with the role of organizer or ranking "Master").</li>
+                        <li>Contest title</li>
+                        <li>Contest description</li>
+                        <li>Submission deadline</li>
+                        <li>Judging criteria</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>14. Can I choose a cover photo for my contest?</h4>
-                    <p>Yes, organizers can upload a cover photo, use an existing URL, or select a photo from previously uploaded images.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">14. Can I choose a cover photo for my contest?</h4>
+                    <p style="color: #fff;">Yes, organizers can upload a cover photo, use an existing URL, or select a photo from previously uploaded images.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>15. What happens when a contest ends?</h4>
-                    <p>Once a contest is finished, participants can:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">15. What happens when a contest ends?</h4>
+                    <p style="color: #fff;">Once a contest is finished, participants can:</p>
                     <ul>
-                        <li>View their own scores and comments.</li>
-                        <li>See the photos submitted by other participants, along with the jury's feedback and scores.</li>
+                        <li>View their scores and feedback</li>
+                        <li>See the winning photos</li>
+                        <li>Receive their awards</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>16. How are ties handled in contest results?</h4>
-                    <p>If multiple participants tie for the top spots, the positions and points are shared. For example, two participants tied for 1st place would each receive 40 points, while other positions adjust accordingly.</p>
+            </div>
+            <!-- Row 6 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">16. How are ties handled in contest results?</h4>
+                    <p style="color: #fff;">If multiple participants tie for the top spots, the positions and points are shared. For example, two participants tied for 1st place would each receive 40 points, while other positions adjust accordingly.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>17. Can I be a jury member?</h4>
-                    <p>Only users with the ranking of "Master" or higher can be invited to serve as a jury member. Organizers automatically have the ability to serve as jurors.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">17. Can I be a jury member?</h4>
+                    <p style="color: #fff;">Only users with the ranking of "Master" or higher can be invited to serve as a jury member. Organizers automatically have the ability to serve as jurors.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>18. How are the contests categorized?</h4>
-                    <p>Each contest belongs to a specific category (e.g., landscape, portrait, abstract), which is visible throughout the contest and must be adhered to by participants.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">18. How are the contests categorized?</h4>
+                    <p style="color: #fff;">Each contest belongs to a specific category (e.g., landscape, portrait, abstract), which is visible throughout the contest and must be adhered to by participants.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>19. Is there a way to view past contests I participated in?</h4>
-                    <p>Yes, Photo Junkies can view both ongoing contests and finished contests they participated in. They will be able to see their scores and reviews once the contest has ended.</p>
+            </div>
+            <!-- Row 7 -->
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">19. Is there a way to view past contests I participated in?</h4>
+                    <p style="color: #fff;">Yes, Photo Junkies can view both ongoing contests and finished contests they participated in. They will be able to see their scores and reviews once the contest has ended.</p>
                 </div>
-                <div class="faq-item">
-                    <h4>20. How long does each phase of a contest last?</h4>
-                    <p>Organizers can set the duration for each phase:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">20. How long does each phase of a contest last?</h4>
+                    <p style="color: #fff;">Organizers can set the duration for each phase:</p>
                     <ul>
-                        <li><strong>Phase I:</strong> Can last from one day to one month.</li>
-                        <li><strong>Phase II:</strong> Can last from one hour to one day.</li>
+                        <li>Submission Phase: 1-2 weeks</li>
+                        <li>Judging Phase: 1 week</li>
+                        <li>Results Phase: 1-2 days</li>
                     </ul>
                 </div>
-                <div class="faq-item">
-                    <h4>21. How can I contact support for issues or feedback?</h4>
-                    <p>For any issues or feedback, please reach out to our support team through the contact form available on the website.</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="faq-item" style="color: #fff;">
+                    <h4 style="color: #fff; font-weight: bold;">21. How can I contact support for issues or feedback?</h4>
+                    <p style="color: #fff;">For any issues or feedback, please reach out to our support team through the contact form available on the website.</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <footer th:replace="~{commons/fragments::footer}"></footer>
 <div th:replace="~{commons/scripts::body}"></div>
