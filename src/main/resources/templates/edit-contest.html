@@ -87,8 +87,19 @@
                             <button type="submit" class="btn btn-primary">Add User</button>
                         </form>
                         <br>
-                        <div class="inline-users">
-                            <div th:each="user : ${invitedUsers}" th:object="${user}" class="user-email">
+                        <div class="inline-users" style=" /* Blue background */
+                        /* White text color */
+                        padding: 10px;
+                        border-radius: 7px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;">
+                            <div th:each="user : ${invitedUsers}" th:object="${user}" class="user-email" style="background-color: #00bdfe; /* Blue background */
+            color: #fff; /* White text color */
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 1rem;
+            display: inline-block;">
                                 <span th:text="*{getEmail()}"></span>
                             </div>
                         </div>
