@@ -2,20 +2,12 @@ package com.example.demo.ServiceTests;// PhotoContestUserDetailsTest.java
 
 import com.example.demo.exceptions.EntityNotFoundException;
 import com.example.demo.models.AuthUser;
-import com.example.demo.models.User;
-import com.example.demo.models.UserRole;
+
 import com.example.demo.repositories.AuthUserRepository;
 import com.example.demo.services.impl.PhotoContestUserDetails;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

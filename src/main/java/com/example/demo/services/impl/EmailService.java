@@ -22,15 +22,7 @@ public class EmailService {
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
-//    public void sendEmail(String to, String subject, String text) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-////        message.setFrom("Forum");
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-//        javaMailSender.send(message);
-//        // implementation
-//    }
+
 public void sendEmail(String to, String subject, String text) {
     Email email = new SimpleEmail();
     email.setHostName("smtp.gmail.com");
