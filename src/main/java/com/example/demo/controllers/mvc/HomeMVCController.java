@@ -100,22 +100,23 @@ public class HomeMVCController {
         }
 
         List<Category> categories = categoryService.getAllCategories();
-        Map<String, Category> categoryMap = new HashMap<>();
-        Map<String, Integer> contestCategoryMap = new HashMap<>();
-        for (Category category : categories) {
-            categoryMap.put(category.getName(), category);
-            try {
-                contestCategoryMap.put(category.getName(), contestService.getContestByCategoryName(category)
-                                                                         .size());
-            } catch (EntityNotFoundException e) {
-                contestCategoryMap.put(category.getName(), 0);
-            }
+//        Map<String, Category> categoryMap = new HashMap<>();
+//        Map<String, Integer> contestCategoryMap = new HashMap<>();
+//        for (Category category : categories) {
+//            categoryMap.put(category.getName(), category);
+//            try {
+//                contestCategoryMap.put(category.getName(), contestService.getContestByCategoryName(category)
+//                                                                         .size());
+//            } catch (EntityNotFoundException e) {
+//                contestCategoryMap.put(category.getName(), 0);
+//            }
+//
+//        }
 
-        }
 
-
-        model.addAttribute("categories", categoryMap);
-        model.addAttribute("contestCategories", contestCategoryMap);
+        model.addAttribute("categories", categories);
+//        model.addAttribute("contestCategories", contestCategoryMap);
+//
         model.addAttribute("photos", photosToPopulate);
 
 
