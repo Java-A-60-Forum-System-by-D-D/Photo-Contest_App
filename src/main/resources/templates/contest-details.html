@@ -57,8 +57,11 @@
                         <div class="col-lg-4">
                             <span class="open" th:text="${phase.toString()}"></span>
                             <span class="wish-list">
-                                <i class="fa fa-scroll" th:text="' ' + ${contest.category}"></i>
+                                <i class="fa fa-scroll"></i>
                             </span>
+                            <span> <em th:text="' ' + ${contest.category}"></em></span>
+
+
                         </div>
                         <div class="col-lg-8">
                             <ul>

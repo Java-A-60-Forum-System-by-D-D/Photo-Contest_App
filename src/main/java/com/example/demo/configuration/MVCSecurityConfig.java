@@ -44,7 +44,7 @@ public class MVCSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/css/**", "/js/**", "/images/**").permitAll();
-                    auth.requestMatchers("/", "/home", "/home/**", "/login", "/register", "/errors/**","/FAQ","/about").permitAll();
+                    auth.requestMatchers("/","/contact", "/home", "/home/**", "/login", "/register", "/errors/**","/FAQ","/about").permitAll();
                     auth.requestMatchers("/api/**").permitAll();
                     auth.anyRequest().authenticated();
 
