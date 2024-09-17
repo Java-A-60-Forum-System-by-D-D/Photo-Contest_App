@@ -1,51 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{commons/fragments::head}">
-
-</head>
+<head th:replace="~{commons/fragments::head}"></head>
 <body>
 <header th:replace="~{commons/fragments::nav}"></header>
-<div class="about-container">
-    <h1>About the Contest App</h1>
-    <p>Welcome to our Contest App! This platform is designed to provide a comprehensive system where users can participate in various contests and track their progress. Our goal is to create a user-friendly and engaging environment for competitive activities.</p>
-    <p>This app was developed by Dimitar and Desislava, who are dedicated to building high-quality web applications. We hope you find this platform useful and enjoyable.</p>
-</div>
-<div class="about-container">
-    <h2>App Features</h2>
-    <ul>
-        <li>User registration and authentication</li>
-        <li>Contest creation and participation</li>
-        <li>Leaderboard and ranking system</li>
-        <li>User profiles and badges</li>
-        <li>Responsive design</li>
-    </ul>
-</div>
-<div class="about-container">
-    <h2>Our Team</h2>
-    <div class="team-member">
-        <img src="../static/images/dimitar.jpg" th:src="@{/images/dimitar.jpg}" alt="Dimitar">
-        <h3>Dimitar</h3>
-        <p>Founder and Developer</p>
-        <p><i class="fas fa-envelope"></i>
-            <a href="mailto:dimitar@example.com">dimitar@example.com</a>
-        </p>
-    </div>
-    <div class="team-member">
-        <img src="../static/images/desislava.jpg" th:src="@{/images/desislava.jpg}" alt="Desislava">
-        <h3>Desislava</h3>
-        <p>Founder and Developer</p>
-        <p><i class="fas fa-envelope"></i>
-            <a href="mailto:desislava@example.com">desislava@example.com</a>
-        </p>
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 header-text">
+                <h2>About the Contest App</h2>
+                <p>Welcome to our Contest App! This platform is designed to provide a comprehensive system where users can participate in various contests and track their progress. Our goal is to create a user-friendly and engaging environment for competitive activities.</p>
+                <p>This app was developed by Dimitar and Desislava, who are dedicated to building high-quality web applications. We hope you find this platform useful and enjoyable.</p>
+            </div>
+        </div>
     </div>
 </div>
-<div class="about-git">
+
+<section class="about-container" style="padding: 50px 0; background-color: #f9f9f9;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h5 style="font-size: 1.5rem; font-weight: 600; color: #333; margin-bottom: 20px;">App Features</h5>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li>User registration and authentication</li>
+                    <li>Contest creation and participation</li>
+                    <li>Leaderboard and ranking system</li>
+                    <li>User profiles and badges</li>
+                    <li>Responsive design</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-container" style="padding: 50px 0; background-color: #fff;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading text-center">
+                    <h5 style="font-size: 1.5rem; font-weight: 600; color: #333; margin-bottom: 20px;">Our Team</h5>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12" style="margin-bottom: 30px;">
+                <div class="team-member" style="background-color: #f9f9f9; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; text-align: center; padding: 20px;">
+                    <img src="../static/images/dimitar.jpg" th:src="@{/images/dimitar.jpg}" alt="Dimitar" style="width: 100%; height: auto; border-radius: 50%; margin-bottom: 20px;">
+                    <h3>Dimitar</h3>
+                    <p>Founder and Developer</p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:dimitar@example.com">dimitar@example.com</a></p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12" style="margin-bottom: 30px;">
+                <div class="team-member" style="background-color: #f9f9f9; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; text-align: center; padding: 20px;">
+                    <img src="../static/images/desislava.jpg" th:src="@{/images/desislava.jpg}" alt="Desislava" style="width: 100%; height: auto; border-radius: 50%; margin-bottom: 20px;">
+                    <h3>Desislava</h3>
+                    <p>Founder and Developer</p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:desislava@example.com">desislava@example.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="about-git" style="text-align: center; margin-top: 20px;">
     <a href="https://github.com/Java-A-60-Forum-System-by-D-D/Photo-Contest_App">
         <i class="fa-brands fa-github" style="font-size:48px;"></i>
     </a>
 </div>
-<footer th:replace="~{commons/fragments::footer}"></footer>
 
+<footer th:replace="~{commons/fragments::footer}"></footer>
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
 <div th:replace="~{commons/scripts::body}"></div>

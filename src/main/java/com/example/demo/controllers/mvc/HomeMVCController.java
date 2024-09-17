@@ -164,6 +164,7 @@ public class HomeMVCController {
     public String getFAQ() {
         return "FAQ";
     }
+
     @GetMapping("/about")
     public String getAbout() {
         return "about-project";
