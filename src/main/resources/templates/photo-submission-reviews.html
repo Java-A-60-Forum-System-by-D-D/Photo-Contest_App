@@ -2,37 +2,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{commons/fragments::head}">
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
 <header th:replace="~{commons/fragments::nav}"></header>
-<div class="container" style="padding-top: 20px">
+<div class="container" style="padding-top: 20px;">
     <div class="col-lg-12">
         <div class="section-heading text-center">
-            <h6 th:text="${photoSubmissionReviewsView.title}"></h6>
+            <h6 th:text="${photoSubmissionReviewsView.title}" style="font-size: 24px; color: #00a6d1; margin-bottom: 20px; font-weight: bold;"></h6>
         </div>
     </div>
-    <div class="card">
-        <img class="card-img-top" th:src="${photoSubmissionReviewsView.photoUrl}" alt="Photo Submission">
-        <div class="card-body">
-            <h5 class="reviews-heading">Reviews</h5>
-            <p style="text-align: center;font-weight: bold;margin-top: 10px;" ><strong>Total Score:</strong> <span th:text="${totalScore}"></span></p>
-            <table class="review-table">
+    <div class="card" style="border: 1px solid #ddd; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(64, 64, 64, 0.15); margin-bottom: 20px; background-color: white; animation: fadeIn 0.6s ease-in-out;">
+        <img class="card-img-top" th:src="${photoSubmissionReviewsView.photoUrl}" alt="Photo Submission" style="width: 100%; height: auto; object-fit: cover; border-bottom: 3px solid #00bdfe;"/>
+        <div class="card-body" style="padding: 20px;">
+            <h5 class="reviews-heading" style="font-size: 18px; color: #333; margin-bottom: 20px; font-weight: bold;">Reviews</h5>
+            <p style="text-align: center; font-weight: bold; margin-top: 10px;"><strong>Total Score:</strong> <span th:text="${totalScore}"></span></p>
+            <table class="review-table" style="width: 100%; border-collapse: collapse; font-family: 'Roboto', sans-serif; margin: 20px 0; background-color: white; box-shadow: 0 2px 15px rgba(64, 64, 64, 0.15); border-radius: 12px; overflow: hidden;">
                 <thead>
                 <tr>
-                    <th>Jury</th>
-                    <th>Score</th>
-                    <th>Comment</th>
-                    <th>Valid Category</th>
+                    <th style="padding: 15px 20px; text-align: left; background: linear-gradient(45deg, #00bdfe, #00a6d1); color: white; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 0.5px; border-bottom: 3px solid #00a6d1;">Jury</th>
+                    <th style="padding: 15px 20px; text-align: left; background: linear-gradient(45deg, #00bdfe, #00a6d1); color: white; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 0.5px; border-bottom: 3px solid #00a6d1;">Score</th>
+                    <th style="padding: 15px 20px; text-align: left; background: linear-gradient(45deg, #00bdfe, #00a6d1); color: white; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 0.5px; border-bottom: 3px solid #00a6d1;">Comment</th>
+                    <th style="padding: 15px 20px; text-align: left; background: linear-gradient(45deg, #00bdfe, #00a6d1); color: white; text-transform: uppercase; font-size: 14px; font-weight: bold; letter-spacing: 0.5px; border-bottom: 3px solid #00a6d1;">Valid Category</th>
                 </tr>
                 </thead>
                 <tbody th:each="review : ${photoSubmissionReviewsView.reviews}">
-                <tr>
-                    <td th:text="${review.juryNames}"></td>
-                    <td th:text="${review.score}"></td>
-                    <td th:text="${review.comment}"></td>
-                    <td>
-                        <i th:classappend="${review.categoryMismatch} ? 'fa fa-times text-danger' : 'fa fa-check text-success'"></i>
+                <tr style="transition: background-color 0.3s ease, transform 0.2s ease; hover: background-color: #f5faff; transform: scale(1.02); box-shadow: 0 4px 20px rgba(64, 64, 64, 0.1);">
+                    <td th:text="${review.juryNames}" style="padding: 15px 20px; text-align: left; font-size: 14px; color: #333;"></td>
+                    <td th:text="${review.score}" style="padding: 15px 20px; text-align: left; font-size: 14px; color: #333;"></td>
+                    <td th:text="${review.comment}" style="padding: 15px 20px; text-align: left; font-size: 14px; color: #333;"></td>
+                    <td style="padding: 15px 20px; text-align: center;">
+                        <i th:classappend="${review.categoryMismatch} ? 'fa fa-times text-danger' : 'fa fa-check text-success'" style="font-size: 16px;"></i>
                     </td>
                 </tr>
                 </tbody>

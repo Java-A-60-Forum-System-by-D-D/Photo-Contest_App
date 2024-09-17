@@ -30,9 +30,9 @@ public class PhaseScheduler {
         this.notificationService = notificationService;
         this.emailService = emailService;
     }
-
-//    @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
-    @Scheduled(cron = "0 0/30 * * * ?") // Run every 30 minutes
+//
+    @Scheduled(cron = "0 0 22 * * ?") // Run every night at 10 PM
+//    @Scheduled(cron = "0 0/1 * * * ?") // Run every 30 minutes
     public void startPhase2() {
         LocalDateTime now = LocalDateTime.now();
 
@@ -44,7 +44,7 @@ public class PhaseScheduler {
                                                 .equals(Phase.NOT_STARTED)) {
                 contest.setPhase(Phase.PHASE_1);
                 contest.setUpdatedAt(now);
-                
+
                 notificationService.sendNotification("Phase 1 has started for contest " + contest.getTitle(), NotificationType.CONTEST_UPDATE, contest.getOrganizer());
                 contestRepository.save(contest);
             } else if (contest.getStartPhase2()
