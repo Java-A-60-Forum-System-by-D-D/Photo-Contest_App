@@ -64,27 +64,6 @@ public class MVCAuthenticationServiceImpl implements MVCAuthenticationService {
         }
     }
 
-//    @Override
-//    public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
-//
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
-//
-//        Cookie sessionCookie = new Cookie("SESSIONID", null);
-//        sessionCookie.setHttpOnly(true);
-//        sessionCookie.setSecure(true);
-//        sessionCookie.setPath("/**");
-//        sessionCookie.setMaxAge(0);
-//        Authentication auth = SecurityContextHolder.getContext()
-//                                                   .getAuthentication();
-//        if (auth != null) {
-//            SecurityContextHolder.getContext()
-//                                 .setAuthentication(null);
-//        }
-//
-//    }
 
 
     @Override
