@@ -137,6 +137,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div th:if="${!contains} ">
                             <div class="main-button" th:if="${!IsFound}">
                                 <a th:href="@{/contests/{id}/submissions(id=${id})}">Submit Your Photo</a>
@@ -173,8 +174,18 @@
 <section class="contest-waiting">
     <div class="container" th:if="${submissions != null}">
         <div class="row">
-            <div class="col-lg-12">
-                <h5>Photo Submissions</h5>
+            <div class="col-lg-12" th:if="${phase.name().equals('PHASE_1')}">
+                <h5 style="text-align: center; font-size: 2rem; color: #fff; margin-top: 20px; font-weight: bold; background-color: #00bdfe; padding: 20px; border-radius: 5px;">Photo Submissions</h5>
+            </div>
+            <div class="col-lg-12" th:if="${!phase.name().equals('PHASE_1')}">
+                <div style="text-align: center; font-size: 2rem; color: #fff; margin-top: 20px; font-weight: bold; background-color: #00bdfe; padding: 20px; border-radius: 5px;">
+                    Contest Opening Soon, Gather your best photos! And while you wait why not check the other awesome contests we have ready for you!
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <a th:href="@{/user/openContests}" style="font-size: 1.5rem; color: #fff; font-weight: bold; background-color: #007bff; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">
+                        Check Other Contests
+                    </a>
+                </div>
             </div>
             <div class="col-lg-3 col-sm-6" th:each="submission : ${submissions}">
                 <div class="waiting-item" th:object="${submission}">
@@ -198,9 +209,6 @@
                         <div class="border-button" th:if="${phase.name().equals('FINISHED')}">
                             <a th:href="@{/submissions/{id}/reviews(id=${submission.getId()})}">View Reviews</a>
                         </div>
-                        <!--              <div class="border-button" th:unless="${!reviewStatusMap[submission.getId()]}">-->
-                        <!--                <a th:href="@{/contests/juryPanel}">Already Reviewed</a>-->
-                        <!--              </div>-->
                     </div>
 
                 </div>
