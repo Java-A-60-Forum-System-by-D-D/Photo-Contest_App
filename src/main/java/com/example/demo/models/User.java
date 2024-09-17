@@ -92,7 +92,7 @@ public class User extends AuthUser implements UserDetails, GrantedAuthority {
     public String getBadgeUrl() {
         switch (this.role) {
             case ORGANIZER:
-                return "/images/badges/organizer.png";
+                return "/images/badges/organizer.jfif";
             case JUNKIE:
                 return "/images/badges/junkie.png";
             case ENTHUSIAST:
