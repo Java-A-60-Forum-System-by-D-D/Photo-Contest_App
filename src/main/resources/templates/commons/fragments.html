@@ -90,9 +90,15 @@
                                 </a>
                                 <div id="notification-dropdown" class="notification-dropdown">
                                     <p th:text="'You have ' + ${notifications.size()} + ' new notifications'"></p>
+                                    <form th:action="@{/notifications/markAllAsRead}" th:method="post">
+                                        <button id="mark-all-as-read" th:if="${notifications.size() > 1}">
+                                            <i class="fa fa-times"></i> Mark All as Read
+                                        </button>
+                                    </form>
                                     <ul>
                                         <li th:each="notification : ${notifications}">
                                             <span th:text="${notification.message}">Notification message</span>
+
                                             <form class="mark-as-read-form" th:action="@{/notifications/markAsRead}"
                                                   th:method="post">
                                                 <input type="hidden" name="notificationId"
@@ -103,11 +109,7 @@
                                             </form>
                                         </li>
                                     </ul>
-                                    <form th:action="@{/notifications/markAllAsRead}" th:method="post">
-                                        <button id="mark-all-as-read" th:if="${notifications.size() > 1}">
-                                            <i class="fa fa-times"></i> Mark All as Read
-                                        </button>
-                                    </form>
+
                                 </div>
                             </div>
                         </li>
