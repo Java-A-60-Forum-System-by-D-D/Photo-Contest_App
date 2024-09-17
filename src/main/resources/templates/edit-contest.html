@@ -45,13 +45,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="top-content">
-                    <div class="row" >
+                    <div class="row">
                         <div class="col-lg-4" style="text-align: center;">
-                            <span class="open" th:text="${contestDto.getPhase().name()}" >Open Contest</span>
-                            <span class="wish-list" >
+                            <span class="open" th:text="${contestDto.getPhase().name()}">Open Contest</span>
+                            <span class="wish-list">
             <i class="fa fa-scroll" th:text="' ' + ${contestDto.category.name}"></i></span>
                         </div>
-                        <div class="col-lg-8" >
+                        <div class="col-lg-8">
                             <ul>
                                 <li>
                                     <i class="fa fa-hourglass"></i> Time left:
@@ -108,37 +108,20 @@
                             <button type="submit" class="btn btn-primary">Add Jury Member</button>
                         </form>
                         <br>
-                        <div class="inline-users">
-                            <div th:each="user : ${jury}" th:object="${user}" class="user-email">
+                        <div class="inline-users" style=" /* Blue background */
+                        /* White text color */
+                        padding: 10px;
+                        border-radius: 7px;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;">
+                            <div th:each="user : ${jury}" th:object="${user}" class="user-email" style="background-color: #00bdfe; /* Blue background */
+            color: #fff; /* White text color */
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 1rem;
+            display: inline-block;">
                                 <span th:text="*{getEmail()}"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h4 class="second-title">Links To Inspire Your Photo</h4>
-                    <div class="row">
-                        <div class="col-lg-3 col-6">
-                            <div class="item">
-                                <span>JPG</span>
-                                <h5>A Trip In The Rain<br><h6>Previous Winner</h6></h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-6">
-                            <div class="item">
-                                <span>PNG</span>
-                                <h5>A Trip In The Jungle<br><h6>Previous Winner</h6></h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-6">
-                            <div class="item">
-                                <span>PDF</span>
-                                <h5>A Trip In The Mountain<br><h6>Previous Winner</h6></h5>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-6">
-                            <div class="item">
-                                <span>AI</span>
-                                <h5>A Trip In The Forest<br><h6>Previous Winner</h6></h5>
                             </div>
                         </div>
                     </div>

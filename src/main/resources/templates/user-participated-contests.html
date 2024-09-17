@@ -27,146 +27,44 @@
 </div>
 
 
-<div class="search-form">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <form id="search-form" name="gs" method="submit" role="search" action="#">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <fieldset>
-                                <!--                    <label for="contest" class="form-label">Search Any Contest</label>-->
-                                <input type="text" name="contest" class="searchText" placeholder="Contest Name..."
-                                       autocomplete="on" required>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-4">
-                            <fieldset>
-                                <label for="category" class="form-label">Pick Category</label>
-                                <select name="category" class="form-select" aria-label="Choose a category" id="category"
-                                        onchange="this.form.click()">
-                                    <option selected>Choose a category</option>
-                                    <option type="checkbox" name="Nature" value="Nature">Nature Photography (220
-                                        Contests)
-                                    </option>
-                                    <option value="Portrait">Portrait Photography (172 Contests)</option>
-                                    <option value="Space">Space Photography (92 Contests)</option>
-                                </select>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-2">
-                            <fieldset>
-                                <!--                    <label for="chooseprice" class="form-label">Award Price</label>-->
-                                <select name="Price" class="form-select" aria-label="Default select example"
-                                        id="chooseCategory" onchange="this.form.click()">
-                                    <option selected>Choose a price</option>
-                                    <option value="500">$500 to $1,000</option>
-                                    <option value="1500">$1,500 to $2,000</option>
-                                    <option value="2500">$2,500 to $3000</option>
-                                    <option value="3500+">$3,500+</option>
-                                </select>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-2">
-                            <fieldset>
-                                <button class="main-button">Search Now</button>
-                            </fieldset>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<section class="contest-waiting" th:if="${not #lists.isEmpty(invitedContests)}">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h5>Contests you have been Invited</h5>
-            </div>
-            <div class="col-lg-3 col-sm-6" th:each="contest : ${invitedContests}">
-                <div class="waiting-item">
-                    <img th:src="${contest.photoUrl}" alt="">
-                    <div class="down-content">
-                        <h4 th:text="${contest.title}">Contest Title</h4>
-                        <p th:text="${contest.description}">Contest Description</p>
-                        <span class="price">Category <em th:text="${contest.category.name}"> Name</em></span>
-                        <span class="deadline"
-                              th:if="${contest.startPhase1 != null and contest.startPhase1.isAfter(#temporals.createNow())}">
-        Starts on <em th:text="${#temporals.format(contest.startPhase1, 'yyyy-MM-dd HH:mm')}">Start Date</em>
-    </span>
-                        <span class="deadline" th:if="${contest.startPhase1 != null and contest.startPhase2 != null
-                                    and contest.startPhase1.isBefore(#temporals.createNow())
-                                    and contest.startPhase2.isAfter(#temporals.createNow())}">
-        Time for submission ends in <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">Submission End Date</em>
-    </span>
-                        <span class="deadline"
-                              th:if="${contest.startPhase2 != null and contest.startPhase2.isBefore(#temporals.createNow())}">
-        Contest ends on <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">End Date</em>
-    </span>
-                        <span class="deadline" th:if="${contest.startPhase3 != null}">
-        Deadline: <em th:text="${#temporals.format(contest.startPhase3, 'yyyy-MM-dd HH:mm')}">Deadline</em>
-    </span>
-                    </div>
-                    <br/>
-                    <div class="border-button">
-                        <a th:href="@{/contests/{id}(id=${contest.id})}">Go To Contest</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="featured-contests" th:if="${not #lists.isEmpty(invitedContests)}">
+
+<section class="featured-contests" th:if="${not #lists.isEmpty(invitedContests)}" style="padding: 50px 0; background-color: #f9f9f9;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-heading text-center">
-                    <h6>Contest</h6>
-                    <h4><em>YOU</em> HAVE BEEN  <em>INVITED</em></h4>
+                    <h6 style="color: #007bff; text-transform: uppercase; font-size: 1.2rem;">Contest</h6>
+                    <h4 style="font-size: 2rem; font-weight: 600;"><em>YOU</em> HAVE BEEN <em>INVITED</em></h4>
                 </div>
             </div>
-            <div class="col-lg-6" th:each="contest : ${invitedContests}" >
-                <div class="item">
-                    <div class="thumb">
-                        <img th:src="${contest.photoUrl}" alt="Contest Photo">
-                        <div class="hover-effect">
-                            <div class="content">
+            <div class="col-lg-6 mb-4" th:each="contest : ${invitedContests}">
+                <div class="item" style="background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+                    <div class="thumb" style="position: relative; height: 300px; overflow: hidden;">
+                        <img th:src="${contest.photoUrl}" alt="Contest Photo" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center;">
+                            <div class="content" style="padding: 20px;">
                                 <div class="top-content">
-                                   <span class="deadline"
-                                         th:if="${contest.startPhase1 != null and contest.startPhase1.isAfter(#temporals.createNow())}">
-        Starts on <em th:text="${#temporals.format(contest.startPhase1, 'yyyy-MM-dd HH:mm')}">Start Date</em>
-    </span>
-                                    <span class="deadline" th:if="${contest.startPhase1 != null and contest.startPhase2 != null
-                                    and contest.startPhase1.isBefore(#temporals.createNow())
-                                    and contest.startPhase2.isAfter(#temporals.createNow())}">
-        Time for submission ends in <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">Submission End Date</em>
-    </span>
-                                    <span class="deadline"
-                                          th:if="${contest.startPhase2 != null and contest.startPhase2.isBefore(#temporals.createNow())}">
-        Contest ends on <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">End Date</em>
-    </span>
-                                    <span class="deadline" th:if="${contest.startPhase3 != null}">
-        Deadline: <em th:text="${#temporals.format(contest.startPhase3, 'yyyy-MM-dd HH:mm')}">Deadline</em>
-    </span>
+                                    <span class="deadline" th:if="${contest.startPhase1 != null and contest.startPhase1.isAfter(#temporals.createNow())}" style="display: block; margin-bottom: 10px;">
+                                        Starts on <em th:text="${#temporals.format(contest.startPhase1, 'yyyy-MM-dd HH:mm')}">Start Date</em>
+                                    </span>
+                                    <span class="deadline" th:if="${contest.startPhase1 != null and contest.startPhase2 != null and contest.startPhase1.isBefore(#temporals.createNow()) and contest.startPhase2.isAfter(#temporals.createNow())}" style="display: block; margin-bottom: 10px;">
+                                        Time for submission ends in <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">Submission End Date</em>
+                                    </span>
+                                    <span class="deadline" th:if="${contest.startPhase2 != null and contest.startPhase2.isBefore(#temporals.createNow())}" style="display: block; margin-bottom: 10px;">
+                                        Contest ends on <em th:text="${#temporals.format(contest.startPhase2, 'yyyy-MM-dd HH:mm')}">End Date</em>
+                                    </span>
+                                    <span class="deadline" th:if="${contest.startPhase3 != null}" style="display: block;">
+                                        Deadline: <em th:text="${#temporals.format(contest.startPhase3, 'yyyy-MM-dd HH:mm')}">Deadline</em>
+                                    </span>
                                 </div>
-                                <h4 th:text="${contest.title}">Walk In The Nature Night</h4>
-                                <p th:text="${contest.description}">Contest Description</p>
-                                <div class="info">
-                                    <span class="participants"><img src="/images/icon-03.png" alt=""><br th:text="${contest.getParticipants().size()}">60<br>Participants</span>
-                                    <span class="submittions"><img src="/images/icon-01.png" alt=""><br th:text="${contest.getSubmissions().size()}">188<br>Submissions</span>
+                                <h4 th:text="${contest.title}" style="font-size: 1.2rem; margin: 10px 0;">Walk In The Nature Night</h4>
+                                <p th:text="${contest.description}" style="font-size: 0.9rem; margin-bottom: 10px;">Contest Description</p>
+                                <div class="info" style="display: flex; justify-content: space-between; font-size: 0.9rem; color: #666;">
+                                    <span class="participants" style="display: flex; align-items: center;"><img src="/images/icon-03.png" alt="" style="width: 20px; height: 20px; margin-right: 5px;"><br th:text="${contest.getParticipants().size()}">60<br>Participants</span>
+                                    <span class="submissions" style="display: flex; align-items: center;"><img src="/images/icon-01.png" alt="" style="width: 20px; height: 20px; margin-right: 5px;"><br th:text="${contest.getSubmissions().size()}">188<br>Submissions</span>
                                 </div>
-                                <div class="border-button">
-                                    <a th:href="@{/contests/{id}(id=${contest.id})}">Go To Contest</a>
+                                <div class="border-button" style="margin-top: 15px;">
+                                    <a th:href="@{/contests/{id}(id=${contest.id})}" style="padding: 10px 20px; border-radius: 20px; background-color: #007bff; color: #fff; text-decoration: none;">Go To Contest</a>
                                 </div>
                             </div>
                         </div>
@@ -176,35 +74,27 @@
         </div>
     </div>
 </section>
-<section class="contest-waiting">
+<section class="contest-waiting" style="background-color: #f9f9f9; padding: 30px 0;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h5>Participated Contests</h5>
+                <h5 style="text-align: center; font-size: 1.5rem; font-weight: 600; margin-bottom: 20px;">Participated Contests</h5>
             </div>
-            <div class="col-lg-3 col-sm-6" th:each="contest : ${contests}" th:object="${contest}">
-                <div class="waiting-item">
-                    <img th:src="*{photoUrl}" alt="">
-                    <div class="down-content">
-                        <h4 th:text="*{title}">Contest Title</h4>
-                        <p th:text="*{description}">Contest Description</p>
-                        <span class="price">Category <em th:text="*{category.name}">$0</em></span>
-                        <span class="deadline">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>
+            <div class="col-lg-3 col-sm-6 mb-4" th:each="contest : ${contests}" th:object="${contest}">
+                <div class="waiting-item" style="background-color: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; height: 350px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <img th:src="*{photoUrl}" alt="" style="width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #eee;">
+                    <div class="down-content" style="padding: 15px; flex-grow: 1; text-align: center;">
+                        <h4 th:text="*{title}" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">Contest Title</h4>
+                        <p th:text="*{description}" style="font-size: 0.9rem; color: #666; margin-bottom: 10px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">Contest Description</p>
+                        <span class="price" style="display: block; font-weight: 500; color: #333;">Category: <em th:text="*{category.name}">$0</em></span>
+                        <span class="deadline" style="display: block; font-weight: 500; color: #333;">Deadline: <em th:text="*{startPhase3}">0 Days</em></span>
                     </div>
-                    <div class="border-button">
-                        <a th:href="@{/contests/{id}(id=${contest.getId()})}">Go To Contest</a>
+                    <div class="border-button" style="padding: 10px; text-align: center;">
+                        <a th:href="@{/contests/{id}(id=${contest.getId()})}" >Go To Contest</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-                </ul>
-            </div>
+
         </div>
     </div>
 </section>
@@ -407,6 +297,17 @@
 <!--      </div>-->
 <!--    </div>-->
 <!--  </section>-->
+<script>
+    // Script to enable hover effect
+    document.querySelectorAll('.item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            item.querySelector('.hover-effect').style.opacity = '1';
+        });
+        item.addEventListener('mouseleave', function() {
+            item.querySelector('.hover-effect').style.opacity = '0';
+        });
+    });
+</script>
 
 <footer th:replace="~{commons/fragments::footer}"></footer>
 
