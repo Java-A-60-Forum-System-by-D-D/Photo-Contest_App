@@ -17,10 +17,9 @@
   <div class="page-heading">
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 offset-lg-2 header-text">
-          <h2>Discover what's currently going on at <em>SnapX</em></h2>
-          <p>When you need Free CSS Templates, you just remember our website TemplateMo. We provide you best quality website templates at absolutely free of charge. No hidden cost involved.</p>
-        </div>
+          <div class="col-lg-8 offset-lg-2 header-text">
+              <h2>Your Creativity, Our Platform?Let's Make <em>Magic!</em></h2>
+          </div>
       </div>
     </div>
   </div>
@@ -40,7 +39,7 @@
                       <div class="down-content" style="padding: 20px; text-align: center; flex-grow: 1;">
                           <h4 th:text="*{title}" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">Contest Title</h4>
                           <p th:text="*{description}" style="font-size: 0.9rem; color: #666; margin-bottom: 10px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">Contest Description</p>
-                          <span class="deadline" style="display: block; font-weight: 500; margin-bottom: 10px;">Reviews Deadline: <em th:text="*{startPhase3}" style="font-weight: bold;">0 Days</em></span>
+                          <span class="deadline" style="display: block; font-weight: 500; margin-bottom: 10px;">Reviews Deadline: <em th:text="${#temporals.format(contest.startPhase3, 'yyyy-MM-dd HH:mm')}" style="font-weight: bold;">0 Days</em></span>
                       </div>
                   </div>
               </div>

@@ -1197,7 +1197,7 @@ Banner Style
 */
 
 .main-banner {
-  background-image: url(../images/banner-bg.jpg);
+  background-image: url(../images/rila.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1513,7 +1513,7 @@ closed contests
 ---------------------------------------------
 */ 
 
-section.closed-contests {
+section.closed-contests, .contest-waiting {
   background-image: url(../images/closed-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
@@ -1744,7 +1744,7 @@ page heading
 */
 
 .page-heading {
-  background-image: url(../images/heading-bg.jpg);
+  background-image: url(../images/snow-bg.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
