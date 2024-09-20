@@ -1,4 +1,6 @@
-# Photo Contest App
+# Welcome to D&D Photo Contest App!!!
+
+![Photo Contest App Logo](assets/logo.png)
 
 ## Overview
 The Photo Contest App is a web application that allows users to participate in photo contests. Users can submit their photos, vote on other submissions, and view contest results. The application is built using Java, Spring Boot, and Thymeleaf, with a MySQL database for data storage. It includes both a RESTful API and an MVC architecture.
