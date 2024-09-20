@@ -1,75 +1,70 @@
-# D\&D Photo Contest
+# Photo Contest App
 
 ## Overview
-This project is a photography contest application built using Java, Spring Boot, and Gradle. It allows users to create, participate in, and review photo contests. The application supports various functionalities such as user authentication, contest management, photo submissions, and reviews.
+The Photo Contest App is a web application that allows users to participate in photo contests. Users can submit their photos, vote on other submissions, and view contest results. The application is built using Java, Spring Boot, and Thymeleaf, with a MySQL database for data storage. It includes both a RESTful API and an MVC architecture.
 
 ## Features
-- User authentication and authorization
-- Contest creation and management
-- Photo submission and review
-- Filtering and sorting of photo submissions
-- Contest summary with top 3 places
+- User Authentication and Authorization
+- Photo Submission
+- Voting System
+- Contest Phases Management
+- Notifications
+- Admin Panel
 
 ## Technologies Used
 - Java
 - Spring Boot
+- Thymeleaf
+- MySQL
+- JavaScript
+- HTML/CSS
 - Gradle
-- MySQL (for database operations)
-- IntelliJ IDEA (IDE)
 
 ## Getting Started
 
 ### Prerequisites
 - Java 11 or higher
-- Gradle
 - MySQL
-- An IDE like IntelliJ IDEA
+- Gradle
 
 ### Installation
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/your-repo-name.git
-   ```
+    ```sh
+    git clone https://github.com/Java-A-60-Forum-System-by-D-D/Photo-Contest_App.git
+    ```
 2. Navigate to the project directory:
-   ```sh
-   cd your-repo-name
-   ```
-3. Build the project using Gradle:
-   ```sh
-   gradle build
-   ```
+    ```sh
+    cd Photo-Contest_App
+    ```
+3. Configure the MySQL database:
+    - Create a database named `photo_contest`.
+    - Update the database configuration in `src/main/resources/application.properties`:
+        ```properties
+        spring.datasource.url=jdbc:mysql://localhost:3306/photo_contest
+        spring.datasource.username=your_username
+        spring.datasource.password=your_password
+        ```
 
-### Running the Application
-1. Ensure MySQL is running and create a database for the project.
-2. Update the `application.properties` file with your MySQL database credentials.
-3. Run the application using Gradle:
-   ```sh
-   gradle bootRun
-   ```
-4. The application will start on `http://localhost:8080`.
+4. Build the project:
+    ```sh
+    ./gradlew build
+    ```
 
-## API Endpoints
+5. Run the application:
+    ```sh
+    ./gradlew bootRun
+    ```
 
-### Photo Submissions
-- `GET /api/photo-submissions` - Retrieve all photo submissions with optional filtering by title, username, sortBy, and sortDirection.
-- `GET /api/photo-submissions/{id}/reviews` - Retrieve reviews for a specific photo submission.
-- `POST /api/photo-submissions/{id}/reviews` - Create a review for a specific photo submission.
+6. Open your browser and navigate to `http://localhost:8080`.
 
-### Contests
-- `GET /api/contests` - Retrieve all contests.
-- `POST /api/contests` - Create a new contest.
-- `GET /api/contests/{id}` - Retrieve a specific contest by ID.
-- `PUT /api/contests/{id}` - Update a specific contest by ID.
-- `DELETE /api/contests/{id}` - Delete a specific contest by ID.
+## Usage
+- Register a new account or log in with an existing account.
+- Submit your photos to active contests.
+- Vote on other users' submissions.
+- View contest results and notifications.
 
-## Project Structure
-- `src/main/java/com/example/demo` - Main source code directory
-  - `controllers` - REST controllers
-  - `models` - Entity and DTO classes
-  - `services` - Service layer
-  - `repositories` - Repository layer
-  - `mappers` - Mapper classes for converting between entities and DTOs
-- `src/main/resources` - Configuration files and static resources
+## Scheduled Tasks
+The application includes scheduled tasks to manage contest phases. These tasks are defined in the `PhaseScheduler` class and can be configured using cron expressions.
 
 ## Contributing
 1. Fork the repository.
@@ -79,7 +74,7 @@ This project is a photography contest application built using Java, Spring Boot,
 5. Open a pull request.
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Contact
-For any questions or feedback, please contact [your-email@example.com].
+For any inquiries or support, please contact us at support@photocontestapp.com.
